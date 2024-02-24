@@ -5,21 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-import java.util.UUID;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "Export")
-public class Export extends BaseEntity {
+@Table(name = "export")
+public class Export extends Node {
 
-    @Column(name = "url")
+    @Column(name = "url", nullable = false)
     private String url;
 
     @OneToOne
-    @JoinColumn(name = "document_id", referencedColumnName = "id")
+    @JoinColumn(name = "document_id", referencedColumnName = "id", nullable = false)
     private Document document;
 
 }
