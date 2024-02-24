@@ -4,29 +4,28 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import java.sql.Timestamp;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name = "School")
-public class School extends BaseEntity {
+@Table(name = "school")
+public class School extends Node {
 
-    @Column(name = "principal_name")
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "principal_name", nullable = false)
     private String principalName;
 
-    @Column(name = "editor_name")
+    @Column(name = "editor_name", nullable = false)
     private String editorName;
 
-    @Column(name = "editor_title")
+    @Column(name = "editor_title", nullable = false)
     private String editorTitle;
 
-    @Column(name = "updated_at")
-    private Timestamp updatedAt;
-
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
 
 }

@@ -6,16 +6,17 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @MappedSuperclass
-public class BaseEntity {
+public class Node {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private UUID id;
 
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private Timestamp updatedAt;
+
 }
