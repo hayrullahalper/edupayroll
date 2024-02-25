@@ -10,8 +10,12 @@ import org.springframework.context.event.EventListener;
 @SpringBootApplication
 public class EdupayrollApplication {
 
+    private final ServerProperties properties;
+
     @Autowired
-    private ServerProperties properties;
+    public EdupayrollApplication(ServerProperties properties) {
+        this.properties = properties;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(EdupayrollApplication.class, args);
@@ -19,8 +23,8 @@ public class EdupayrollApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void onReady() {
-        String host = properties.getAddress().getHostAddress();
         String port = properties.getPort().toString();
+        String host = properties.getAddress().getHostAddress();
 
         System.out.printf("\nedupayroll application started at \n\t+ http://%s:%s \uD83D\uDE80\uD83D\uDE80\n", host, port);
     }
