@@ -1,32 +1,32 @@
 package com.incubator.edupayroll.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Entity
 @Table(name = "document_row")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class DocumentRow extends Node {
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)
-    private Teacher teacher;
+    @Column(name = "line", nullable = false)
+    private int line;
 
     @Column(name = "course_type", nullable = false)
-    private CourseType courseType;
+    private String courseType;
 
     @Column(name = "information", nullable = false)
     private String information;
 
-    @ManyToOne
-    @JoinColumn(name = "document_id", referencedColumnName = "id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "teacher_id", nullable = false)
+    private Teacher teacher;
+
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "document_id", nullable = false)
     private Document document;
-
-    @Column(name = "index", nullable = false)
-    private int index;
-
 }

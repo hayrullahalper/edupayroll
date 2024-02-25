@@ -1,23 +1,19 @@
 package com.incubator.edupayroll.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Entity
 @Table(name = "teacher")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Teacher extends Node {
 
     @Column(name = "name", nullable = false)
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
 
     @Column(name = "branch", nullable = false)
     private String branch;
@@ -25,4 +21,8 @@ public class Teacher extends Node {
     @Column(name = "id_number", nullable = false)
     private String idNumber;
 
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

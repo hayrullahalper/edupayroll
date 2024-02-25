@@ -1,22 +1,21 @@
 package com.incubator.edupayroll.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Entity
 @Table(name = "export")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Export extends Node {
 
     @Column(name = "url", nullable = false)
     private String url;
 
-    @OneToOne
-    @JoinColumn(name = "document_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "document_id", nullable = false)
     private Document document;
-
 }

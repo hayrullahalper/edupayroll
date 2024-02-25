@@ -2,7 +2,7 @@ package com.incubator.edupayroll.entity;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -10,13 +10,13 @@ public class Node {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "created_at", nullable = false)
-    private Timestamp createdAt;
+    private LocalTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+    private LocalTime updatedAt;
 
 }
