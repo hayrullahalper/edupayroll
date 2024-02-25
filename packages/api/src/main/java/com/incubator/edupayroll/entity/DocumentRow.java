@@ -3,6 +3,17 @@ package com.incubator.edupayroll.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+enum CourseType {
+    GUNDUZ(101),
+    GECE(102);
+
+    private int code;
+
+    private CourseType(int code) {
+        this.code = code;
+    }
+}
+
 @Entity
 @Table(name = "document_row")
 @Getter
@@ -15,8 +26,9 @@ public class DocumentRow extends Node {
     @Column(name = "line", nullable = false)
     private int line;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "course_type", nullable = false)
-    private String courseType;
+    private CourseType courseType;
 
     @Column(name = "information", nullable = false)
     private String information;
