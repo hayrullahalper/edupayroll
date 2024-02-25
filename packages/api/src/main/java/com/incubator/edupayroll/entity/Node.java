@@ -1,10 +1,12 @@
 package com.incubator.edupayroll.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
 @MappedSuperclass
 public class Node {
 
@@ -14,9 +16,21 @@ public class Node {
     private UUID id;
 
     @Column(name = "created_at", nullable = false)
-    private LocalTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private LocalTime updatedAt;
+    private LocalDateTime updatedAt;
 
+    @PrePersist
+    private void onSave() {
+        LocalDateTime now = LocalDateTime.now();
+
+        createdAt = now;
+        updatedAt = now;
+    }
+
+    @PreUpdate
+    private void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }
