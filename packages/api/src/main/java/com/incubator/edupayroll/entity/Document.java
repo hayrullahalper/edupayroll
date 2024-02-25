@@ -3,7 +3,7 @@ package com.incubator.edupayroll.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -19,7 +19,7 @@ public class Document extends Node {
     private String name;
 
     @Column(name = "time", nullable = false)
-    private LocalTime time;
+    private LocalDateTime time;
 
     @Column(name = "description", nullable = false)
     private String description;
