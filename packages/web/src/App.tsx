@@ -1,15 +1,16 @@
-import { MantineProvider } from '@mantine/core';
 import { BrowserRouter } from 'react-router-dom';
-import Routes from './routes/Routes.tsx';
+import { MantineProvider } from '@mantine/core';
+
+import Routes from './routes/Routes';
 
 import './globals.scss';
 
 export default function App() {
-  return (
-    <MantineProvider>
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
-    </MantineProvider>
-  );
-};
+	return (
+		<MantineProvider>
+			<BrowserRouter>
+				<Routes />
+			</BrowserRouter>
+		</MantineProvider>
+	);
+}
