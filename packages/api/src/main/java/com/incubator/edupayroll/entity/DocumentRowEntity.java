@@ -38,7 +38,8 @@ public class DocumentRowEntity extends BaseEntity {
     private TeacherEntity teacher;
 
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "document_id", nullable = false)
     private DocumentEntity document;
+
 }

@@ -29,10 +29,11 @@ public class DocumentEntity extends BaseEntity {
     private UserEntity user;
 
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "document")
+    @OneToMany(mappedBy = "document")
     private List<ExportEntity> exports;
 
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "document")
+    @OneToMany(mappedBy = "document")
     private List<DocumentRowEntity> rows;
+
 }

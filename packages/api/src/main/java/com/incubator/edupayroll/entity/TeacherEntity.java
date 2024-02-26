@@ -22,7 +22,8 @@ public class TeacherEntity extends BaseEntity {
     private String idNumber;
 
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
 }
