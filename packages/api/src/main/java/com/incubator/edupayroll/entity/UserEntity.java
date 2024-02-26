@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends Node {
+public class UserEntity extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -29,9 +29,9 @@ public class User extends Node {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
-    private List<Teacher> teachers;
+    private List<TeacherEntity> teachers;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
-    private List<Document> documents;
+    private List<DocumentEntity> documents;
 }

@@ -21,7 +21,7 @@ enum CourseType {
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocumentRow extends Node {
+public class DocumentRowEntity extends BaseEntity {
 
     @Column(name = "line", nullable = false)
     private int line;
@@ -35,10 +35,10 @@ public class DocumentRow extends Node {
 
     @OneToOne
     @JoinColumn(name = "teacher_id", nullable = false)
-    private Teacher teacher;
+    private TeacherEntity teacher;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_id", nullable = false)
-    private Document document;
+    private DocumentEntity document;
 }

@@ -1,6 +1,6 @@
 package com.incubator.edupayroll.dao;
 
-import com.incubator.edupayroll.entity.Teacher;
+import com.incubator.edupayroll.entity.TeacherEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +21,25 @@ public class TeacherDAO {
     }
 
     @Transactional
-    public void save(Teacher teacher) {
+    public void save(TeacherEntity teacher) {
         entityManager.persist(teacher);
     }
 
-    public Teacher findById(String id) {
+    public TeacherEntity findById(String id) {
         UUID uuid;
 
         uuid = UUID.fromString(id);
 
-        return entityManager.find(Teacher.class, uuid);
+        return entityManager.find(TeacherEntity.class, uuid);
     }
 
-    public List<Teacher> findAll() {
-        TypedQuery<Teacher> query = entityManager.createQuery("FROM Teacher", Teacher.class);
+    public List<TeacherEntity> findAll() {
+        TypedQuery<TeacherEntity> query = entityManager.createQuery("FROM TeacherEntity", TeacherEntity.class);
         return query.getResultList();
     }
 
     @Transactional
-    public void update(Teacher teacher) {
+    public void update(TeacherEntity teacher) {
         entityManager.merge(teacher);
     }
 

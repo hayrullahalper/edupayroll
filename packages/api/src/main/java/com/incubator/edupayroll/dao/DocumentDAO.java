@@ -1,7 +1,6 @@
 package com.incubator.edupayroll.dao;
 
-import com.incubator.edupayroll.entity.Document;
-import com.incubator.edupayroll.entity.DocumentRow;
+import com.incubator.edupayroll.entity.DocumentEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +21,25 @@ public class DocumentDAO {
     }
 
     @Transactional
-    public void save(Document document) {
+    public void save(DocumentEntity document) {
         entityManager.persist(document);
     }
 
-    public Document findById(String id) {
+    public DocumentEntity findById(String id) {
         UUID uuid;
 
         uuid = UUID.fromString(id);
 
-        return entityManager.find(Document.class, uuid);
+        return entityManager.find(DocumentEntity.class, uuid);
     }
 
-    public List<Document> findAll() {
-        TypedQuery<Document> query = entityManager.createQuery("FROM Document ", Document.class);
+    public List<DocumentEntity> findAll() {
+        TypedQuery<DocumentEntity> query = entityManager.createQuery("FROM DocumentEntity ", DocumentEntity.class);
         return query.getResultList();
     }
 
     @Transactional
-    public void update(Document document) {
+    public void update(DocumentEntity document) {
         entityManager.merge(document);
     }
 
@@ -51,7 +50,7 @@ public class DocumentDAO {
 
     @Transactional
     public int deleteAll() {
-        return entityManager.createQuery("DELETE FROM Document").executeUpdate();
+        return entityManager.createQuery("DELETE FROM DocumentEntity").executeUpdate();
     }
 
 }

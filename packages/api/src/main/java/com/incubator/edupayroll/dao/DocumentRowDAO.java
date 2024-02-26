@@ -1,7 +1,6 @@
 package com.incubator.edupayroll.dao;
 
-import com.incubator.edupayroll.entity.DocumentRow;
-import com.incubator.edupayroll.entity.Teacher;
+import com.incubator.edupayroll.entity.DocumentRowEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +21,25 @@ public class DocumentRowDAO {
     }
 
     @Transactional
-    public void save(DocumentRow documentRow) {
+    public void save(DocumentRowEntity documentRow) {
         entityManager.persist(documentRow);
     }
 
-    public DocumentRow findById(String id) {
+    public DocumentRowEntity findById(String id) {
         UUID uuid;
 
         uuid = UUID.fromString(id);
 
-        return entityManager.find(DocumentRow.class, uuid);
+        return entityManager.find(DocumentRowEntity.class, uuid);
     }
 
-    public List<DocumentRow> findAll() {
-        TypedQuery<DocumentRow> query = entityManager.createQuery("FROM DocumentRow ", DocumentRow.class);
+    public List<DocumentRowEntity> findAll() {
+        TypedQuery<DocumentRowEntity> query = entityManager.createQuery("FROM DocumentRowEntity ", DocumentRowEntity.class);
         return query.getResultList();
     }
 
     @Transactional
-    public void update(DocumentRow documentRow) {
+    public void update(DocumentRowEntity documentRow) {
         entityManager.merge(documentRow);
     }
 
@@ -51,7 +50,7 @@ public class DocumentRowDAO {
 
     @Transactional
     public int deleteAll() {
-        return entityManager.createQuery("DELETE FROM DocumentRow").executeUpdate();
+        return entityManager.createQuery("DELETE FROM DocumentRowEntity").executeUpdate();
     }
 
 }
