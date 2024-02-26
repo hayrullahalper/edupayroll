@@ -1,16 +1,18 @@
 package com.incubator.edupayroll.dao;
 
-import com.incubator.edupayroll.entity.TeacherEntity;
+import com.incubator.edupayroll.entity.UserEntity;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
+
 @Repository
-public class TeacherDAO extends BaseDAO<TeacherEntity> {
+public class UserDAO extends BaseDAO<UserEntity> implements Serializable {
 
     @Autowired
-    public TeacherDAO(EntityManager em) {
-        super(em, TeacherEntity.class);
+    public UserDAO(EntityManager em) {
+        super(em, UserEntity.class);
     }
 
 }
