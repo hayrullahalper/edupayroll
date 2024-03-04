@@ -1,1 +1,9 @@
-@import '../node_modules/@mantine/core/styles.css';
+@import '@mantine/core/styles.css';
+
+:root {
+	--ff-title: 'DM Serif Display', serif;
+}
+
+.mantine-active:active {
+	transform: unset;
+}
