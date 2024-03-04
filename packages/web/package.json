@@ -16,8 +16,11 @@
     "@mantine/core": "^7.5.3",
     "@mantine/hooks": "^7.5.3",
     "@mantine/notifications": "^7.5.3",
+    "@tabler/icons-react": "^2.47.0",
     "react": "^18.2.0",
+    "react-div-100vh": "^0.7.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.22.1"
   },
   "devDependencies": {
