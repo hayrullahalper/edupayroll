@@ -1,0 +1,13 @@
+.logo {
+	position: relative;
+
+	&::after {
+		content: "software";
+		position: absolute;
+		font-size: .8rem;
+
+		right: 0;
+		bottom: -0.25rem;
+		color: var(--mantine-color-indigo-6);
+	}
+}
