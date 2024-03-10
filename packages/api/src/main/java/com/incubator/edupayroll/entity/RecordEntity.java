@@ -4,17 +4,6 @@ import com.incubator.edupayroll.utils.CourseType;
 import jakarta.persistence.*;
 import lombok.*;
 
-enum CourseType {
-    GUNDUZ(101),
-    GECE(102);
-
-    private int code;
-
-    private CourseType(int code) {
-        this.code = code;
-    }
-}
-
 @Entity
 @Table(name = "document_row")
 @Getter
