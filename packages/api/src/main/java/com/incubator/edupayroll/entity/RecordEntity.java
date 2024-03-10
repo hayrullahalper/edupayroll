@@ -5,13 +5,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "document_row")
+@Table(name = "record")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocumentRowEntity extends BaseEntity {
+public class RecordEntity extends BaseEntity {
 
     @Column(name = "line", nullable = false)
     private int line;

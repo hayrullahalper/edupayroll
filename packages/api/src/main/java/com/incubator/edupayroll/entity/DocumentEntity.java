@@ -34,6 +34,6 @@ public class DocumentEntity extends BaseEntity {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "document")
-    private List<DocumentRowEntity> rows;
+    private List<RecordEntity> records;
 
 }
