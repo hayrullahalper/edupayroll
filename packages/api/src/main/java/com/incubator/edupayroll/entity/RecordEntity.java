@@ -1,5 +1,6 @@
 package com.incubator.edupayroll.entity;
 
+import com.incubator.edupayroll.utils.CourseType;
 import jakarta.persistence.*;
 import lombok.*;
 

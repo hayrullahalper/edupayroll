@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.dao;
+package com.incubator.edupayroll.repository;
 
 import com.incubator.edupayroll.entity.DocumentRowEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

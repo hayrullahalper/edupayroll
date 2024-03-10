@@ -1,6 +1,6 @@
 package com.incubator.edupayroll.controller;
 
-import com.incubator.edupayroll.dao.TeacherRepository;
+import com.incubator.edupayroll.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,21 +13,21 @@ import java.util.UUID;
 @RequestMapping("/teachers")
 public class TeacherController {
 
-    private final TeacherRepository teacherDAO;
+    private final TeacherRepository teacherRepository;
 
     @Autowired
     public TeacherController(TeacherRepository teacherDAO) {
-        this.teacherDAO = teacherDAO;
+        this.teacherRepository = teacherDAO;
     }
 
     @GetMapping("/")
     public String getTeachers() {
-        return teacherDAO.findAll().toString();
+        return teacherRepository.findAll().toString();
     }
 
     @GetMapping("/{id}")
     public String getTeachers(@PathVariable String id) {
-        return teacherDAO.findById(UUID.fromString(id)).toString();
+        return teacherRepository.findById(UUID.fromString(id)).toString();
     }
 
 }
