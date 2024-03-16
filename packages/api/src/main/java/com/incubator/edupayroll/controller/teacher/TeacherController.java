@@ -1,6 +1,6 @@
 package com.incubator.edupayroll.controller.teacher;
 
-import com.incubator.edupayroll.dto.teacher.TeacherCreationDTO;
+import com.incubator.edupayroll.dto.teacher.TeacherCreateDTO;
 import com.incubator.edupayroll.dto.teacher.TeacherDTO;
 import com.incubator.edupayroll.service.teacher.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ public class TeacherController {
 
     @PostMapping({"", "/"})
     public ResponseEntity<TeacherDTO> createTeacher(
-            @RequestBody TeacherCreationDTO teacherCreationDTO
+            @RequestBody TeacherCreateDTO teacherCreateDTO
     ) {
-        var teacher = teacherService.create(teacherCreationDTO);
+        var teacher = teacherService.create(teacherCreateDTO);
 
         return ResponseEntity
                 .ok()

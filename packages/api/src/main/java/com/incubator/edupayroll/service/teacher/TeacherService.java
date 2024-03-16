@@ -1,6 +1,6 @@
 package com.incubator.edupayroll.service.teacher;
 
-import com.incubator.edupayroll.dto.teacher.TeacherCreationDTO;
+import com.incubator.edupayroll.dto.teacher.TeacherCreateDTO;
 import com.incubator.edupayroll.dto.teacher.TeacherDTO;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import com.incubator.edupayroll.entity.user.UserEntity;
@@ -34,11 +34,11 @@ public class TeacherService {
         return page.get().map(this::mapToTeacherDTO).toList();
     }
 
-    public TeacherDTO create(TeacherCreationDTO teacherCreationDTO) {
+    public TeacherDTO create(TeacherCreateDTO teacherCreateDTO) {
         var maybeUser = userRepository.findById(UUID.fromString("573a6bbf-31f7-4cd3-a778-6e696d1525bc"));
         var user = maybeUser.orElseThrow();
 
-        var teacher = mapToTeacherEntity(user, teacherCreationDTO);
+        var teacher = mapToTeacherEntity(user, teacherCreateDTO);
 
         return mapToTeacherDTO(teacherRepository.saveAndFlush(teacher));
     }
@@ -52,11 +52,11 @@ public class TeacherService {
         );
     }
 
-    private TeacherEntity mapToTeacherEntity(UserEntity userEntity, TeacherCreationDTO teacherCreationDTO) {
+    private TeacherEntity mapToTeacherEntity(UserEntity userEntity, TeacherCreateDTO teacherCreateDTO) {
         return new TeacherEntity(
-                teacherCreationDTO.getName(),
-                teacherCreationDTO.getBranch(),
-                teacherCreationDTO.getIdNumber(),
+                teacherCreateDTO.getName(),
+                teacherCreateDTO.getBranch(),
+                teacherCreateDTO.getIdNumber(),
                 userEntity
         );
     }
