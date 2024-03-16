@@ -1,5 +1,7 @@
-package com.incubator.edupayroll.entity;
+package com.incubator.edupayroll.entity.teacher;
 
+import com.incubator.edupayroll.entity.BaseEntity;
+import com.incubator.edupayroll.entity.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

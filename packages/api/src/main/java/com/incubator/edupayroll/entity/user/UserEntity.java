@@ -1,5 +1,8 @@
-package com.incubator.edupayroll.entity;
+package com.incubator.edupayroll.entity.user;
 
+import com.incubator.edupayroll.entity.BaseEntity;
+import com.incubator.edupayroll.entity.document.DocumentEntity;
+import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -34,4 +37,5 @@ public class UserEntity extends BaseEntity {
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<DocumentEntity> documents;
+
 }

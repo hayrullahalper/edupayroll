@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.controller;
+package com.incubator.edupayroll.controller.teacher;
 
 import com.incubator.edupayroll.dto.teacher.TeacherCreationDTO;
 import com.incubator.edupayroll.dto.teacher.TeacherDTO;

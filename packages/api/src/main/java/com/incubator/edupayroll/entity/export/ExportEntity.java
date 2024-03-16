@@ -1,5 +1,7 @@
-package com.incubator.edupayroll.entity;
+package com.incubator.edupayroll.entity.export;
 
+import com.incubator.edupayroll.entity.BaseEntity;
+import com.incubator.edupayroll.entity.document.DocumentEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,4 +20,5 @@ public class ExportEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "document_id", nullable = false)
     private DocumentEntity document;
+
 }

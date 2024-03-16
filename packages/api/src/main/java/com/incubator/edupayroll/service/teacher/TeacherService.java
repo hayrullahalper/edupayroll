@@ -2,10 +2,10 @@ package com.incubator.edupayroll.service.teacher;
 
 import com.incubator.edupayroll.dto.teacher.TeacherCreationDTO;
 import com.incubator.edupayroll.dto.teacher.TeacherDTO;
-import com.incubator.edupayroll.entity.TeacherEntity;
-import com.incubator.edupayroll.entity.UserEntity;
-import com.incubator.edupayroll.repository.TeacherRepository;
-import com.incubator.edupayroll.repository.UserRepository;
+import com.incubator.edupayroll.entity.teacher.TeacherEntity;
+import com.incubator.edupayroll.entity.user.UserEntity;
+import com.incubator.edupayroll.repository.teacher.TeacherRepository;
+import com.incubator.edupayroll.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
