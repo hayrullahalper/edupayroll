@@ -7,7 +7,6 @@ import lombok.Value;
 public class TeacherCreateDTO {
     String name;
     String branch;
-
     @JsonProperty("id_number")
     String idNumber;
 }
