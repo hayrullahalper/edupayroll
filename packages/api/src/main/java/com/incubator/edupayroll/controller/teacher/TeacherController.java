@@ -4,6 +4,7 @@ import com.incubator.edupayroll.dto.teacher.TeacherCreateDTO;
 import com.incubator.edupayroll.dto.teacher.TeacherDTO;
 import com.incubator.edupayroll.dto.teacher.TeacherUpdateDTO;
 import com.incubator.edupayroll.service.teacher.TeacherService;
+import com.incubator.edupayroll.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,21 +17,23 @@ import java.util.Optional;
 public class TeacherController {
 
     private final TeacherService teacherService;
+    private final UserService userService;
 
     @Autowired
-    public TeacherController(TeacherService teacherService) {
+    public TeacherController(TeacherService teacherService, UserService userService) {
         this.teacherService = teacherService;
+        this.userService = userService;
     }
 
     @PostMapping({"", "/"})
     public ResponseEntity<TeacherDTO> createTeacher(
             @RequestBody TeacherCreateDTO teacherCreateDTO
     ) {
-        var teacher = teacherService.create(teacherCreateDTO);
+//        var teacher = teacherService.create(teacherCreateDTO);
 
         return ResponseEntity
                 .ok()
-                .body(teacher);
+                .body(null);
     }
 
     @PutMapping({"", "/"})
