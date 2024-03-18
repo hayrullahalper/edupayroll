@@ -1,7 +1,6 @@
 package com.incubator.edupayroll.controller.auth;
 
-import com.incubator.edupayroll.dto.auth.LoginDTO;
-import com.incubator.edupayroll.dto.auth.RegisterDTO;
+import com.incubator.edupayroll.dto.auth.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,4 +23,26 @@ public class AuthController {
                 .ok()
                 .body(registerDTO);
     }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<ResetPasswordDTO> resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
+        return ResponseEntity
+                .ok()
+                .body(resetPasswordDTO);
+    }
+
+    @PostMapping("/reset-password/complete")
+    public ResponseEntity<ResetPasswordCompleteDTO> resetPasswordComplete(@RequestBody ResetPasswordCompleteDTO resetPasswordCompleteDTO) {
+        return ResponseEntity
+                .ok()
+                .body(resetPasswordCompleteDTO);
+    }
+
+    @PostMapping("/update-password")
+    public ResponseEntity<UpdatePasswordDTO> updatePassword(@RequestBody UpdatePasswordDTO updatePasswordDTO) {
+        return ResponseEntity
+                .ok()
+                .body(updatePasswordDTO);
+    }
+
 }
