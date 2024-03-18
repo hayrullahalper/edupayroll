@@ -1,7 +1,18 @@
-import { createTheme, LoadingOverlay, Paper, ScrollArea } from '@mantine/core';
+import {
+	Paper,
+	TextInput,
+	ScrollArea,
+	createTheme,
+	LoadingOverlay,
+} from '@mantine/core';
 
 export default createTheme({
 	components: {
+		TextInput: TextInput.extend({
+			defaultProps: {
+				spellCheck: false,
+			},
+		}),
 		Paper: Paper.extend({
 			defaultProps: {
 				bg: 'gray.2',
