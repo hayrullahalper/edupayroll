@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class TeacherService {
@@ -34,9 +33,7 @@ public class TeacherService {
         return page.get().map(this::mapToTeacherDTO).toList();
     }
 
-    public TeacherDTO create(TeacherCreateDTO teacherCreateDTO) {
-        var maybeUser = userRepository.findById(UUID.fromString("573a6bbf-31f7-4cd3-a778-6e696d1525bc"));
-        var user = maybeUser.orElseThrow();
+    public TeacherDTO create(UserEntity user, TeacherCreateDTO teacherCreateDTO) {
 
         var teacher = mapToTeacherEntity(user, teacherCreateDTO);
 
