@@ -7,6 +7,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import paths from './paths';
 import Login from './Login';
 import Logout from './Logout';
+import Register from './Register';
 import Documents from './Documents';
 import RequireAuth from './RequireAuth';
 import RequireAnonymous from './RequireAnonymous';
@@ -21,7 +22,7 @@ export default function Routes() {
 					<Route element={<RequireAnonymous />}>
 						<Route element={<AuthLayout />}>
 							<Route path={paths.login} element={<Login />} />
-							<Route path={paths.register} element="register" />
+							<Route path={paths.register} element={<Register />} />
 						</Route>
 
 						<Route path={paths.forgotPassword} element="forgotPassword" />
