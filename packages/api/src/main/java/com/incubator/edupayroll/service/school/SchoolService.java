@@ -3,9 +3,9 @@ package com.incubator.edupayroll.service.school;
 import com.incubator.edupayroll.dto.school.SchoolCreateDTO;
 import com.incubator.edupayroll.dto.school.SchoolDTO;
 import com.incubator.edupayroll.dto.school.SchoolUpdateDTO;
-import com.incubator.edupayroll.entity.school.SchoolEntity;
-import com.incubator.edupayroll.entity.user.UserEntity;
-import com.incubator.edupayroll.repository.school.SchoolRepository;
+import com.incubator.edupayroll.entity.SchoolEntity;
+import com.incubator.edupayroll.entity.UserEntity;
+import com.incubator.edupayroll.repository.SchoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

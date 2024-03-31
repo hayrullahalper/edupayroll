@@ -1,6 +1,6 @@
-package com.incubator.edupayroll.repository.document;
+package com.incubator.edupayroll.repository;
 
-import com.incubator.edupayroll.entity.document.DocumentEntity;
+import com.incubator.edupayroll.entity.DocumentEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

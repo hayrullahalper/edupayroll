@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.controller.user;
+package com.incubator.edupayroll.controller;
 
 import com.incubator.edupayroll.dto.user.UserUpdateDTO;
 import org.springframework.http.ResponseEntity;

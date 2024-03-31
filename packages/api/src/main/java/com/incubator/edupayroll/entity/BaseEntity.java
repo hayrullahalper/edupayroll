@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.entity.base;
+package com.incubator.edupayroll.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

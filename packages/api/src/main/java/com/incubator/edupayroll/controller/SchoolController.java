@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.controller.school;
+package com.incubator.edupayroll.controller;
 
 import com.incubator.edupayroll.dto.school.SchoolUpdateDTO;
 import com.incubator.edupayroll.service.school.SchoolNotFoundException;

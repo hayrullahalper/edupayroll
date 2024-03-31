@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.controller.document;
+package com.incubator.edupayroll.controller;
 
 import com.incubator.edupayroll.dto.document.DocumentDTO;
 import com.incubator.edupayroll.dto.document.DocumentUpdateDTO;
