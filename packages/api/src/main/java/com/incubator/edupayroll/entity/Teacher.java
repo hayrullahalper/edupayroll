@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeacherEntity extends BaseEntity {
+public class Teacher extends Node {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -24,6 +24,6 @@ public class TeacherEntity extends BaseEntity {
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    private User user;
 
 }

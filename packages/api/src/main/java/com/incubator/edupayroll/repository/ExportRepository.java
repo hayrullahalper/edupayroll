@@ -1,10 +1,12 @@
 package com.incubator.edupayroll.repository;
 
-import com.incubator.edupayroll.entity.ExportEntity;
+import com.incubator.edupayroll.entity.Export;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-public interface ExportRepository extends JpaRepository<ExportEntity, UUID> {
+@Repository
+public interface ExportRepository extends JpaRepository<Export, UUID> {
 
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Getter
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class Node implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

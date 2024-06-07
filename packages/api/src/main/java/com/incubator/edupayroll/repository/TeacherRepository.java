@@ -1,10 +1,12 @@
 package com.incubator.edupayroll.repository;
 
-import com.incubator.edupayroll.entity.TeacherEntity;
+import com.incubator.edupayroll.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-public interface TeacherRepository extends JpaRepository<TeacherEntity, UUID> {
+@Repository
+public interface TeacherRepository extends JpaRepository<Teacher, UUID> {
 
 }

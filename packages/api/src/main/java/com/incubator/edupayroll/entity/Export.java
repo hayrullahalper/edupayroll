@@ -10,12 +10,12 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExportEntity extends BaseEntity {
+public class Export extends Node {
 
     @Column(name = "url", nullable = false)
     private String url;
 
     @ManyToOne
     @JoinColumn(name = "document_id", nullable = false)
-    private DocumentEntity document;
+    private Document document;
 }

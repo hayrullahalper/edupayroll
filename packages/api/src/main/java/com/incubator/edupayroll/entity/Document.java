@@ -13,7 +13,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocumentEntity extends BaseEntity {
+public class Document extends Node {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -26,14 +26,14 @@ public class DocumentEntity extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    private User user;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "document")
-    private List<ExportEntity> exports;
+    private List<Export> exports;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "document")
-    private List<RecordEntity> records;
+    private List<Record> records;
 
 }
