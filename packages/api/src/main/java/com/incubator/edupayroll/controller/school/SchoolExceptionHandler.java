@@ -13,6 +13,9 @@ public class SchoolExceptionHandler {
     public ResponseEntity<Response<?, ?, SchoolErrorCode>> handleSchoolNotFoundException() {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
-                .body(Response.error(SchoolErrorCode.SCHOOL_NOT_FOUND, "School not found"));
+                .body(Response
+                        .error(SchoolErrorCode.SCHOOL_NOT_FOUND, "School not found")
+                        .build()
+                );
     }
 }

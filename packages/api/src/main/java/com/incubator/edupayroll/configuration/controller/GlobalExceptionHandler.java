@@ -18,37 +18,49 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Response<?, ?, GeneralErrorCode>> handleJsonParseException(JsonParseException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(Response.error(GeneralErrorCode.INVALID_JSON, "Invalid JSON: " + ex.getOriginalMessage()));
+                .body(Response
+                        .error(GeneralErrorCode.INVALID_JSON, "Invalid JSON: " + ex.getOriginalMessage())
+                        .build()
+                );
     }
 
     @ExceptionHandler(MismatchedInputException.class)
     public ResponseEntity<Response<?, ?, GeneralErrorCode>> handleMismatchedInputException(MismatchedInputException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(Response.error(GeneralErrorCode.INVALID_TYPE, "Invalid type: " + ex.getTargetType().getSimpleName()));
+                .body(Response
+                        .error(GeneralErrorCode.INVALID_TYPE, "Invalid type: " + ex.getTargetType().getSimpleName())
+                        .build()
+                );
     }
 
     @ExceptionHandler(InvalidFormatException.class)
     public ResponseEntity<Response<?, ?, GeneralErrorCode>> handleInvalidFormatException(InvalidFormatException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(Response.error(GeneralErrorCode.INVALID_TYPE, "Invalid type: " + ex.getTargetType().getSimpleName()));
+                .body(Response
+                        .error(GeneralErrorCode.INVALID_TYPE, "Invalid type: " + ex.getTargetType().getSimpleName())
+                        .build()
+                );
     }
 
     @ExceptionHandler(UnrecognizedPropertyException.class)
     public ResponseEntity<Response<?, ?, GeneralErrorCode>> handleUnrecognizedPropertyException(UnrecognizedPropertyException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(Response.error(GeneralErrorCode.UNKNOWN_PROPERTY, "Unknown property: " + ex.getPropertyName()));
+                .body(Response
+                        .error(GeneralErrorCode.UNKNOWN_PROPERTY, "Unknown property: " + ex.getPropertyName())
+                        .build()
+                );
     }
 
     @ExceptionHandler({InvalidConstraintsException.class})
     public ResponseEntity<Response<?, ?, GeneralErrorCode>> handleInvalidConstraintsException(InvalidConstraintsException e) {
-        var response = new Response<Object, Object, GeneralErrorCode>();
-        e.getViolations().forEach(violation -> response.withError(GeneralErrorCode.INVALID_CONSTRAINTS, violation));
-
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(response);
+                .body(Response
+                        .error(GeneralErrorCode.INVALID_CONSTRAINTS, e.getViolations())
+                        .build()
+                );
     }
 }

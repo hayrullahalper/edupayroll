@@ -16,13 +16,19 @@ public class AuthExceptionHandler {
     public ResponseEntity<Response<?, ?, AuthErrorCode>> handleUserAlreadyRegisteredException() {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
-                .body(Response.error(AuthErrorCode.USER_ALREADY_REGISTERED, "User already registered"));
+                .body(Response
+                        .error(AuthErrorCode.USER_ALREADY_REGISTERED, "User already registered")
+                        .build()
+                );
     }
 
     @ExceptionHandler({UserNotFoundException.class, InvalidCredentialsException.class})
     public ResponseEntity<Response<?, ?, AuthErrorCode>> handleInvalidCredentialsException() {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
-                .body(Response.error(AuthErrorCode.INVALID_CREDENTIALS, "Invalid credentials"));
+                .body(Response
+                        .error(AuthErrorCode.INVALID_CREDENTIALS, "Invalid credentials")
+                        .build()
+                );
     }
 }

@@ -25,7 +25,7 @@ public class SchoolController {
         this.schoolService = schoolService;
     }
 
-    @PutMapping({"", "/"})
+    @PutMapping("")
     public ResponseEntity<Response<SchoolDTO, ?, SchoolErrorCode>> update(
             @RequestBody SchoolUpdateDTO schoolUpdateDTO
     ) {
@@ -44,16 +44,16 @@ public class SchoolController {
 
         return ResponseEntity
                 .ok()
-                .body(Response.data(SchoolMapper.toDTO(updatedSchool)));
+                .body(Response.data(SchoolMapper.toDTO(updatedSchool)).build());
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping("")
     public ResponseEntity<Response<SchoolDTO, ?, SchoolErrorCode>> get() {
         var user = userService.getAuthenticatedUser();
         var school = schoolService.getByUser(user);
 
         return ResponseEntity
                 .ok()
-                .body(Response.data(SchoolMapper.toDTO(school)));
+                .body(Response.data(SchoolMapper.toDTO(school)).build());
     }
 }

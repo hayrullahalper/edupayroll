@@ -36,7 +36,7 @@ public class AuthController {
 
         return ResponseEntity
                 .ok()
-                .body(Response.data(new TokenDTO(token)));
+                .body(Response.data(new TokenDTO(token)).build());
     }
 
     @PostMapping("/register")
@@ -56,7 +56,7 @@ public class AuthController {
 
         return ResponseEntity
                 .ok()
-                .body(Response.data(new TokenDTO(token)));
+                .body(Response.data(new TokenDTO(token)).build());
     }
 
 }
