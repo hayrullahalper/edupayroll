@@ -9,7 +9,7 @@ import java.util.List;
 public class Response<D, M, E> {
     private D data = null;
     private M meta = null;
-    private final List<E> errors = new ArrayList<>();
+    private final List<ResponseError<E>> errors = new ArrayList<>();
 
     public static <D, M, E> Response<D, M, E> data(D data) {
         return new Response<D, M, E>().withData(data);
@@ -19,12 +19,8 @@ public class Response<D, M, E> {
         return new Response<D, M, E>().withMeta(meta);
     }
 
-    public static <D, M, E> Response<D, M, E> error(E error) {
-        return new Response<D, M, E>().withError(error);
-    }
-
-    public static <D, M, E> Response<D, M, E> errors(List<E> errors) {
-        return new Response<D, M, E>().withErrors(errors);
+    public static <D, M, E> Response<D, M, E> error(E code, String message) {
+        return new Response<D, M, E>().withError(code, message);
     }
 
     public Response<D, M, E> withData(D data) {
@@ -37,13 +33,8 @@ public class Response<D, M, E> {
         return this;
     }
 
-    public Response<D, M, E> withError(E error) {
-        this.errors.add(error);
-        return this;
-    }
-
-    public Response<D, M, E> withErrors(List<E> errors) {
-        this.errors.addAll(errors);
+    public Response<D, M, E> withError(E code, String message) {
+        this.errors.add(new ResponseError<>(code, message));
         return this;
     }
 }

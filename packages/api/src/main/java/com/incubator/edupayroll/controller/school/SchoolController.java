@@ -2,9 +2,9 @@ package com.incubator.edupayroll.controller.school;
 
 import com.incubator.edupayroll.dto.school.SchoolDTO;
 import com.incubator.edupayroll.dto.school.SchoolUpdateDTO;
-import com.incubator.edupayroll.entity.User;
 import com.incubator.edupayroll.mapper.school.SchoolMapper;
 import com.incubator.edupayroll.service.school.SchoolService;
+import com.incubator.edupayroll.service.user.UserService;
 import com.incubator.edupayroll.util.response.Response;
 import com.incubator.edupayroll.util.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +15,23 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/school")
 public class SchoolController {
 
+
+    private final UserService userService;
     private final SchoolService schoolService;
 
     @Autowired
-    public SchoolController(SchoolService schoolService) {
+    public SchoolController(UserService userService, SchoolService schoolService) {
+        this.userService = userService;
         this.schoolService = schoolService;
     }
 
     @PutMapping({"", "/"})
-    public ResponseEntity<Response<SchoolDTO, ?, ?>> update(
-            @ModelAttribute("user") User user,
+    public ResponseEntity<Response<SchoolDTO, ?, SchoolErrorCode>> update(
             @RequestBody SchoolUpdateDTO schoolUpdateDTO
     ) {
         Validation.validate(schoolUpdateDTO);
 
+        var user = userService.getAuthenticatedUser();
         var school = schoolService.getByUser(user);
 
         var updatedSchool = schoolService.update(
@@ -45,7 +48,8 @@ public class SchoolController {
     }
 
     @GetMapping({"", "/"})
-    public ResponseEntity<Response<SchoolDTO, ?, ?>> get(@ModelAttribute("user") User user) {
+    public ResponseEntity<Response<SchoolDTO, ?, SchoolErrorCode>> get() {
+        var user = userService.getAuthenticatedUser();
         var school = schoolService.getByUser(user);
 
         return ResponseEntity

@@ -28,7 +28,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Response<TokenDTO, ?, ?>> login(@RequestBody LoginDTO request) {
+    public ResponseEntity<Response<TokenDTO, ?, AuthErrorCode>> login(@RequestBody LoginDTO request) {
         Validation.validate(request);
 
         var user = authService.login(request.getEmail(), request.getPassword());
@@ -40,7 +40,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Response<TokenDTO, ?, ?>> register(@RequestBody RegisterDTO request) {
+    public ResponseEntity<Response<TokenDTO, ?, AuthErrorCode>> register(@RequestBody RegisterDTO request) {
         Validation.validate(request);
 
         var user = authService.register(
