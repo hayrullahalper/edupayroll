@@ -4,6 +4,8 @@ import com.incubator.edupayroll.entity.Role;
 import com.incubator.edupayroll.entity.User;
 import com.incubator.edupayroll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,5 +43,26 @@ public class UserService {
     public User getByEmail(String email) {
         var maybeUser = userRepository.findByEmail(email);
         return maybeUser.orElseThrow(() -> UserNotFoundException.byEmail(email));
+    }
+
+    public User getAuthenticatedUser() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+
+        try {
+            if (auth != null && auth.isAuthenticated()) {
+                var detail = auth.getPrincipal();
+
+                if (detail instanceof UserDetails) {
+                    var email = ((UserDetails) detail).getUsername();
+                    return getByEmail(email);
+                }
+
+                return null;
+            }
+
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
