@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class SchoolEntity extends BaseEntity {
+public class School extends Node {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -26,6 +26,6 @@ public class SchoolEntity extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
+    private User user;
 
 }
