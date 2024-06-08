@@ -24,7 +24,9 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src"
+    "src",
+    "types",
+    "scripts"
   ],
   "references": [
     {
