@@ -1,5 +1,7 @@
-package com.incubator.edupayroll.entity;
+package com.incubator.edupayroll.entity.teacher;
 
+import com.incubator.edupayroll.entity.base.BaseEntity;
+import com.incubator.edupayroll.entity.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +12,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Teacher extends Node {
+public class TeacherEntity extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -24,6 +26,6 @@ public class Teacher extends Node {
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private UserEntity user;
 
 }

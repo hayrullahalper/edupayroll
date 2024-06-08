@@ -1,11 +1,10 @@
 package com.incubator.edupayroll.controller.teacher;
 
-import com.incubator.edupayroll.dto.teacher.TeacherDTO;
+import com.incubator.edupayroll.dto.teacher.Teacher;
 import com.incubator.edupayroll.mapper.teacher.TeacherMapper;
 import com.incubator.edupayroll.service.teacher.TeacherService;
 import com.incubator.edupayroll.service.user.UserService;
-import com.incubator.edupayroll.util.meta.PageMeta;
-import com.incubator.edupayroll.util.response.Response;
+import com.incubator.edupayroll.util.response.PageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +26,7 @@ public class TeacherController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Response<TeacherDTO[], PageMeta, ?>> getTeachers(
+    public ResponseEntity<PageResponse<Teacher, ?>> getTeachers(
             @RequestParam("limit") int limit,
             @RequestParam("offset") int offset
     ) {
@@ -37,16 +36,16 @@ public class TeacherController {
         var teachers = teacherService.getAll(user, limit, offset)
                 .stream()
                 .map(TeacherMapper::toDTO)
-                .toArray(TeacherDTO[]::new);
+                .toList();
 
 
         var pages = (int) Math.ceil((double) count / limit);
 
         return ResponseEntity
                 .ok()
-                .body(Response
+                .body(PageResponse
                         .data(teachers)
-                        .meta(PageMeta.of(limit, offset, pages))
+                        .meta(limit, offset, pages)
                         .build()
                 );
     }

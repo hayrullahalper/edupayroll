@@ -1,8 +1,8 @@
 package com.incubator.edupayroll.controller.auth;
 
-import com.incubator.edupayroll.dto.auth.LoginDTO;
-import com.incubator.edupayroll.dto.auth.RegisterDTO;
-import com.incubator.edupayroll.dto.auth.TokenDTO;
+import com.incubator.edupayroll.dto.auth.LoginInput;
+import com.incubator.edupayroll.dto.auth.RegisterInput;
+import com.incubator.edupayroll.dto.auth.TokenPayload;
 import com.incubator.edupayroll.service.auth.AuthService;
 import com.incubator.edupayroll.service.token.TokenService;
 import com.incubator.edupayroll.util.response.Response;
@@ -28,35 +28,35 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Response<TokenDTO, ?, AuthErrorCode>> login(@RequestBody LoginDTO request) {
-        Validation.validate(request);
+    public ResponseEntity<Response<TokenPayload, AuthErrorCode>> login(@RequestBody LoginInput input) {
+        Validation.validate(input);
 
-        var user = authService.login(request.getEmail(), request.getPassword());
+        var user = authService.login(input.getEmail(), input.getPassword());
         var token = tokenService.encode(user);
 
         return ResponseEntity
                 .ok()
-                .body(Response.data(new TokenDTO(token)).build());
+                .body(Response.data(new TokenPayload(token)).build());
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Response<TokenDTO, ?, AuthErrorCode>> register(@RequestBody RegisterDTO request) {
-        Validation.validate(request);
+    public ResponseEntity<Response<TokenPayload, AuthErrorCode>> register(@RequestBody RegisterInput input) {
+        Validation.validate(input);
 
         var user = authService.register(
-                request.getName(),
-                request.getEmail(),
-                request.getTitle(),
-                request.getPassword(),
-                request.getSchoolName(),
-                request.getPrincipalName()
+                input.getName(),
+                input.getEmail(),
+                input.getTitle(),
+                input.getPassword(),
+                input.getSchoolName(),
+                input.getPrincipalName()
         );
 
         var token = tokenService.encode(user);
 
         return ResponseEntity
                 .ok()
-                .body(Response.data(new TokenDTO(token)).build());
+                .body(Response.data(new TokenPayload(token)).build());
     }
 
 }

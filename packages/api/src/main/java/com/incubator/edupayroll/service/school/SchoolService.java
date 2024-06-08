@@ -1,7 +1,7 @@
 package com.incubator.edupayroll.service.school;
 
-import com.incubator.edupayroll.entity.School;
-import com.incubator.edupayroll.entity.User;
+import com.incubator.edupayroll.entity.school.SchoolEntity;
+import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.repository.SchoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,8 @@ public class SchoolService {
         this.schoolRepository = schoolRepository;
     }
 
-    public School create(User user, String schoolName, String editorName, String editorTitle, String principalName) {
-        var school = new School();
+    public SchoolEntity create(UserEntity user, String schoolName, String editorName, String editorTitle, String principalName) {
+        var school = new SchoolEntity();
 
         school.setUser(user);
 
@@ -28,7 +28,7 @@ public class SchoolService {
         return schoolRepository.saveAndFlush(school);
     }
 
-    public School update(School school, String schoolName, String editorName, String editorTitle, String principalName) {
+    public SchoolEntity update(SchoolEntity school, String schoolName, String editorName, String editorTitle, String principalName) {
         if (schoolName != null)
             school.setName(schoolName);
 
@@ -44,7 +44,7 @@ public class SchoolService {
         return schoolRepository.saveAndFlush(school);
     }
 
-    public School getByUser(User user) {
+    public SchoolEntity getByUser(UserEntity user) {
         var schools = schoolRepository.findByUser(user);
 
         if (schools.isEmpty()) {

@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.entity;
+package com.incubator.edupayroll.entity.base;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Getter
 @MappedSuperclass
-public class Node implements Serializable {
+public class BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

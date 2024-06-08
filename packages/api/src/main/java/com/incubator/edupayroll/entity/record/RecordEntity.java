@@ -1,5 +1,8 @@
-package com.incubator.edupayroll.entity;
+package com.incubator.edupayroll.entity.record;
 
+import com.incubator.edupayroll.entity.base.BaseEntity;
+import com.incubator.edupayroll.entity.document.DocumentEntity;
+import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,25 +13,25 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Record extends Node {
+public class RecordEntity extends BaseEntity {
 
     @Column(name = "line", nullable = false)
     private int line;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "course", nullable = false)
-    private Course course;
+    @Column(name = "type", nullable = false)
+    private RecordType type;
 
     @Column(name = "information", nullable = false)
     private String information;
 
     @OneToOne
     @JoinColumn(name = "teacher_id", nullable = false)
-    private Teacher teacher;
+    private TeacherEntity teacher;
 
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "document_id", nullable = false)
-    private Document document;
+    private DocumentEntity document;
 
 }

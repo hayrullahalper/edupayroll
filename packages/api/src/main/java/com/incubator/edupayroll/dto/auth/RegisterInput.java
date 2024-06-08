@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Value;
 
 @Value
-public class RegisterDTO {
+public class RegisterInput {
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     @NotEmpty(message = "Name is required")
     public String name;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(JsonParseException.class)
-    public ResponseEntity<Response<?, ?, GeneralErrorCode>> handleJsonParseException(JsonParseException ex) {
+    public ResponseEntity<Response<?, GeneralErrorCode>> handleJsonParseException(JsonParseException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Response
@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MismatchedInputException.class)
-    public ResponseEntity<Response<?, ?, GeneralErrorCode>> handleMismatchedInputException(MismatchedInputException ex) {
+    public ResponseEntity<Response<?, GeneralErrorCode>> handleMismatchedInputException(MismatchedInputException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Response
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InvalidFormatException.class)
-    public ResponseEntity<Response<?, ?, GeneralErrorCode>> handleInvalidFormatException(InvalidFormatException ex) {
+    public ResponseEntity<Response<?, GeneralErrorCode>> handleInvalidFormatException(InvalidFormatException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Response
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UnrecognizedPropertyException.class)
-    public ResponseEntity<Response<?, ?, GeneralErrorCode>> handleUnrecognizedPropertyException(UnrecognizedPropertyException ex) {
+    public ResponseEntity<Response<?, GeneralErrorCode>> handleUnrecognizedPropertyException(UnrecognizedPropertyException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Response
@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({InvalidConstraintsException.class})
-    public ResponseEntity<Response<?, ?, GeneralErrorCode>> handleInvalidConstraintsException(InvalidConstraintsException e) {
+    public ResponseEntity<Response<?, GeneralErrorCode>> handleInvalidConstraintsException(InvalidConstraintsException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Response

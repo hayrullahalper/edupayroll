@@ -1,7 +1,7 @@
 package com.incubator.edupayroll.service.user;
 
-import com.incubator.edupayroll.entity.Role;
-import com.incubator.edupayroll.entity.User;
+import com.incubator.edupayroll.entity.user.UserEntity;
+import com.incubator.edupayroll.entity.user.UserRole;
 import com.incubator.edupayroll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +19,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User create(
+    public UserEntity create(
             String name,
             String email,
             String passwordHash
@@ -28,9 +28,9 @@ public class UserService {
             throw UserAlreadyRegisteredException.byEmail(email);
         }
 
-        List<Role> roles = List.of(Role.USER);
+        List<UserRole> roles = List.of(UserRole.USER);
 
-        var user = new User();
+        var user = new UserEntity();
 
         user.setName(name);
         user.setEmail(email);
@@ -40,12 +40,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getByEmail(String email) {
+    public UserEntity getByEmail(String email) {
         var maybeUser = userRepository.findByEmail(email);
         return maybeUser.orElseThrow(() -> UserNotFoundException.byEmail(email));
     }
 
-    public User getAuthenticatedUser() {
+    public UserEntity getAuthenticatedUser() {
         var auth = SecurityContextHolder.getContext().getAuthentication();
 
         try {

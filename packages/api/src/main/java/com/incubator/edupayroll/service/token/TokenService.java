@@ -3,7 +3,7 @@ package com.incubator.edupayroll.service.token;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.incubator.edupayroll.entity.User;
+import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.service.user.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +29,7 @@ public class TokenService {
         return JWT.require(algorithm).build().verify(token) != null;
     }
 
-    public String encode(User user) {
+    public String encode(UserEntity user) {
         var expiresAt = Instant.now().plusSeconds(expiration);
 
         return JWT.create()

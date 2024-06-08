@@ -1,5 +1,8 @@
-package com.incubator.edupayroll.entity;
+package com.incubator.edupayroll.entity.user;
 
+import com.incubator.edupayroll.entity.base.BaseEntity;
+import com.incubator.edupayroll.entity.document.DocumentEntity;
+import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,8 +15,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class User extends Node {
+public class UserEntity extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -25,17 +27,17 @@ public class User extends Node {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "roles", nullable = false)
     @Enumerated(EnumType.STRING)
-    private List<Role> roles;
+    private List<UserRole> roles;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
-    private List<Teacher> teachers;
+    private List<TeacherEntity> teachers;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
-    private List<Document> documents;
+    private List<DocumentEntity> documents;
 }

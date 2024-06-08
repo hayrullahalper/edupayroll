@@ -1,6 +1,6 @@
 package com.incubator.edupayroll.service.auth;
 
-import com.incubator.edupayroll.entity.User;
+import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.service.password.PasswordService;
 import com.incubator.edupayroll.service.school.SchoolService;
 import com.incubator.edupayroll.service.user.UserService;
@@ -24,7 +24,7 @@ public class AuthService {
         this.passwordService = passwordService;
     }
 
-    public User login(String email, String password) {
+    public UserEntity login(String email, String password) {
         var user = userService.getByEmail(email);
 
         if (!passwordService.match(password, user.getPasswordHash())) {
@@ -34,7 +34,7 @@ public class AuthService {
         return user;
     }
 
-    public User register(
+    public UserEntity register(
             String name,
             String email,
             String title,

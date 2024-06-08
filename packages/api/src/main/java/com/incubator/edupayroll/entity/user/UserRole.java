@@ -1,15 +1,15 @@
-package com.incubator.edupayroll.entity;
+package com.incubator.edupayroll.entity.user;
 
 import lombok.Getter;
 
 @Getter
-public enum Role {
+public enum UserRole {
     USER("user"),
     ADMIN("admin");
 
     private final String name;
 
-    Role(String name) {
+    UserRole(String name) {
         this.name = name;
     }
 }

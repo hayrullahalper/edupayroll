@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Value;
 
 @Value
-public class LoginDTO {
+public class LoginInput {
     @Email(message = "Invalid email")
     @NotEmpty(message = "Email is required")
     public String email;

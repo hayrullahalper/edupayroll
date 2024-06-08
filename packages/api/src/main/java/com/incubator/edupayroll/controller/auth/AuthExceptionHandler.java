@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class AuthExceptionHandler {
 
     @ExceptionHandler({UserAlreadyRegisteredException.class})
-    public ResponseEntity<Response<?, ?, AuthErrorCode>> handleUserAlreadyRegisteredException() {
+    public ResponseEntity<Response<?, AuthErrorCode>> handleUserAlreadyRegisteredException() {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(Response
@@ -23,7 +23,7 @@ public class AuthExceptionHandler {
     }
 
     @ExceptionHandler({UserNotFoundException.class, InvalidCredentialsException.class})
-    public ResponseEntity<Response<?, ?, AuthErrorCode>> handleInvalidCredentialsException() {
+    public ResponseEntity<Response<?, AuthErrorCode>> handleInvalidCredentialsException() {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(Response

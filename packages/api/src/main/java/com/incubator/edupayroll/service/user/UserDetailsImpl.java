@@ -1,6 +1,6 @@
 package com.incubator.edupayroll.service.user;
 
-import com.incubator.edupayroll.entity.User;
+import com.incubator.edupayroll.entity.user.UserEntity;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,7 +27,7 @@ public class UserDetailsImpl implements UserDetails {
         this.passwordHash = passwordHash;
     }
 
-    public static UserDetailsImpl build(User user) {
+    public static UserDetailsImpl build(UserEntity user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());

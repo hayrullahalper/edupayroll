@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Value;
 
 @Value
-public class SchoolUpdateDTO {
+public class SchoolUpdateInput {
     @Size(min = 3, max = 50, message = "School name must be between 3 and 50 characters")
     public String name;
 

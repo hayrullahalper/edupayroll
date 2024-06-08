@@ -1,7 +1,7 @@
 package com.incubator.edupayroll.controller.school;
 
-import com.incubator.edupayroll.dto.school.SchoolDTO;
-import com.incubator.edupayroll.dto.school.SchoolUpdateDTO;
+import com.incubator.edupayroll.dto.school.School;
+import com.incubator.edupayroll.dto.school.SchoolUpdateInput;
 import com.incubator.edupayroll.mapper.school.SchoolMapper;
 import com.incubator.edupayroll.service.school.SchoolService;
 import com.incubator.edupayroll.service.user.UserService;
@@ -26,20 +26,20 @@ public class SchoolController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Response<SchoolDTO, ?, SchoolErrorCode>> update(
-            @RequestBody SchoolUpdateDTO schoolUpdateDTO
+    public ResponseEntity<Response<School, SchoolErrorCode>> update(
+            @RequestBody SchoolUpdateInput input
     ) {
-        Validation.validate(schoolUpdateDTO);
+        Validation.validate(input);
 
         var user = userService.getAuthenticatedUser();
         var school = schoolService.getByUser(user);
 
         var updatedSchool = schoolService.update(
                 school,
-                schoolUpdateDTO.getName(),
-                schoolUpdateDTO.getEditorName(),
-                schoolUpdateDTO.getEditorTitle(),
-                schoolUpdateDTO.getPrincipalName()
+                input.getName(),
+                input.getEditorName(),
+                input.getEditorTitle(),
+                input.getPrincipalName()
         );
 
         return ResponseEntity
@@ -48,7 +48,7 @@ public class SchoolController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Response<SchoolDTO, ?, SchoolErrorCode>> get() {
+    public ResponseEntity<Response<School, SchoolErrorCode>> get() {
         var user = userService.getAuthenticatedUser();
         var school = schoolService.getByUser(user);
 

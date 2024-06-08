@@ -1,5 +1,9 @@
-package com.incubator.edupayroll.entity;
+package com.incubator.edupayroll.entity.document;
 
+import com.incubator.edupayroll.entity.base.BaseEntity;
+import com.incubator.edupayroll.entity.export.ExportEntity;
+import com.incubator.edupayroll.entity.record.RecordEntity;
+import com.incubator.edupayroll.entity.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +17,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Document extends Node {
+public class DocumentEntity extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -26,14 +30,14 @@ public class Document extends Node {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private UserEntity user;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "document")
-    private List<Export> exports;
+    private List<ExportEntity> exports;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "document")
-    private List<Record> records;
+    private List<RecordEntity> records;
 
 }

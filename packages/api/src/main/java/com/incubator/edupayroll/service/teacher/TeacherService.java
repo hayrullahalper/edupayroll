@@ -1,7 +1,7 @@
 package com.incubator.edupayroll.service.teacher;
 
-import com.incubator.edupayroll.entity.Teacher;
-import com.incubator.edupayroll.entity.User;
+import com.incubator.edupayroll.entity.teacher.TeacherEntity;
+import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -18,11 +18,11 @@ public class TeacherService {
         this.teacherRepository = teacherRepository;
     }
 
-    public long count(User user) {
+    public long count(UserEntity user) {
         return teacherRepository.countByUser(user);
     }
 
-    public List<Teacher> getAll(User user, int limit, int offset) {
+    public List<TeacherEntity> getAll(UserEntity user, int limit, int offset) {
         int number = Math.round((float) offset / limit);
 
         var pr = PageRequest.of(number, limit);

@@ -1,11 +1,11 @@
 package com.incubator.edupayroll.mapper.teacher;
 
-import com.incubator.edupayroll.dto.teacher.TeacherDTO;
-import com.incubator.edupayroll.entity.Teacher;
+import com.incubator.edupayroll.dto.teacher.Teacher;
+import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 
 public class TeacherMapper {
-    public static TeacherDTO toDTO(Teacher teacher) {
-        return new TeacherDTO(
+    public static Teacher toDTO(TeacherEntity teacher) {
+        return new Teacher(
                 teacher.getId(),
                 teacher.getName(),
                 teacher.getBranch(),
