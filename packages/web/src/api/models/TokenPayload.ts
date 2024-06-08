@@ -24,13 +24,14 @@ export interface TokenPayload {
      * @type {string}
      * @memberof TokenPayload
      */
-    token?: string;
+    token: string;
 }
 
 /**
  * Check if a given object implements the TokenPayload interface.
  */
 export function instanceOfTokenPayload(value: object): value is TokenPayload {
+    if (!('token' in value) || value['token'] === undefined) return false;
     return true;
 }
 
@@ -44,7 +45,7 @@ export function TokenPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolea
     }
     return {
         
-        'token': json['token'] == null ? undefined : json['token'],
+        'token': json['token'],
     };
 }
 

@@ -24,37 +24,42 @@ export interface School {
      * @type {string}
      * @memberof School
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof School
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof School
      */
-    editorName?: string;
+    editorName: string;
     /**
      * 
      * @type {string}
      * @memberof School
      */
-    editorTitle?: string;
+    editorTitle: string;
     /**
      * 
      * @type {string}
      * @memberof School
      */
-    principalName?: string;
+    principalName: string;
 }
 
 /**
  * Check if a given object implements the School interface.
  */
 export function instanceOfSchool(value: object): value is School {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('editorName' in value) || value['editorName'] === undefined) return false;
+    if (!('editorTitle' in value) || value['editorTitle'] === undefined) return false;
+    if (!('principalName' in value) || value['principalName'] === undefined) return false;
     return true;
 }
 
@@ -68,11 +73,11 @@ export function SchoolFromJSONTyped(json: any, ignoreDiscriminator: boolean): Sc
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'editorName': json['editorName'] == null ? undefined : json['editorName'],
-        'editorTitle': json['editorTitle'] == null ? undefined : json['editorTitle'],
-        'principalName': json['principalName'] == null ? undefined : json['principalName'],
+        'id': json['id'],
+        'name': json['name'],
+        'editorName': json['editorName'],
+        'editorTitle': json['editorTitle'],
+        'principalName': json['principalName'],
     };
 }
 

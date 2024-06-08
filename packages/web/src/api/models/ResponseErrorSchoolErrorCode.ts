@@ -24,7 +24,7 @@ export interface ResponseErrorSchoolErrorCode {
      * @type {string}
      * @memberof ResponseErrorSchoolErrorCode
      */
-    code?: ResponseErrorSchoolErrorCodeCodeEnum;
+    code: ResponseErrorSchoolErrorCodeCodeEnum;
     /**
      * 
      * @type {string}
@@ -47,6 +47,7 @@ export type ResponseErrorSchoolErrorCodeCodeEnum = typeof ResponseErrorSchoolErr
  * Check if a given object implements the ResponseErrorSchoolErrorCode interface.
  */
 export function instanceOfResponseErrorSchoolErrorCode(value: object): value is ResponseErrorSchoolErrorCode {
+    if (!('code' in value) || value['code'] === undefined) return false;
     return true;
 }
 
@@ -60,7 +61,7 @@ export function ResponseErrorSchoolErrorCodeFromJSONTyped(json: any, ignoreDiscr
     }
     return {
         
-        'code': json['code'] == null ? undefined : json['code'],
+        'code': json['code'],
         'message': json['message'] == null ? undefined : json['message'],
     };
 }

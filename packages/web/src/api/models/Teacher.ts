@@ -24,31 +24,35 @@ export interface Teacher {
      * @type {string}
      * @memberof Teacher
      */
-    id?: string;
+    id: string;
     /**
      * 
      * @type {string}
      * @memberof Teacher
      */
-    name?: string;
+    name: string;
     /**
      * 
      * @type {string}
      * @memberof Teacher
      */
-    branch?: string;
+    branch: string;
     /**
      * 
      * @type {string}
      * @memberof Teacher
      */
-    identityNo?: string;
+    identityNo: string;
 }
 
 /**
  * Check if a given object implements the Teacher interface.
  */
 export function instanceOfTeacher(value: object): value is Teacher {
+    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('branch' in value) || value['branch'] === undefined) return false;
+    if (!('identityNo' in value) || value['identityNo'] === undefined) return false;
     return true;
 }
 
@@ -62,10 +66,10 @@ export function TeacherFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
-        'name': json['name'] == null ? undefined : json['name'],
-        'branch': json['branch'] == null ? undefined : json['branch'],
-        'identityNo': json['identityNo'] == null ? undefined : json['identityNo'],
+        'id': json['id'],
+        'name': json['name'],
+        'branch': json['branch'],
+        'identityNo': json['identityNo'],
     };
 }
 

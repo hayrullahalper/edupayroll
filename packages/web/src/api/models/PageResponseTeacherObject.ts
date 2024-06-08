@@ -55,13 +55,14 @@ export interface PageResponseTeacherObject {
      * @type {Array<ResponseErrorObject>}
      * @memberof PageResponseTeacherObject
      */
-    errors?: Array<ResponseErrorObject>;
+    errors: Array<ResponseErrorObject>;
 }
 
 /**
  * Check if a given object implements the PageResponseTeacherObject interface.
  */
 export function instanceOfPageResponseTeacherObject(value: object): value is PageResponseTeacherObject {
+    if (!('errors' in value) || value['errors'] === undefined) return false;
     return true;
 }
 
@@ -77,7 +78,7 @@ export function PageResponseTeacherObjectFromJSONTyped(json: any, ignoreDiscrimi
         
         'data': json['data'] == null ? undefined : ((json['data'] as Array<any>).map(TeacherFromJSON)),
         'meta': json['meta'] == null ? undefined : PageMetaFromJSON(json['meta']),
-        'errors': json['errors'] == null ? undefined : ((json['errors'] as Array<any>).map(ResponseErrorObjectFromJSON)),
+        'errors': ((json['errors'] as Array<any>).map(ResponseErrorObjectFromJSON)),
     };
 }
 
@@ -89,7 +90,7 @@ export function PageResponseTeacherObjectToJSON(value?: PageResponseTeacherObjec
         
         'data': value['data'] == null ? undefined : ((value['data'] as Array<any>).map(TeacherToJSON)),
         'meta': PageMetaToJSON(value['meta']),
-        'errors': value['errors'] == null ? undefined : ((value['errors'] as Array<any>).map(ResponseErrorObjectToJSON)),
+        'errors': ((value['errors'] as Array<any>).map(ResponseErrorObjectToJSON)),
     };
 }
 

@@ -24,7 +24,7 @@ export interface ResponseErrorAuthErrorCode {
      * @type {string}
      * @memberof ResponseErrorAuthErrorCode
      */
-    code?: ResponseErrorAuthErrorCodeCodeEnum;
+    code: ResponseErrorAuthErrorCodeCodeEnum;
     /**
      * 
      * @type {string}
@@ -49,6 +49,7 @@ export type ResponseErrorAuthErrorCodeCodeEnum = typeof ResponseErrorAuthErrorCo
  * Check if a given object implements the ResponseErrorAuthErrorCode interface.
  */
 export function instanceOfResponseErrorAuthErrorCode(value: object): value is ResponseErrorAuthErrorCode {
+    if (!('code' in value) || value['code'] === undefined) return false;
     return true;
 }
 
@@ -62,7 +63,7 @@ export function ResponseErrorAuthErrorCodeFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
-        'code': json['code'] == null ? undefined : json['code'],
+        'code': json['code'],
         'message': json['message'] == null ? undefined : json['message'],
     };
 }

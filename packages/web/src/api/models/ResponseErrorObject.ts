@@ -24,7 +24,7 @@ export interface ResponseErrorObject {
      * @type {object}
      * @memberof ResponseErrorObject
      */
-    code?: object;
+    code: object;
     /**
      * 
      * @type {string}
@@ -37,6 +37,7 @@ export interface ResponseErrorObject {
  * Check if a given object implements the ResponseErrorObject interface.
  */
 export function instanceOfResponseErrorObject(value: object): value is ResponseErrorObject {
+    if (!('code' in value) || value['code'] === undefined) return false;
     return true;
 }
 
@@ -50,7 +51,7 @@ export function ResponseErrorObjectFromJSONTyped(json: any, ignoreDiscriminator:
     }
     return {
         
-        'code': json['code'] == null ? undefined : json['code'],
+        'code': json['code'],
         'message': json['message'] == null ? undefined : json['message'],
     };
 }
