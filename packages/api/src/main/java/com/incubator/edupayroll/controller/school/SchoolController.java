@@ -26,7 +26,7 @@ public class SchoolController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Response<School, SchoolErrorCode>> update(
+    public ResponseEntity<Response<School, SchoolErrorCode>> updateSchool(
             @RequestBody SchoolUpdateInput input
     ) {
         Validation.validate(input);
@@ -48,7 +48,7 @@ public class SchoolController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Response<School, SchoolErrorCode>> get() {
+    public ResponseEntity<Response<School, SchoolErrorCode>> getSchool() {
         var user = userService.getAuthenticatedUser();
         var school = schoolService.getByUser(user);
 

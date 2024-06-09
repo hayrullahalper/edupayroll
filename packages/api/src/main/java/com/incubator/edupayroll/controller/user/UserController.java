@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Response<User, UserErrorCode>> get() {
+    public ResponseEntity<Response<User, UserErrorCode>> getUser() {
         var user = userService.getAuthenticatedUser();
 
         return ResponseEntity
