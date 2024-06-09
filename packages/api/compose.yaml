@@ -7,10 +7,10 @@ services:
     image: mariadb
     restart: always
     environment:
-      MYSQL_DATABASE: 'app'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'secret'
-      MYSQL_ROOT_PASSWORD: 'secret'
+      MYSQL_DATABASE: app
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
     ports:
       - '3306:3306'
     expose:
