@@ -38,7 +38,6 @@ public class TeacherController {
                 .map(TeacherMapper::toDTO)
                 .toList();
 
-
         var pages = (int) Math.ceil((double) count / limit);
 
         return ResponseEntity
