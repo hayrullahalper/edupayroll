@@ -33,24 +33,46 @@ public class TeacherService {
     }
 
     public TeacherEntity getById(UserEntity user, UUID uuid) {
-        return teacherRepository.getReferenceById(uuid);
+        var maybeTeacher = teacherRepository.findById(uuid);
+
+        if (maybeTeacher.isEmpty())
+            throw TeacherNotFoundException.byUser(user);
+
+        var teacherEntity = maybeTeacher.get();
+
+//        if (user.equals(teacherEntity.getUser()))
+//            throw AccessDeniedException.byUser(user);
+
+        return teacherEntity;
     }
 
     public TeacherEntity update(TeacherEntity teacher, String name, String branch, String idNumber) {
-        if (name != null) teacher.setName(name);
-        if (branch != null) teacher.setBranch(branch);
-        if (idNumber != null) teacher.setIdNumber(idNumber);
+        if (name != null)
+            teacher.setName(name);
+
+        if (branch != null)
+            teacher.setBranch(branch);
+
+        if (idNumber != null)
+            teacher.setIdNumber(idNumber);
 
         return teacherRepository.saveAndFlush(teacher);
     }
 
     public TeacherEntity create(String name, String branch, String idNumber, UserEntity user) {
-        TeacherEntity teacher = new TeacherEntity();
+        var teacher = new TeacherEntity();
 
-        if (name != null) teacher.setName(name);
-        if (branch != null) teacher.setBranch(branch);
-        if (idNumber != null) teacher.setIdNumber(idNumber);
-        if (user != null) teacher.setUser(user);
+        if (name != null)
+            teacher.setName(name);
+
+        if (branch != null)
+            teacher.setBranch(branch);
+
+        if (idNumber != null)
+            teacher.setIdNumber(idNumber);
+
+        if (user != null)
+            teacher.setUser(user);
 
         return teacherRepository.saveAndFlush(teacher);
     }

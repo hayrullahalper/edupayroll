@@ -13,7 +13,7 @@ public class TeacherExceptionHandler {
     @ExceptionHandler({TeacherNotFoundException.class})
     public ResponseEntity<Response<?, TeacherErrorCode>> handleTeacherNotFoundException() {
         return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
+                .status(HttpStatus.NOT_FOUND)
                 .body(Response
                         .error(TeacherErrorCode.TEACHER_NOT_FOUND, "Teacher not found")
                         .build()

@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/teachers")
 public class TeacherController {
@@ -57,9 +55,9 @@ public class TeacherController {
         Validation.validate(input);
 
         var user = userService.getAuthenticatedUser();
-        var teacher = teacherService.getById(user, UUID.fromString(input.id));
+        var teacher = teacherService.getById(user, input.getId());
 
-        var updatedTeacher = teacherService.update(teacher, input.name, input.branch, input.identityNo);
+        var updatedTeacher = teacherService.update(teacher, input.getName(), input.getBranch(), input.getIdentityNo());
 
         return ResponseEntity.ok().body(Response.data(TeacherMapper.toDTO(updatedTeacher)).build());
     }
@@ -69,9 +67,12 @@ public class TeacherController {
         Validation.validate(input);
 
         var user = userService.getAuthenticatedUser();
-        var createdTeacher = teacherService.create(input.name, input.branch, input.identityNo, user);
+        var createdTeacher = teacherService.create(input.getName(), input.getBranch(), input.getIdentityNo(), user);
 
-        return ResponseEntity.ok().body(Response.data(TeacherMapper.toDTO(createdTeacher)).build());
+        return ResponseEntity.ok()
+                .body(Response
+                        .data(TeacherMapper.toDTO(createdTeacher))
+                        .build());
     }
 
 }
