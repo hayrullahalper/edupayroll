@@ -3,12 +3,10 @@ package com.incubator.edupayroll.dto.teacher;
 import jakarta.validation.constraints.Size;
 import lombok.Value;
 
-import java.util.UUID;
-
 @Value
 public class TeacherUpdateInput {
     @Size(min = 3, max = 50, message = "Teacher id must be between 3 and 50 characters")
-    public UUID id;
+    public String id;
 
     @Size(min = 3, max = 50, message = "Teacher name must be between 3 and 50 characters")
     public String name;

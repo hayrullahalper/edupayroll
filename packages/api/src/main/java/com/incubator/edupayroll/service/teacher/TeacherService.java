@@ -35,13 +35,7 @@ public class TeacherService {
     public TeacherEntity getById(UserEntity user, UUID uuid) {
         var maybeTeacher = teacherRepository.findById(uuid);
 
-        if (maybeTeacher.isEmpty())
-            throw TeacherNotFoundException.byUser(user);
-
-        var teacherEntity = maybeTeacher.get();
-
-//        if (user.equals(teacherEntity.getUser()))
-//            throw AccessDeniedException.byUser(user);
+        var teacherEntity = maybeTeacher.orElseThrow(() -> TeacherNotFoundException.byUser(user));
 
         return teacherEntity;
     }
@@ -60,20 +54,7 @@ public class TeacherService {
     }
 
     public TeacherEntity create(String name, String branch, String idNumber, UserEntity user) {
-        var teacher = new TeacherEntity();
-
-        if (name != null)
-            teacher.setName(name);
-
-        if (branch != null)
-            teacher.setBranch(branch);
-
-        if (idNumber != null)
-            teacher.setIdNumber(idNumber);
-
-        if (user != null)
-            teacher.setUser(user);
-
+        var teacher = new TeacherEntity(name, branch, idNumber, user);
         return teacherRepository.saveAndFlush(teacher);
     }
 

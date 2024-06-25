@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/teachers")
 public class TeacherController {
@@ -55,7 +57,7 @@ public class TeacherController {
         Validation.validate(input);
 
         var user = userService.getAuthenticatedUser();
-        var teacher = teacherService.getById(user, input.getId());
+        var teacher = teacherService.getById(user, UUID.fromString(input.getId()));
 
         var updatedTeacher = teacherService.update(teacher, input.getName(), input.getBranch(), input.getIdentityNo());
 
