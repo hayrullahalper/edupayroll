@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import com.incubator.edupayroll.service.auth.InvalidCredentialsException;
+import com.incubator.edupayroll.service.user.UserNotFoundException;
 import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import com.incubator.edupayroll.util.response.Response;
 import com.incubator.edupayroll.util.validation.InvalidConstraintsException;
@@ -86,6 +88,16 @@ public class GlobalExceptionHandler {
                 );
     }
 
+    @ExceptionHandler({UserNotFoundException.class, InvalidCredentialsException.class})
+    public ResponseEntity<Response<?, GlobalErrorCode>> handleInvalidCredentialsException() {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(Response
+                        .error(GlobalErrorCode.INVALID_CREDENTIALS, "Invalid credentials")
+                        .build()
+                );
+    }
+
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Response<?, GlobalErrorCode>> handleException() {
         return ResponseEntity
@@ -95,4 +107,5 @@ public class GlobalExceptionHandler {
                         .build()
                 );
     }
+
 }
