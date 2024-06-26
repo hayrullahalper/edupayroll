@@ -35,9 +35,12 @@ public class TeacherService {
     public TeacherEntity getById(UserEntity user, UUID uuid) {
         var maybeTeacher = teacherRepository.findById(uuid);
 
-        var teacherEntity = maybeTeacher.orElseThrow(() -> TeacherNotFoundException.byUser(user));
+        var teacher = maybeTeacher.orElseThrow(() -> TeacherNotFoundException.byUser(user));
 
-        return teacherEntity;
+        if (!teacher.getUser().getId().equals(user.getId()))
+            throw AccessDeniedException.byUser(user);
+
+        return teacher;
     }
 
     public TeacherEntity update(TeacherEntity teacher, String name, String branch, String idNumber) {

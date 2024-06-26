@@ -52,16 +52,19 @@ public class TeacherController {
                 );
     }
 
-    @PutMapping("")
-    public ResponseEntity<Response<Teacher, TeacherErrorCode>> updateTeacher(@RequestBody TeacherUpdateInput input) {
+    @PutMapping("{id}")
+    public ResponseEntity<Response<Teacher, TeacherErrorCode>> updateTeacher(@RequestBody TeacherUpdateInput input, @PathVariable String id) {
         Validation.validate(input);
 
         var user = userService.getAuthenticatedUser();
-        var teacher = teacherService.getById(user, UUID.fromString(input.getId()));
+        var teacher = teacherService.getById(user, UUID.fromString(id));
 
         var updatedTeacher = teacherService.update(teacher, input.getName(), input.getBranch(), input.getIdentityNo());
 
-        return ResponseEntity.ok().body(Response.data(TeacherMapper.toDTO(updatedTeacher)).build());
+        return ResponseEntity.ok()
+                .body(Response
+                        .data(TeacherMapper.toDTO(updatedTeacher))
+                        .build());
     }
 
     @PostMapping("")

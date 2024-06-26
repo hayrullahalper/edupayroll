@@ -5,8 +5,6 @@ import lombok.Value;
 
 @Value
 public class TeacherUpdateInput {
-    @Size(min = 3, max = 50, message = "Teacher id must be between 3 and 50 characters")
-    public String id;
 
     @Size(min = 3, max = 50, message = "Teacher name must be between 3 and 50 characters")
     public String name;
