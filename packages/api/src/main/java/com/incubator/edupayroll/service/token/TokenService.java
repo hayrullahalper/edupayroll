@@ -3,45 +3,42 @@ package com.incubator.edupayroll.service.token;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.service.user.UserNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class TokenService {
     private final int expiration = 7 * 24 * 60 * 60;
 
-    private final UserDetailsService userDetailsService;
-
     private final Algorithm algorithm = Algorithm.HMAC256("baeldung");
-
-    @Autowired
-    public TokenService(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
 
     public boolean verify(String token) {
         return JWT.require(algorithm).build().verify(token) != null;
     }
 
-    public String encode(UserEntity user) {
+    public String encode(Map<String, String> claims) {
         var expiresAt = Instant.now().plusSeconds(expiration);
 
-        return JWT.create()
-                .withClaim("email", user.getEmail())
-                .withExpiresAt(expiresAt)
+        var jwt = JWT.create();
+
+        claims.forEach(jwt::withClaim);
+
+        return jwt.withExpiresAt(expiresAt)
                 .sign(algorithm);
     }
 
-    public UserDetails decode(String token) {
+    public Map<String, String> decode(String token) {
         try {
-            var userId = JWT.decode(token).getClaim("email").asString();
-            return userDetailsService.loadUserByUsername(userId);
+            return JWT.decode(token)
+                    .getClaims()
+                    .entrySet()
+                    .stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().asString()));
+
         } catch (TokenExpiredException e) {
             throw InvalidTokenException.byExpiredToken(token);
         } catch (UserNotFoundException e) {
@@ -50,4 +47,5 @@ public class TokenService {
             throw InvalidTokenException.byInvalidToken(token, e);
         }
     }
+
 }
