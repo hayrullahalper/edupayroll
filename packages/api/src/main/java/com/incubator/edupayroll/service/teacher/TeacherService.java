@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TeacherService {
@@ -30,4 +31,31 @@ public class TeacherService {
 
         return page.get().toList();
     }
+
+    public TeacherEntity getById(UserEntity user, UUID uuid) {
+        var maybeTeacher = teacherRepository.findById(uuid);
+
+        var teacherEntity = maybeTeacher.orElseThrow(() -> TeacherNotFoundException.byUser(user));
+
+        return teacherEntity;
+    }
+
+    public TeacherEntity update(TeacherEntity teacher, String name, String branch, String idNumber) {
+        if (name != null)
+            teacher.setName(name);
+
+        if (branch != null)
+            teacher.setBranch(branch);
+
+        if (idNumber != null)
+            teacher.setIdNumber(idNumber);
+
+        return teacherRepository.saveAndFlush(teacher);
+    }
+
+    public TeacherEntity create(String name, String branch, String idNumber, UserEntity user) {
+        var teacher = new TeacherEntity(name, branch, idNumber, user);
+        return teacherRepository.saveAndFlush(teacher);
+    }
+
 }
