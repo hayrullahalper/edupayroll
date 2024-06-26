@@ -3,6 +3,7 @@ package com.incubator.edupayroll.service.teacher;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.repository.TeacherRepository;
+import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,10 @@ public class TeacherService {
     public TeacherEntity create(String name, String branch, String idNumber, UserEntity user) {
         var teacher = new TeacherEntity(name, branch, idNumber, user);
         return teacherRepository.saveAndFlush(teacher);
+    }
+
+    public void remove(TeacherEntity teacher) {
+        teacherRepository.delete(teacher);
     }
 
 }

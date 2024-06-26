@@ -2,6 +2,7 @@ package com.incubator.edupayroll.controller.teacher;
 
 import com.incubator.edupayroll.dto.teacher.Teacher;
 import com.incubator.edupayroll.dto.teacher.TeacherCreateInput;
+import com.incubator.edupayroll.dto.teacher.TeacherDeletePayload;
 import com.incubator.edupayroll.dto.teacher.TeacherUpdateInput;
 import com.incubator.edupayroll.mapper.teacher.TeacherMapper;
 import com.incubator.edupayroll.service.teacher.TeacherService;
@@ -77,6 +78,19 @@ public class TeacherController {
         return ResponseEntity.ok()
                 .body(Response
                         .data(TeacherMapper.toDTO(createdTeacher))
+                        .build());
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Response<TeacherDeletePayload, TeacherErrorCode>> deleteTeacher(@PathVariable String id) {
+        var user = userService.getAuthenticatedUser();
+        var teacher = teacherService.getById(user, UUID.fromString(id));
+
+        teacherService.remove(teacher);
+
+        return ResponseEntity.ok()
+                .body(Response
+                        .data(new TeacherDeletePayload(true))
                         .build());
     }
 
