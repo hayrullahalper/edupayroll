@@ -33,7 +33,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             if (token != null && tokenService.verify(token)) {
 
                 var claims = tokenService.decode(token);
-                var details = userDetailsService.loadUserByUsername(claims.get("email"));
+                var details = userDetailsService.loadUserByUsername(claims.get("email").asString());
                 var auth = new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
 
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

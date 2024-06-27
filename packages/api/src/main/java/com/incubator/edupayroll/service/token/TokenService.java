@@ -3,12 +3,11 @@ package com.incubator.edupayroll.service.token;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.incubator.edupayroll.service.user.UserNotFoundException;
+import com.auth0.jwt.interfaces.Claim;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class TokenService {
@@ -20,29 +19,38 @@ public class TokenService {
         return JWT.require(algorithm).build().verify(token) != null;
     }
 
-    public String encode(Map<String, String> claims) {
+    public String encode(Map<String, Object> claims) {
         var expiresAt = Instant.now().plusSeconds(expiration);
 
-        var jwt = JWT.create();
+        var jb = JWT.create();
 
-        claims.forEach(jwt::withClaim);
+        claims.forEach((key, value) -> {
+            if (value instanceof String) {
+                jb.withClaim(key, (String) value);
+                return;
+            }
 
-        return jwt.withExpiresAt(expiresAt)
-                .sign(algorithm);
+            if (value instanceof Integer) {
+                jb.withClaim(key, (Integer) value);
+                return;
+            }
+
+            if (value instanceof Boolean) {
+                jb.withClaim(key, (Boolean) value);
+                return;
+            }
+
+            throw new IllegalArgumentException("Unsupported claim type");
+        });
+
+        return jb.withExpiresAt(java.util.Date.from(expiresAt)).sign(algorithm);
     }
 
-    public Map<String, String> decode(String token) {
+    public Map<String, Claim> decode(String token) {
         try {
-            return JWT.decode(token)
-                    .getClaims()
-                    .entrySet()
-                    .stream()
-                    .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().asString()));
-
+            return JWT.decode(token).getClaims();
         } catch (TokenExpiredException e) {
             throw InvalidTokenException.byExpiredToken(token);
-        } catch (UserNotFoundException e) {
-            throw InvalidTokenException.byInvalidToken(token);
         } catch (Exception e) {
             throw InvalidTokenException.byInvalidToken(token, e);
         }
