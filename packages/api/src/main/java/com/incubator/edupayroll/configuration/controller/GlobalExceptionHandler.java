@@ -4,13 +4,14 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
-import com.incubator.edupayroll.service.auth.InvalidCredentialsException;
-import com.incubator.edupayroll.service.user.UserNotFoundException;
 import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import com.incubator.edupayroll.util.response.Response;
 import com.incubator.edupayroll.util.validation.InvalidConstraintsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -18,42 +19,42 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(JsonParseException.class)
-    public ResponseEntity<Response<?, GlobalErrorCode>> handleJsonParseException(JsonParseException ex) {
+    @ExceptionHandler({JsonParseException.class})
+    public ResponseEntity<Response<?, GlobalErrorCode>> handleJsonParseException(JsonParseException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Response
-                        .error(GlobalErrorCode.INVALID_JSON, "Invalid JSON: " + ex.getOriginalMessage())
+                        .error(GlobalErrorCode.INVALID_JSON, "Invalid JSON: " + e.getOriginalMessage())
                         .build()
                 );
     }
 
-    @ExceptionHandler(MismatchedInputException.class)
-    public ResponseEntity<Response<?, GlobalErrorCode>> handleMismatchedInputException(MismatchedInputException ex) {
+    @ExceptionHandler({MismatchedInputException.class})
+    public ResponseEntity<Response<?, GlobalErrorCode>> handleMismatchedInputException(MismatchedInputException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Response
-                        .error(GlobalErrorCode.INVALID_TYPE, "Invalid type: " + ex.getTargetType().getSimpleName())
+                        .error(GlobalErrorCode.INVALID_TYPE, "Invalid type: " + e.getTargetType().getSimpleName())
                         .build()
                 );
     }
 
-    @ExceptionHandler(InvalidFormatException.class)
-    public ResponseEntity<Response<?, GlobalErrorCode>> handleInvalidFormatException(InvalidFormatException ex) {
+    @ExceptionHandler({InvalidFormatException.class})
+    public ResponseEntity<Response<?, GlobalErrorCode>> handleInvalidFormatException(InvalidFormatException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Response
-                        .error(GlobalErrorCode.INVALID_TYPE, "Invalid type: " + ex.getTargetType().getSimpleName())
+                        .error(GlobalErrorCode.INVALID_TYPE, "Invalid type: " + e.getTargetType().getSimpleName())
                         .build()
                 );
     }
 
-    @ExceptionHandler(UnrecognizedPropertyException.class)
-    public ResponseEntity<Response<?, GlobalErrorCode>> handleUnrecognizedPropertyException(UnrecognizedPropertyException ex) {
+    @ExceptionHandler({UnrecognizedPropertyException.class})
+    public ResponseEntity<Response<?, GlobalErrorCode>> handleUnrecognizedPropertyException(UnrecognizedPropertyException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(Response
-                        .error(GlobalErrorCode.UNKNOWN_PROPERTY, "Unknown property: " + ex.getPropertyName())
+                        .error(GlobalErrorCode.UNKNOWN_PROPERTY, "Unknown property: " + e.getPropertyName())
                         .build()
                 );
     }
@@ -88,22 +89,32 @@ public class GlobalExceptionHandler {
                 );
     }
 
-    @ExceptionHandler({UserNotFoundException.class, InvalidCredentialsException.class})
-    public ResponseEntity<Response<?, GlobalErrorCode>> handleInvalidCredentialsException() {
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    public ResponseEntity<Response<?, GlobalErrorCode>> handleException() {
         return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(Response
-                        .error(GlobalErrorCode.INVALID_CREDENTIALS, "Invalid credentials")
+                        .error(GlobalErrorCode.INVALID_REQUEST_BODY, "Request body is missing or invalid")
                         .build()
                 );
     }
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<Response<?, GlobalErrorCode>> handleException() {
+    @ExceptionHandler({MissingServletRequestParameterException.class})
+    public ResponseEntity<Response<?, GlobalErrorCode>> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(Response
-                        .error(GlobalErrorCode.INTERNAL_SERVER_ERROR, "Internal server error")
+                        .error(GlobalErrorCode.MISSING_REQUEST_PARAMETER, "Request parameter is missing: " + e.getParameterName())
+                        .build()
+                );
+    }
+
+    @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
+    public ResponseEntity<Response<?, GlobalErrorCode>> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        return ResponseEntity
+                .status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(Response
+                        .error(GlobalErrorCode.METHOD_NOT_ALLOWED, "Method not allowed: " + e.getMethod())
                         .build()
                 );
     }
