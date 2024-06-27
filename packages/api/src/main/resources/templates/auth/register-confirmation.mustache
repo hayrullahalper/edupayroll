@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Posta Adresinizi Doğrulayın</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            background: #007bff;
+            color: #fff !important;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        a.btn, a.btn:hover, a.btn:visited, a.btn:active {
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>E-posta Adresinizi Doğrulayın</h2>
+    <p>Merhaba,</p>
+    <p>Bizimle bir hesap oluşturduğunuz için teşekkür ederiz! Kayıt işleminizi tamamlamak için lütfen aşağıdaki
+        bağlantıya tıklayın:</p>
+    <a href="{{verification_url}}" class="btn">Kayıt İşlemini Tamamla</a>
+    <p>Eğer bu işlemi siz yapmadıysanız, lütfen bu e-postayı göz ardı edin.</p>
+    <p>Teşekkürler,<br>edupayroll.com</p>
+</div>
+</body>
+</html>
