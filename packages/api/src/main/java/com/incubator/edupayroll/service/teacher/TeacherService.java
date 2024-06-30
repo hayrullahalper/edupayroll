@@ -6,6 +6,7 @@ import com.incubator.edupayroll.repository.TeacherRepository;
 import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +28,11 @@ public class TeacherService {
     public List<TeacherEntity> getAll(UserEntity user, int limit, int offset) {
         int number = Math.round((float) offset / limit);
 
-        var pr = PageRequest.of(number, limit);
+        var sort = Sort
+                .by(Sort.Direction.DESC, "createdAt")
+                .and(Sort.by(Sort.Direction.DESC, "id"));
+
+        var pr = PageRequest.of(number, limit, sort);
         var page = teacherRepository.findAllByUser(user, pr);
 
         return page.get().toList();
