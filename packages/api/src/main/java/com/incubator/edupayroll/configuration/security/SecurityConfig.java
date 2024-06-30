@@ -20,13 +20,13 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableMethodSecurity
-public class WebSecurityConfig {
+public class SecurityConfig {
 
     private final AuthEntryPoint unauthorizedHandler;
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    public WebSecurityConfig(
+    public SecurityConfig(
             AuthEntryPoint unauthorizedHandler,
             UserDetailsService userDetailsService
     ) {
