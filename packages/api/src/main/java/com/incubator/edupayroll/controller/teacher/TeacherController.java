@@ -42,13 +42,14 @@ public class TeacherController {
                 .map(TeacherMapper::toDTO)
                 .toList();
 
-        var pages = (int) Math.ceil((double) count / limit);
+        var page = offset / limit + 1;
+        var total = (int) Math.ceil((double) count / limit);
 
         return ResponseEntity
                 .ok()
                 .body(PageResponse
                         .data(teachers)
-                        .meta(limit, offset, pages)
+                        .meta(page, limit, total)
                         .build()
                 );
     }
