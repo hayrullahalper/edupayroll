@@ -93,20 +93,20 @@ public class TeacherControllerTest {
     public void testCreateTeacher() throws Exception {
         var name = faker.name().fullName();
         var branch = faker.name().fullName();
-        var identityNo = faker.idNumber().valid();
+        var idNumber = faker.idNumber().valid();
 
         mvc.perform(post("/teachers")
                         .contentType("application/json")
                         .content(mapper.writeValueAsString(Map.of(
                                 "name", name,
                                 "branch", branch,
-                                "identityNo", identityNo
+                                "idNumber", idNumber
                         ))))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("errors").isEmpty())
                 .andExpect(jsonPath("data.name").value(name))
                 .andExpect(jsonPath("data.branch").value(branch))
-                .andExpect(jsonPath("data.identityNo").value(identityNo));
+                .andExpect(jsonPath("data.identityNo").value(idNumber));
     }
 
     @Test
@@ -189,12 +189,12 @@ public class TeacherControllerTest {
     private TeacherEntity createTeacher() {
         var name = faker.name().fullName();
         var branch = faker.name().fullName();
-        var identityNo = faker.idNumber().valid();
+        var idNumber = faker.idNumber().valid();
 
         var teacher = new TeacherEntity(
                 name,
                 branch,
-                identityNo,
+                idNumber,
                 mockedUser
         );
 

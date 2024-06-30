@@ -74,7 +74,7 @@ public class TeacherController {
         Validation.validate(input);
 
         var user = userService.getAuthenticatedUser();
-        var createdTeacher = teacherService.create(input.getName(), input.getBranch(), input.getIdentityNo(), user);
+        var createdTeacher = teacherService.create(input.getName(), input.getBranch(), input.getIdNumber(), user);
 
         return ResponseEntity.ok()
                 .body(Response
