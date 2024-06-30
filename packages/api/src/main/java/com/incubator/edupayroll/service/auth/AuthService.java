@@ -42,7 +42,7 @@ public class AuthService {
             String schoolName,
             String principalName
     ) {
-        var passwordHash = passwordService.encode(password);
+        var passwordHash = passwordService.hash(password);
         var user = userService.create(name, email, passwordHash);
 
         schoolService.create(

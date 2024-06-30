@@ -14,7 +14,7 @@ public class PasswordService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public String encode(String password) {
+    public String hash(String password) {
         return passwordEncoder.encode(password);
     }
 
