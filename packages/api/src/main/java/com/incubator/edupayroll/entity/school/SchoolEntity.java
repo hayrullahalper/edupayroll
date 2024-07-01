@@ -14,20 +14,19 @@ import lombok.*;
 @AllArgsConstructor
 public class SchoolEntity extends BaseEntity {
 
-    @Column(name = "name", nullable = false)
-    private String name;
+  @Column(name = "name", nullable = false)
+  private String name;
 
-    @Column(name = "editor_name", nullable = false)
-    private String editorName;
+  @Column(name = "editor_name", nullable = false)
+  private String editorName;
 
-    @Column(name = "editor_title", nullable = false)
-    private String editorTitle;
+  @Column(name = "editor_title", nullable = false)
+  private String editorTitle;
 
-    @Column(name = "principal_name", nullable = false)
-    private String principalName;
+  @Column(name = "principal_name", nullable = false)
+  private String principalName;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
-
+  @OneToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private UserEntity user;
 }

@@ -14,18 +14,17 @@ import lombok.*;
 @AllArgsConstructor
 public class TeacherEntity extends BaseEntity {
 
-    @Column(name = "name", nullable = false)
-    private String name;
+  @Column(name = "name", nullable = false)
+  private String name;
 
-    @Column(name = "branch", nullable = false)
-    private String branch;
+  @Column(name = "branch", nullable = false)
+  private String branch;
 
-    @Column(name = "id_number", nullable = false)
-    private String idNumber;
+  @Column(name = "id_number", nullable = false)
+  private String idNumber;
 
-    @ToString.Exclude
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private UserEntity user;
-
+  @ToString.Exclude
+  @ManyToOne
+  @JoinColumn(name = "user_id", nullable = false)
+  private UserEntity user;
 }

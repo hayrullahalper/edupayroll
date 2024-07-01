@@ -5,7 +5,6 @@ import lombok.Value;
 
 @Value
 public class ResponseError<E> {
-    @NotNull
-    public E code;
-    public String message;
+  @NotNull public E code;
+  public String message;
 }

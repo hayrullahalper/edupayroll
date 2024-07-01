@@ -5,6 +5,5 @@ import lombok.Value;
 
 @Value
 public class TokenPayload {
-    @NotNull
-    public String token;
+  @NotNull public String token;
 }
