@@ -1,4 +1,3 @@
-package com.incubator.edupayroll.service.export.ExportService;
+package com.incubator.edupayroll.service.export;
 
-public class ExportService {
-}
+public class ExportService {}

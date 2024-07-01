@@ -10,14 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice(assignableTypes = TeacherController.class)
 public class TeacherExceptionHandler {
 
-    @ExceptionHandler({TeacherNotFoundException.class})
-    public ResponseEntity<Response<?, TeacherErrorCode>> handleTeacherNotFoundException() {
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(Response
-                        .error(TeacherErrorCode.TEACHER_NOT_FOUND, "Teacher not found")
-                        .build()
-                );
-    }
-
+  @ExceptionHandler({TeacherNotFoundException.class})
+  public ResponseEntity<Response<?, TeacherErrorCode>> handleTeacherNotFoundException() {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        .body(Response.error(TeacherErrorCode.TEACHER_NOT_FOUND, "Teacher not found").build());
+  }
 }

@@ -6,10 +6,10 @@ import lombok.Value;
 
 @Value
 public class LoginInput {
-    @Email(message = "Invalid email")
-    @NotEmpty(message = "Email is required")
-    public String email;
+  @Email(message = "Invalid email")
+  @NotEmpty(message = "Email is required")
+  public String email;
 
-    @NotEmpty(message = "Password is required")
-    public String password;
+  @NotEmpty(message = "Password is required")
+  public String password;
 }
