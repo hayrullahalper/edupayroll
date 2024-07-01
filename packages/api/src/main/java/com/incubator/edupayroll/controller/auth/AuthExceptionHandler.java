@@ -12,23 +12,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice(assignableTypes = AuthController.class)
 public class AuthExceptionHandler {
 
-    @ExceptionHandler({UserAlreadyRegisteredException.class})
-    public ResponseEntity<Response<?, AuthErrorCode>> handleUserAlreadyRegisteredException() {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(Response
-                        .error(AuthErrorCode.USER_ALREADY_REGISTERED, "User already registered")
-                        .build()
-                );
-    }
+  @ExceptionHandler({UserAlreadyRegisteredException.class})
+  public ResponseEntity<Response<?, AuthErrorCode>> handleUserAlreadyRegisteredException() {
+    return ResponseEntity.status(HttpStatus.CONFLICT)
+        .body(
+            Response.error(AuthErrorCode.USER_ALREADY_REGISTERED, "User already registered")
+                .build());
+  }
 
-    @ExceptionHandler({UserNotFoundException.class, InvalidCredentialsException.class})
-    public ResponseEntity<Response<?, AuthErrorCode>> handleInvalidCredentialsException() {
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(Response
-                        .error(AuthErrorCode.INVALID_CREDENTIALS, "Invalid credentials")
-                        .build()
-                );
-    }
+  @ExceptionHandler({UserNotFoundException.class, InvalidCredentialsException.class})
+  public ResponseEntity<Response<?, AuthErrorCode>> handleInvalidCredentialsException() {
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+        .body(Response.error(AuthErrorCode.INVALID_CREDENTIALS, "Invalid credentials").build());
+  }
 }
