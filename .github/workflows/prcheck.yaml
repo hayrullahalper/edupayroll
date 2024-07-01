@@ -1,0 +1,63 @@
+name: check on pr
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - main
+    paths:
+      - 'packages/api/**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Install Maven dependencies
+        run: mvn install -DskipTests
+        working-directory: packages/api
+
+      - name: Run Spotless check
+        run: mvn spotless:check
+        working-directory: packages/api
+
+      - name: Start MariaDB
+        uses: getong/mariadb-action@v1.11
+        with:
+          host port: 3307
+          container port: 3306
+          mariadb version: 'latest'
+          mysql database: 'app'
+          mysql user: 'user'
+          mysql password: 'secret'
+          mysql root password: 'secret'
+
+      - name: Wait for MySQL to be ready
+        run: |
+          for i in `seq 1 60`; do
+            if echo 'SELECT 1' | mysql -h127.0.0.1 -P3307 -uuser -psecret app &> /dev/null; then
+              break
+            fi
+            echo 'Waiting for MySQL...'
+            sleep 5
+          done
+
+      - name: Run tests
+        run: mvn test
+        working-directory: packages/api
+
+      - name: Build project
+        run: mvn clean package
+        working-directory: packages/api
