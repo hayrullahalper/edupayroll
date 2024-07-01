@@ -25,6 +25,16 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: Start MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          host port: 3307
+          container port: 3306
+          mysql database: 'app'
+          mysql user: 'user'
+          mysql password: 'secret'
+          mysql root password: 'secret'
+
       - name: Install Maven dependencies
         run: mvn install -DskipTests
         working-directory: packages/api
@@ -33,28 +43,25 @@ jobs:
         run: mvn spotless:check
         working-directory: packages/api
 
-      - name: Start MariaDB
-        uses: getong/mariadb-action@v1.11
-        with:
-          host port: 3307
-          container port: 3306
-          mariadb version: 'latest'
-          mysql database: 'app'
-          mysql user: 'user'
-          mysql password: 'secret'
-          mysql root password: 'secret'
-
       - name: Wait for MySQL to be ready
         run: |
-          for i in `seq 1 60`; do
-            if echo 'SELECT 1' | mysql -h127.0.0.1 -P3307 -uuser -psecret app &> /dev/null; then
-              break
+          echo "Waiting for MySQL to be ready..."
+          for i in {1..30}; do
+            if mysqladmin ping -h127.0.0.1 -P3307 -uuser -psecret --silent; then
+              echo "MySQL is ready!"
+              exit 0
             fi
-            echo 'Waiting for MySQL...'
-            sleep 5
+            echo "Waiting for MySQL to be ready... ($i/30)"
+            sleep 10
           done
+          echo "MySQL failed to become ready"
+          exit 1
 
       - name: Run tests
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3307/app
+          SPRING_DATASOURCE_USERNAME: user
+          SPRING_DATASOURCE_PASSWORD: secret
         run: mvn test
         working-directory: packages/api
 
