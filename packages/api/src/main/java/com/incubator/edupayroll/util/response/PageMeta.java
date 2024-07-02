@@ -5,12 +5,9 @@ import lombok.Value;
 
 @Value
 public class PageMeta {
-    @NotNull
-    public int page;
+  @NotNull public int page;
 
-    @NotNull
-    public int size;
+  @NotNull public int size;
 
-    @NotNull
-    public int total;
+  @NotNull public int total;
 }

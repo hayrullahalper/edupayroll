@@ -11,19 +11,19 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class EmailConfig {
-    @Value("${aws.access.key}")
-    private String accessKey;
+  @Value("${aws.access.key}")
+  private String accessKey;
 
-    @Value("${aws.access.secret}")
-    private String secretKey;
+  @Value("${aws.access.secret}")
+  private String secretKey;
 
-    @Bean
-    public AmazonSimpleEmailService amazonSimpleEmailService() {
-        var credentials = new BasicAWSCredentials(accessKey, secretKey);
+  @Bean
+  public AmazonSimpleEmailService amazonSimpleEmailService() {
+    var credentials = new BasicAWSCredentials(accessKey, secretKey);
 
-        return AmazonSimpleEmailServiceClientBuilder.standard()
-                .withRegion(Regions.US_EAST_1)
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .build();
-    }
+    return AmazonSimpleEmailServiceClientBuilder.standard()
+        .withRegion(Regions.US_EAST_1)
+        .withCredentials(new AWSStaticCredentialsProvider(credentials))
+        .build();
+  }
 }

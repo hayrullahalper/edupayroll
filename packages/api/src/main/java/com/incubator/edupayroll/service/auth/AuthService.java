@@ -9,50 +9,40 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
-    private final UserService userService;
-    private final SchoolService schoolService;
-    private final PasswordService passwordService;
+  private final UserService userService;
+  private final SchoolService schoolService;
+  private final PasswordService passwordService;
 
-    @Autowired
-    public AuthService(
-            UserService userService,
-            SchoolService schoolService,
-            PasswordService passwordService
-    ) {
-        this.userService = userService;
-        this.schoolService = schoolService;
-        this.passwordService = passwordService;
+  @Autowired
+  public AuthService(
+      UserService userService, SchoolService schoolService, PasswordService passwordService) {
+    this.userService = userService;
+    this.schoolService = schoolService;
+    this.passwordService = passwordService;
+  }
+
+  public UserEntity login(String email, String password) {
+    var user = userService.getByEmail(email);
+
+    if (!passwordService.match(password, user.getPasswordHash())) {
+      throw new InvalidCredentialsException();
     }
 
-    public UserEntity login(String email, String password) {
-        var user = userService.getByEmail(email);
+    return user;
+  }
 
-        if (!passwordService.match(password, user.getPasswordHash())) {
-            throw new InvalidCredentialsException();
-        }
+  public UserEntity register(
+      String name,
+      String email,
+      String title,
+      String password,
+      String schoolName,
+      String principalName) {
+    var passwordHash = passwordService.hash(password);
+    var user = userService.create(name, email, passwordHash);
 
-        return user;
-    }
+    schoolService.create(user, schoolName, name, title, principalName);
 
-    public UserEntity register(
-            String name,
-            String email,
-            String title,
-            String password,
-            String schoolName,
-            String principalName
-    ) {
-        var passwordHash = passwordService.hash(password);
-        var user = userService.create(name, email, passwordHash);
-
-        schoolService.create(
-                user,
-                schoolName,
-                name,
-                title,
-                principalName
-        );
-
-        return user;
-    }
+    return user;
+  }
 }

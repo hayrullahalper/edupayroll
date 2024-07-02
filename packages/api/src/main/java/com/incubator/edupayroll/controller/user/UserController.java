@@ -14,22 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+  @Autowired
+  public UserController(UserService userService) {
+    this.userService = userService;
+  }
 
-    @GetMapping("")
-    public ResponseEntity<Response<User, UserErrorCode>> getUser() {
-        var user = userService.getAuthenticatedUser();
+  @GetMapping("")
+  public ResponseEntity<Response<User, UserErrorCode>> getUser() {
+    var user = userService.getAuthenticatedUser();
 
-        return ResponseEntity
-                .ok()
-                .body(Response
-                        .data(UserMapper.toDTO(user))
-                        .build()
-                );
-    }
+    return ResponseEntity.ok().body(Response.data(UserMapper.toDTO(user)).build());
+  }
 }
