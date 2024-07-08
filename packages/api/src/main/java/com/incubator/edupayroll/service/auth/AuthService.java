@@ -36,7 +36,7 @@ public class AuthService {
     }
 
     public void register(String email, String token) {
-        if (userService.getByEmail(email) != null)
+        if (!userService.existsByEmail(email))
             emailService.sendRegisterConfirmationEmail(email, token);
     }
 

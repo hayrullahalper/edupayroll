@@ -40,6 +40,10 @@ public class UserService {
     return maybeUser.orElseThrow(() -> UserNotFoundException.byEmail(email));
   }
 
+  public boolean existsByEmail(String email) {
+    return userRepository.existsByEmail(email);
+  }
+
   public UserEntity getAuthenticatedUser() {
     var auth = SecurityContextHolder.getContext().getAuthentication();
 
