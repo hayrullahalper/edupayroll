@@ -44,9 +44,8 @@ public class AuthController {
             @RequestBody RegisterInput input) {
         Validation.validate(input);
 
-        var token = generateUserToken(input.email);
-
-        authService.register(input.email, token);
+        var token = generateUserToken(input.getEmail());
+        authService.register(input.getEmail(), token);
 
         return ResponseEntity.ok().body(Response.data(new RegisterPayload(true)).build());
     }
