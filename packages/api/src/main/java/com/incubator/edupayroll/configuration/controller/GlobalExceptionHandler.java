@@ -9,6 +9,7 @@ import com.incubator.edupayroll.util.response.Response;
 import com.incubator.edupayroll.util.validation.InvalidConstraintsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -82,15 +83,15 @@ public class GlobalExceptionHandler {
                 .body(Response.error(GlobalErrorCode.NO_RESOURCE_FOUND, "Resource not found").build());
     }
 
-//  @ExceptionHandler({HttpMessageNotReadableException.class})
-//  public ResponseEntity<Response<?, GlobalErrorCode>> handleException() {
-//
-//    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//        .body(
-//            Response.error(
-//                    GlobalErrorCode.INVALID_REQUEST_BODY, "Request body is missing or invalid")
-//                .build());
-//  }
+  @ExceptionHandler({HttpMessageNotReadableException.class})
+  public ResponseEntity<Response<?, GlobalErrorCode>> handleException() {
+
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        .body(
+            Response.error(
+                    GlobalErrorCode.INVALID_REQUEST_BODY, "Request body is missing or invalid")
+                .build());
+  }
 
     @ExceptionHandler({MissingServletRequestParameterException.class})
     public ResponseEntity<Response<?, GlobalErrorCode>> handleMissingServletRequestParameterException(
