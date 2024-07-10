@@ -40,6 +40,22 @@ public class AuthService {
             emailService.sendRegisterConfirmationEmail(email, token);
     }
 
+    public void forgotPassword(String email, String token) {
+        emailService.sendForgotPasswordEmail(email, token);
+    }
+
+    public UserEntity changePassword(
+            String email,
+            String password
+    ) {
+        var passwordHash = passwordService.hash(password);
+        var user = userService.getByEmail(email);
+
+        user.setPasswordHash(passwordHash);
+        
+        return user;
+    }
+
     public UserEntity completeRegister(
             String name,
             String email,
@@ -54,7 +70,7 @@ public class AuthService {
         schoolService.create(user, schoolName, name, title, principalName);
 
         emailService.sendRegisterCompleteEmail(email, name);
-        
+
         return user;
     }
 
