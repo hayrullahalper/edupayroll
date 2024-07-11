@@ -6,22 +6,17 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class ChangePasswordInput {
+public class ResetPasswordInput {
+
+    @NotEmpty(message = "Token is required")
+    public String token;
 
     @Size(min = 6, max = 32, message = "Password must be between 6 and 50 characters")
     @Pattern(
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",
             message =
                     "Password must contain at least one uppercase letter, one lowercase letter, and one digit")
-    @NotEmpty(message = "Old password is required")
-    public String oldPassword;
-
-    @Size(min = 6, max = 32, message = "Password must be between 6 and 50 characters")
-    @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",
-            message =
-                    "Password must contain at least one uppercase letter, one lowercase letter, and one digit")
-    @NotEmpty(message = "New password is required")
+    @NotEmpty(message = "Password is required")
     public String newPassword;
 
 }

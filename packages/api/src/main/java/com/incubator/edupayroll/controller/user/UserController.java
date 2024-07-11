@@ -1,30 +1,46 @@
 package com.incubator.edupayroll.controller.user;
 
+import com.incubator.edupayroll.controller.auth.AuthErrorCode;
+import com.incubator.edupayroll.dto.auth.ChangePasswordInput;
+import com.incubator.edupayroll.dto.auth.PasswordPayload;
 import com.incubator.edupayroll.dto.user.User;
 import com.incubator.edupayroll.mapper.user.UserMapper;
 import com.incubator.edupayroll.service.user.UserService;
 import com.incubator.edupayroll.util.response.Response;
+import com.incubator.edupayroll.util.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-  private final UserService userService;
+    private final UserService userService;
 
-  @Autowired
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
-  @GetMapping("")
-  public ResponseEntity<Response<User, UserErrorCode>> getUser() {
-    var user = userService.getAuthenticatedUser();
+    @GetMapping("")
+    public ResponseEntity<Response<User, UserErrorCode>> getUser() {
+        var user = userService.getAuthenticatedUser();
 
-    return ResponseEntity.ok().body(Response.data(UserMapper.toDTO(user)).build());
-  }
+        return ResponseEntity.ok().body(Response.data(UserMapper.toDTO(user)).build());
+    }
+
+    @PostMapping("/password/change")
+    public ResponseEntity<Response<PasswordPayload, AuthErrorCode>> changePassword(
+            @RequestBody ChangePasswordInput input) {
+
+        Validation.validate(input);
+
+        var user = userService.getAuthenticatedUser();
+
+        userService.changePassword(user, input.getOldPassword(), input.getNewPassword());
+
+        return ResponseEntity.ok().body(Response.data(new PasswordPayload(true)).build());
+    }
+
 }
