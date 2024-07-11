@@ -69,25 +69,20 @@ public class UserService {
         }
     }
 
-    public UserEntity changePassword(
-            UserEntity user,
-            String oldPassword,
-            String newPassword
-    ) {
-        try {
-            passwordService.match(oldPassword, user.getPasswordHash());
-            user.setPasswordHash(passwordService.hash(newPassword));
-        } catch (Exception e) {
-            System.out.println(e);
+    public void changePassword(UserEntity user, String password, String newPassword) {
+        var matched = passwordService.match(password, user.getPasswordHash());
+
+        if (!matched) {
+            throw UserPasswordMismatchException.byUser(user);
         }
 
-        return userRepository.save(user);
-
+        user.setPasswordHash(passwordService.hash(newPassword));
+        userRepository.save(user);
     }
 
     @Autowired
     @Lazy
-    public void setPasswordService(PasswordService passwordService) {
+    private void setPasswordService(PasswordService passwordService) {
         this.passwordService = passwordService;
     }
 
