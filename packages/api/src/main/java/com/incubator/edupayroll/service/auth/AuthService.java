@@ -1,6 +1,7 @@
 package com.incubator.edupayroll.service.auth;
 
 import com.incubator.edupayroll.entity.user.UserEntity;
+import com.incubator.edupayroll.repository.UserRepository;
 import com.incubator.edupayroll.service.email.EmailService;
 import com.incubator.edupayroll.service.password.PasswordService;
 import com.incubator.edupayroll.service.school.SchoolService;
@@ -14,15 +15,16 @@ public class AuthService {
     private final SchoolService schoolService;
     private final PasswordService passwordService;
     private final EmailService emailService;
+    private final UserRepository userRepository;
 
     @Autowired
     public AuthService(
-            UserService userService, SchoolService schoolService, PasswordService passwordService, EmailService emailService) {
+            UserService userService, SchoolService schoolService, PasswordService passwordService, EmailService emailService, UserRepository userRepository) {
         this.userService = userService;
         this.schoolService = schoolService;
         this.passwordService = passwordService;
         this.emailService = emailService;
-
+        this.userRepository = userRepository;
     }
 
     public UserEntity login(String email, String password) {
@@ -44,7 +46,7 @@ public class AuthService {
         emailService.sendForgotPasswordEmail(email, token);
     }
 
-    public UserEntity changePassword(
+    public UserEntity resetPassword(
             String email,
             String password
     ) {
@@ -52,8 +54,8 @@ public class AuthService {
         var user = userService.getByEmail(email);
 
         user.setPasswordHash(passwordHash);
-        
-        return user;
+
+        return userRepository.save(user);
     }
 
     public UserEntity completeRegister(

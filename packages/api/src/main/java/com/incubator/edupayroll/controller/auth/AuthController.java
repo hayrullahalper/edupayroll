@@ -93,16 +93,16 @@ public class AuthController {
         return ResponseEntity.ok().body(Response.data(new PasswordPayload(true)).build());
     }
 
-    @PostMapping("/password/change")
-    public ResponseEntity<Response<PasswordPayload, AuthErrorCode>> changePassword(
-            @RequestBody ChangePasswordInput input) {
+    @PostMapping("/password/reset")
+    public ResponseEntity<Response<PasswordPayload, AuthErrorCode>> resetPassword(
+            @RequestBody ResetPasswordInput input) {
 
         Validation.validate(input);
 
         var context = tokenService.decode(input.getToken());
         var email = context.get("email").asString();
 
-        authService.changePassword(email, input.getNewPassword());
+        authService.resetPassword(email, input.getNewPassword());
 
         return ResponseEntity.ok().body(Response.data(new PasswordPayload(true)).build());
     }
