@@ -1,5 +1,6 @@
 package com.incubator.edupayroll.configuration.security;
 
+import com.incubator.edupayroll.service.token.InvalidTokenException;
 import com.incubator.edupayroll.service.token.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -32,7 +33,15 @@ public class AuthTokenFilter extends OncePerRequestFilter {
       if (token != null && tokenService.verify(token)) {
 
         var claims = tokenService.decode(token);
-        var details = userDetailsService.loadUserByUsername(claims.get("email").asString());
+
+        var email = claims.get("email").asString();
+        var verified = claims.get("verified").asBoolean();
+
+        if (!verified) {
+          throw InvalidTokenException.byInvalidToken(token);
+        }
+
+        var details = userDetailsService.loadUserByUsername(email);
         var auth = new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
 
         auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Value;
 
 @Value
-public class PasswordPayload {
+public class ResetPasswordPayload {
 
     @NotNull
     public boolean success;

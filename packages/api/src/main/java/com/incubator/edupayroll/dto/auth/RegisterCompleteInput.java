@@ -18,7 +18,7 @@ public class RegisterCompleteInput {
   @NotEmpty(message = "Title is required")
   public String title;
 
-  @Size(min = 6, max = 32, message = "Password must be between 6 and 50 characters")
+  @Size(min = 6, max = 32, message = "Password must be between 6 and 32 characters")
   @Pattern(
       regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",
       message =

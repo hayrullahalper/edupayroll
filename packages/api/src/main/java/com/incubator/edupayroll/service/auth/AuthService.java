@@ -42,20 +42,17 @@ public class AuthService {
             emailService.sendRegisterConfirmationEmail(email, token);
     }
 
-    public void forgotPassword(String email, String token) {
-        emailService.sendForgotPasswordEmail(email, token);
+    public void requestResetPassword(String email, String token) {
+        if (userService.existsByEmail(email))
+            emailService.sendResetPasswordEmail(email, token);
     }
 
-    public UserEntity resetPassword(
-            String email,
-            String password
-    ) {
-        var passwordHash = passwordService.hash(password);
+    public void resetPassword(String email, String password) {
         var user = userService.getByEmail(email);
+        var passwordHash = passwordService.hash(password);
 
         user.setPasswordHash(passwordHash);
-
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     public UserEntity completeRegister(
