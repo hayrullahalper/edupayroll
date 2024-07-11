@@ -75,7 +75,7 @@ public class AuthController {
 
     @PostMapping("/reset-password")
     public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> forgotPassword(
-            @RequestBody ForgotPasswordInput input) {
+            @RequestBody ResetPasswordInput input) {
         Validation.validate(input);
 
         var email = input.getEmail();
@@ -88,7 +88,7 @@ public class AuthController {
 
     @PostMapping("/reset-password/complete")
     public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> resetPassword(
-            @RequestBody ResetPasswordInput input) {
+            @RequestBody ResetPasswordCompleteInput input) {
         Validation.validate(input);
 
         var ctx = tokenService.decode(input.getToken());

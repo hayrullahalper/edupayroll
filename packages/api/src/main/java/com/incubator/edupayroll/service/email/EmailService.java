@@ -33,7 +33,7 @@ public class EmailService {
     public void sendResetPasswordEmail(String email, String token) {
         try {
             var ub = new URIBuilder(env.getProperty("app.client-url"));
-            ub.setPath(env.getProperty("app.client-reset-password-path"));
+            ub.setPath(env.getProperty("app.client-reset-password-complete-path"));
             ub.setParameter("token", token);
 
             sendEmail(
