@@ -3,9 +3,9 @@ package com.incubator.edupayroll.service.user;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.entity.user.UserRole;
 import com.incubator.edupayroll.repository.UserRepository;
-import com.incubator.edupayroll.service.auth.InvalidCredentialsException;
 import com.incubator.edupayroll.service.password.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -15,12 +15,11 @@ import java.util.List;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final PasswordService passwordService;
+    private PasswordService passwordService;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordService passwordService) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordService = passwordService;
     }
 
     public UserEntity create(String name, String email, String passwordHash) {
@@ -75,12 +74,21 @@ public class UserService {
             String oldPassword,
             String newPassword
     ) {
-        if (!passwordService.match(oldPassword, user.getPasswordHash()))
-            throw new InvalidCredentialsException();
-
-        user.setPasswordHash(passwordService.hash(newPassword));
+        try {
+            passwordService.match(oldPassword, user.getPasswordHash());
+            user.setPasswordHash(passwordService.hash(newPassword));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         return userRepository.save(user);
+
+    }
+
+    @Autowired
+    @Lazy
+    public void setPasswordService(PasswordService passwordService) {
+        this.passwordService = passwordService;
     }
 
 }
