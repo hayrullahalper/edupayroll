@@ -53,7 +53,7 @@ public class AuthController {
     }
 
     @PostMapping("/register/complete")
-    public ResponseEntity<Response<TokenPayload, AuthErrorCode>> register(
+    public ResponseEntity<Response<TokenPayload, AuthErrorCode>> registerComplete(
             @RequestBody RegisterCompleteInput input) {
         Validation.validate(input);
 
@@ -75,7 +75,7 @@ public class AuthController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> forgotPassword(
+    public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> resetPassword(
             @RequestBody ResetPasswordInput input) {
         Validation.validate(input);
 
@@ -88,7 +88,7 @@ public class AuthController {
     }
 
     @PostMapping("/reset-password/complete")
-    public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> resetPassword(
+    public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> resetPasswordComplete(
             @RequestBody ResetPasswordCompleteInput input) {
         Validation.validate(input);
 
