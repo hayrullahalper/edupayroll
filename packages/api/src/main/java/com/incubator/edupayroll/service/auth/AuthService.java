@@ -5,6 +5,7 @@ import com.incubator.edupayroll.repository.UserRepository;
 import com.incubator.edupayroll.service.email.EmailService;
 import com.incubator.edupayroll.service.password.PasswordService;
 import com.incubator.edupayroll.service.school.SchoolService;
+import com.incubator.edupayroll.service.user.UserAlreadyRegisteredException;
 import com.incubator.edupayroll.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,8 +39,12 @@ public class AuthService {
     }
 
     public void register(String email, String token) {
-        if (!userService.existsByEmail(email))
+        if (!userService.existsByEmail(email)) {
             emailService.sendRegisterConfirmationEmail(email, token);
+            return;
+        }
+
+        throw UserAlreadyRegisteredException.byEmail(email);
     }
 
     public void requestResetPassword(String email, String token) {
