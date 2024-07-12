@@ -74,7 +74,7 @@ public class AuthService {
 
         schoolService.create(user, schoolName, firstName + lastName, title, principalName);
 
-        emailService.sendRegisterCompleteEmail(email, firstName + lastName);
+        emailService.sendRegisterCompleteEmail(email, firstName);
 
         return user;
     }
