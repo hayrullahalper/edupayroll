@@ -1,6 +1,7 @@
 package com.incubator.edupayroll.service.auth;
 
 import com.incubator.edupayroll.entity.user.UserEntity;
+import com.incubator.edupayroll.repository.UserRepository;
 import com.incubator.edupayroll.service.email.EmailService;
 import com.incubator.edupayroll.service.password.PasswordService;
 import com.incubator.edupayroll.service.school.SchoolService;
@@ -14,15 +15,16 @@ public class AuthService {
     private final SchoolService schoolService;
     private final PasswordService passwordService;
     private final EmailService emailService;
+    private final UserRepository userRepository;
 
     @Autowired
     public AuthService(
-            UserService userService, SchoolService schoolService, PasswordService passwordService, EmailService emailService) {
+            UserService userService, SchoolService schoolService, PasswordService passwordService, EmailService emailService, UserRepository userRepository) {
         this.userService = userService;
         this.schoolService = schoolService;
         this.passwordService = passwordService;
         this.emailService = emailService;
-
+        this.userRepository = userRepository;
     }
 
     public UserEntity login(String email, String password) {
@@ -40,6 +42,19 @@ public class AuthService {
             emailService.sendRegisterConfirmationEmail(email, token);
     }
 
+    public void requestResetPassword(String email, String token) {
+        if (userService.existsByEmail(email))
+            emailService.sendResetPasswordEmail(email, token);
+    }
+
+    public void resetPassword(String email, String password) {
+        var user = userService.getByEmail(email);
+        var passwordHash = passwordService.hash(password);
+
+        user.setPasswordHash(passwordHash);
+        userRepository.save(user);
+    }
+
     public UserEntity completeRegister(
             String name,
             String email,
@@ -54,7 +69,7 @@ public class AuthService {
         schoolService.create(user, schoolName, name, title, principalName);
 
         emailService.sendRegisterCompleteEmail(email, name);
-        
+
         return user;
     }
 

@@ -22,6 +22,8 @@ public class AuthController {
     private final AuthService authService;
     private final TokenService tokenService;
 
+    private final int SHORT_EXPIRATION_TIME = 60 * 60;
+
     @Autowired
     public AuthController(AuthService authService, TokenService tokenService) {
         this.authService = authService;
@@ -34,7 +36,7 @@ public class AuthController {
         Validation.validate(input);
 
         var user = authService.login(input.getEmail(), input.getPassword());
-        var token = generateUserToken(user.getEmail());
+        var token = generateVerifiedToken(user.getEmail());
 
         return ResponseEntity.ok().body(Response.data(new TokenPayload(token)).build());
     }
@@ -44,7 +46,7 @@ public class AuthController {
             @RequestBody RegisterInput input) {
         Validation.validate(input);
 
-        var token = generateUserToken(input.getEmail());
+        var token = generateUnverifiedToken(input.getEmail());
         authService.register(input.getEmail(), token);
 
         return ResponseEntity.ok().body(Response.data(new RegisterPayload(true)).build());
@@ -66,13 +68,43 @@ public class AuthController {
                 input.getSchoolName(),
                 input.getPrincipalName());
 
-        var token = generateUserToken(user.getEmail());
+        var token = generateVerifiedToken(user.getEmail());
 
         return ResponseEntity.ok().body(Response.data(new TokenPayload(token)).build());
     }
 
-    private String generateUserToken(String email) {
-        return tokenService.encode(new HashMap<>(Map.of("email", email)));
+    @PostMapping("/reset-password")
+    public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> forgotPassword(
+            @RequestBody ResetPasswordInput input) {
+        Validation.validate(input);
+
+        var email = input.getEmail();
+        var token = generateUnverifiedToken(email);
+
+        authService.requestResetPassword(email, token);
+
+        return ResponseEntity.ok().body(Response.data(new ResetPasswordPayload(true)).build());
+    }
+
+    @PostMapping("/reset-password/complete")
+    public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> resetPassword(
+            @RequestBody ResetPasswordCompleteInput input) {
+        Validation.validate(input);
+
+        var ctx = tokenService.decode(input.getToken());
+        var email = ctx.get("email").asString();
+
+        authService.resetPassword(email, input.getPassword());
+
+        return ResponseEntity.ok().body(Response.data(new ResetPasswordPayload(true)).build());
+    }
+
+    private String generateVerifiedToken(String email) {
+        return tokenService.encode(new HashMap<>(Map.of("email", email, "verified", true)));
+    }
+
+    private String generateUnverifiedToken(String email) {
+        return tokenService.encode(new HashMap<>(Map.of("email", email, "verified", false)), SHORT_EXPIRATION_TIME);
     }
 
 }
