@@ -4,9 +4,12 @@ import {
 	ScrollArea,
 	createTheme,
 	LoadingOverlay,
+	PasswordInput,
 } from '@mantine/core';
+import { IconEye, IconEyeOff } from '@tabler/icons-react';
 
-export default createTheme({
+const light = createTheme({
+	primaryColor: 'indigo',
 	components: {
 		TextInput: TextInput.extend({
 			defaultProps: {
@@ -33,5 +36,17 @@ export default createTheme({
 				},
 			},
 		}),
+		PasswordInput: PasswordInput.extend({
+			defaultProps: {
+				visibilityToggleIcon: ({ reveal }) =>
+					reveal ? (
+						<IconEyeOff size={16} stroke={1.5} />
+					) : (
+						<IconEye size={16} stroke={1.5} />
+					),
+			},
+		}),
 	},
 });
+
+export default light;
