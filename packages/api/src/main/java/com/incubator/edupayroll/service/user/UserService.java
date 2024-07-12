@@ -22,7 +22,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserEntity create(String name, String email, String passwordHash) {
+    public UserEntity create(String firstName, String lastName, String email, String passwordHash) {
         if (userRepository.existsByEmail(email)) {
             throw UserAlreadyRegisteredException.byEmail(email);
         }
@@ -31,7 +31,8 @@ public class UserService {
 
         var user = new UserEntity();
 
-        user.setName(name);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         user.setEmail(email);
         user.setRoles(roles);
         user.setPasswordHash(passwordHash);

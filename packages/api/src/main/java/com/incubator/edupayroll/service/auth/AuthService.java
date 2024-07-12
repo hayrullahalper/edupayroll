@@ -59,7 +59,8 @@ public class AuthService {
     }
 
     public UserEntity completeRegister(
-            String name,
+            String firstName,
+            String lastName,
             String email,
             String title,
             String password,
@@ -67,11 +68,11 @@ public class AuthService {
             String principalName) {
 
         var passwordHash = passwordService.hash(password);
-        var user = userService.create(name, email, passwordHash);
+        var user = userService.create(firstName, lastName, email, passwordHash);
 
-        schoolService.create(user, schoolName, name, title, principalName);
+        schoolService.create(user, schoolName, firstName + lastName, title, principalName);
 
-        emailService.sendRegisterCompleteEmail(email, name);
+        emailService.sendRegisterCompleteEmail(email, firstName + lastName);
 
         return user;
     }
