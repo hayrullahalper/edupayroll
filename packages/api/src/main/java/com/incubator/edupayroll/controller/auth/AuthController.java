@@ -61,7 +61,8 @@ public class AuthController {
         var email = context.get("email").asString();
 
         var user = authService.completeRegister(
-                input.getName(),
+                input.getFirstName(),
+                input.getLastName(),
                 email,
                 input.getTitle(),
                 input.getPassword(),

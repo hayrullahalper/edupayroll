@@ -4,8 +4,9 @@ import com.incubator.edupayroll.entity.base.BaseEntity;
 import com.incubator.edupayroll.entity.document.DocumentEntity;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import jakarta.persistence.*;
-import java.util.List;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
@@ -16,27 +17,31 @@ import lombok.*;
 @AllArgsConstructor
 public class UserEntity extends BaseEntity {
 
-  @Column(name = "name", nullable = false)
-  private String name;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-  @Column(name = "email", nullable = false, unique = true)
-  private String email;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
-  @ToString.Exclude
-  @Column(name = "password_hash", nullable = false)
-  private String passwordHash;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
 
-  @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
-  @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
-  @Column(name = "roles", nullable = false)
-  @Enumerated(EnumType.STRING)
-  private List<UserRole> roles;
+    @ToString.Exclude
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
 
-  @ToString.Exclude
-  @OneToMany(mappedBy = "user")
-  private List<TeacherEntity> teachers;
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "roles", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<UserRole> roles;
 
-  @ToString.Exclude
-  @OneToMany(mappedBy = "user")
-  private List<DocumentEntity> documents;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<TeacherEntity> teachers;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<DocumentEntity> documents;
+
 }
