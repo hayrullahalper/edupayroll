@@ -1,9 +1,9 @@
 package com.incubator.edupayroll.controller.user;
 
 import com.incubator.edupayroll.controller.auth.AuthErrorCode;
-import com.incubator.edupayroll.dto.auth.ChangePasswordInput;
-import com.incubator.edupayroll.dto.auth.PasswordPayload;
+import com.incubator.edupayroll.dto.user.UserChangePasswordInput;
 import com.incubator.edupayroll.dto.user.User;
+import com.incubator.edupayroll.dto.user.UserChangePasswordPayload;
 import com.incubator.edupayroll.mapper.user.UserMapper;
 import com.incubator.edupayroll.service.user.UserService;
 import com.incubator.edupayroll.util.response.Response;
@@ -30,17 +30,15 @@ public class UserController {
         return ResponseEntity.ok().body(Response.data(UserMapper.toDTO(user)).build());
     }
 
-    @PostMapping("/password/change")
-    public ResponseEntity<Response<PasswordPayload, AuthErrorCode>> changePassword(
-            @RequestBody ChangePasswordInput input) {
-
+    @PostMapping("/change-password")
+    public ResponseEntity<Response<UserChangePasswordPayload, AuthErrorCode>> changePassword(
+            @RequestBody UserChangePasswordInput input) {
         Validation.validate(input);
 
         var user = userService.getAuthenticatedUser();
+        userService.changePassword(user, input.getCurrentPassword(), input.getNewPassword());
 
-        userService.changePassword(user, input.getOldPassword(), input.getNewPassword());
-
-        return ResponseEntity.ok().body(Response.data(new PasswordPayload(true)).build());
+        return ResponseEntity.ok().body(Response.data(new UserChangePasswordPayload(true)).build());
     }
 
 }

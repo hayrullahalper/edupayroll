@@ -24,6 +24,10 @@ public class TokenService {
   }
 
   public String encode(Map<String, Object> claims) {
+    return encode(claims, expiration);
+  }
+
+  public String encode(Map<String, Object> claims, int expiration) {
     var expiresAt = Instant.now().plusSeconds(expiration);
 
     var jb = JWT.create();

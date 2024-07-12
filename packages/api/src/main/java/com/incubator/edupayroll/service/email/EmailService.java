@@ -26,12 +26,21 @@ public class EmailService {
         this.emailService = emailService;
     }
 
-    public void sendForgotPasswordEmail(String email, String token) {
-        //TODO: CREATE FORGOT PASSWORD MAIL TEMPLATE, DO URIBUILDER THING
-    }
-
     public void sendRegisterCompleteEmail(String to, String name) {
         sendEmail(to, "auth/register-complete", Map.of("name", name));
+    }
+
+    public void sendResetPasswordEmail(String email, String token) {
+        try {
+            var ub = new URIBuilder(env.getProperty("app.client-url"));
+            ub.setPath(env.getProperty("app.client-reset-password-complete-path"));
+            ub.setParameter("token", token);
+
+            sendEmail(
+                    email, "auth/reset-password", Map.of("reset_password_url", ub.build().toString()));
+        } catch (URISyntaxException e) {
+            throw new EmailCreatingException("Failed to create reset password URL", e);
+        }
     }
 
     public void sendRegisterConfirmationEmail(String to, String token) {

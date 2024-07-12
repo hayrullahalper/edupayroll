@@ -3,7 +3,6 @@ package com.incubator.edupayroll.controller.auth;
 import com.incubator.edupayroll.dto.auth.*;
 import com.incubator.edupayroll.service.auth.AuthService;
 import com.incubator.edupayroll.service.token.TokenService;
-import com.incubator.edupayroll.service.user.UserService;
 import com.incubator.edupayroll.util.response.Response;
 import com.incubator.edupayroll.util.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +21,13 @@ public class AuthController {
 
     private final AuthService authService;
     private final TokenService tokenService;
-    private final UserService userService;
+
+    private final int SHORT_EXPIRATION_TIME = 60 * 60;
 
     @Autowired
-    public AuthController(AuthService authService, TokenService tokenService, UserService userService) {
+    public AuthController(AuthService authService, TokenService tokenService) {
         this.authService = authService;
         this.tokenService = tokenService;
-        this.userService = userService;
     }
 
     @PostMapping("/login")
@@ -37,7 +36,7 @@ public class AuthController {
         Validation.validate(input);
 
         var user = authService.login(input.getEmail(), input.getPassword());
-        var token = generateUserToken(user.getEmail());
+        var token = generateVerifiedToken(user.getEmail());
 
         return ResponseEntity.ok().body(Response.data(new TokenPayload(token)).build());
     }
@@ -47,7 +46,7 @@ public class AuthController {
             @RequestBody RegisterInput input) {
         Validation.validate(input);
 
-        var token = generateUserToken(input.getEmail());
+        var token = generateUnverifiedToken(input.getEmail());
         authService.register(input.getEmail(), token);
 
         return ResponseEntity.ok().body(Response.data(new RegisterPayload(true)).build());
@@ -70,46 +69,43 @@ public class AuthController {
                 input.getSchoolName(),
                 input.getPrincipalName());
 
-        var token = generateUserToken(user.getEmail());
+        var token = generateVerifiedToken(user.getEmail());
 
         return ResponseEntity.ok().body(Response.data(new TokenPayload(token)).build());
     }
 
-    @PostMapping("/password/forgot")
-    public ResponseEntity<Response<PasswordPayload, AuthErrorCode>> forgotPassword(
-            @RequestBody ForgotPasswordInput input) {
-
+    @PostMapping("/reset-password")
+    public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> forgotPassword(
+            @RequestBody ResetPasswordInput input) {
         Validation.validate(input);
 
         var email = input.getEmail();
-        var user = userService.getByEmail(email);
+        var token = generateUnverifiedToken(email);
 
-        if (user == null)
-            return ResponseEntity.ok().body(Response.data(new PasswordPayload(false)).build());
+        authService.requestResetPassword(email, token);
 
-        var token = generateUserToken(email);
-
-        authService.forgotPassword(email, token);
-
-        return ResponseEntity.ok().body(Response.data(new PasswordPayload(true)).build());
+        return ResponseEntity.ok().body(Response.data(new ResetPasswordPayload(true)).build());
     }
 
-    @PostMapping("/password/reset")
-    public ResponseEntity<Response<PasswordPayload, AuthErrorCode>> resetPassword(
-            @RequestBody ResetPasswordInput input) {
-
+    @PostMapping("/reset-password/complete")
+    public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> resetPassword(
+            @RequestBody ResetPasswordCompleteInput input) {
         Validation.validate(input);
 
-        var context = tokenService.decode(input.getToken());
-        var email = context.get("email").asString();
+        var ctx = tokenService.decode(input.getToken());
+        var email = ctx.get("email").asString();
 
-        authService.resetPassword(email, input.getNewPassword());
+        authService.resetPassword(email, input.getPassword());
 
-        return ResponseEntity.ok().body(Response.data(new PasswordPayload(true)).build());
+        return ResponseEntity.ok().body(Response.data(new ResetPasswordPayload(true)).build());
     }
 
-    private String generateUserToken(String email) {
-        return tokenService.encode(new HashMap<>(Map.of("email", email)));
+    private String generateVerifiedToken(String email) {
+        return tokenService.encode(new HashMap<>(Map.of("email", email, "verified", true)));
+    }
+
+    private String generateUnverifiedToken(String email) {
+        return tokenService.encode(new HashMap<>(Map.of("email", email, "verified", false)), SHORT_EXPIRATION_TIME);
     }
 
 }

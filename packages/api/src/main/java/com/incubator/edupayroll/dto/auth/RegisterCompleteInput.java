@@ -7,6 +7,7 @@ import lombok.Value;
 
 @Value
 public class RegisterCompleteInput {
+auth-controller-forgot-password
     @Size(min = 3, max = 50, message = "First name must be between 3 and 50 characters")
     @NotEmpty(message = "First name is required")
     public String firstName;
@@ -37,5 +38,4 @@ public class RegisterCompleteInput {
     @Size(min = 3, max = 50, message = "Principal name must be between 3 and 50 characters")
     @NotEmpty(message = "Principal name is required")
     public String principalName;
-
 }

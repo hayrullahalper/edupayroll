@@ -1,10 +1,10 @@
-package com.incubator.edupayroll.dto.auth;
+package com.incubator.edupayroll.dto.user;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;
 
 @Value
-public class PasswordPayload {
+public class UserChangePasswordPayload {
 
     @NotNull
     public boolean success;

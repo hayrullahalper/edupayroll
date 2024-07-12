@@ -1,6 +1,7 @@
 package com.incubator.edupayroll.controller.user;
 
 import com.incubator.edupayroll.service.user.UserNotFoundException;
+import com.incubator.edupayroll.service.user.UserPasswordMismatchException;
 import com.incubator.edupayroll.util.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,4 +16,10 @@ public class UserExceptionHandler {
     return ResponseEntity.status(HttpStatus.NOT_FOUND)
         .body(Response.error(UserErrorCode.USER_NOT_FOUND, "User not found").build());
   }
+
+  @ExceptionHandler({UserPasswordMismatchException.class})
+    public ResponseEntity<Response<?, UserErrorCode>> handleUserPasswordMismatchException() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(Response.error(UserErrorCode.PASSWORD_MISMATCH, "Password mismatch").build());
+    }
 }
