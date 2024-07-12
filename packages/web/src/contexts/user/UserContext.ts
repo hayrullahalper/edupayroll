@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 
-export type UserContextProps = {
-	user: string | null;
-	revoke: () => void;
-	authenticate: (token: string) => void;
-};
+import { User } from '../../api';
 
-export default createContext<UserContextProps | null>(null);
+export interface UserContextType {
+	user: User | null;
+}
+
+export default createContext<UserContextType | null>(null);
