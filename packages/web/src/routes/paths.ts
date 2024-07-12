@@ -1,4 +1,6 @@
 export default {
+	home: '/',
+
 	document: '/documents/:documentId',
 	documents: '/documents',
 
@@ -10,9 +12,9 @@ export default {
 	login: '/login',
 	logout: '/logout',
 	register: '/register',
-	registerComplete: '/register/complete',
 	resetPassword: '/reset-password',
-	forgotPassword: '/forgot-password',
+	registerComplete: '/register/complete',
+	resetPasswordComplete: '/reset-password/complete',
 
 	school: '/settings/school',
 	profile: '/settings/profile',
