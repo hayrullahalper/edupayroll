@@ -1,54 +1,103 @@
 import {
+	Text,
+	Flex,
+	Stack,
 	Button,
 	Checkbox,
-	Flex,
-	PasswordInput,
-	Stack,
-	Text,
 	TextInput,
+	PasswordInput,
 } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { IconAt, IconKey } from '@tabler/icons-react';
+import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
 
 import paths from '../../paths';
 
-export default function LoginForm() {
+import {
+	LoginFormInput,
+	loginFormSchema,
+	loginFormInitialValues,
+} from './LoginForm.utils';
+
+interface LoginFormProps {
+	loading?: boolean;
+	onSubmit: (
+		values: LoginFormInput,
+		helpers: FormikHelpers<LoginFormInput>,
+	) => void;
+}
+
+export default function LoginForm({ loading, onSubmit }: LoginFormProps) {
+	const formik = useFormik({
+		onSubmit,
+		validateOnBlur: true,
+		validateOnChange: false,
+		validationSchema: loginFormSchema,
+		initialValues: loginFormInitialValues,
+	});
+
 	return (
-		<>
-			<TextInput
-				size="sm"
-				inputMode="email"
-				autoComplete="username"
-				placeholder="Email adresiniz"
-				leftSection={<IconAt size={16} stroke={1.5} />}
-			/>
-			<PasswordInput
-				size="sm"
-				placeholder="Şifreniz"
-				autoComplete="current-password"
-				leftSection={<IconKey size={16} stroke={1.5} />}
-			/>
+		<FormikProvider value={formik}>
+			<Form noValidate onSubmit={formik.handleSubmit}>
+				<Stack gap="sm">
+					<TextInput
+						size="sm"
+						inputMode="email"
+						autoComplete="username"
+						error={formik.errors.email}
+						placeholder="E-posta adresiniz"
+						leftSection={<IconAt size={16} stroke={1.5} />}
+						{...formik.getFieldProps('email')}
+					/>
 
-			<Stack gap="sm">
-				<Flex justify="space-between" align="center">
-					<Flex component="label" gap=".32rem" justify="center" align="center">
-						<Checkbox size="xs" color="indigo" />
-						<Text fz="xs" fw="200">
-							Beni Hatırla
-						</Text>
-					</Flex>
+					<PasswordInput
+						size="sm"
+						maxLength={32}
+						placeholder="Şifreniz"
+						error={formik.errors.password}
+						autoComplete="current-password"
+						leftSection={<IconKey size={16} stroke={1.5} />}
+						{...formik.getFieldProps('password')}
+					/>
 
-					<Text component={Link} to={paths.forgotPassword} fw="200" fz="xs">
-						Şifrenizi mi unuttunuz?
-					</Text>
-				</Flex>
+					<Stack gap="sm">
+						<Flex justify="space-between" align="center">
+							<Flex
+								gap=".32rem"
+								align="center"
+								justify="center"
+								component="label"
+							>
+								<Checkbox
+									size="xs"
+									color="indigo"
+									onChange={(e) =>
+										formik.setFieldValue('remember', e.target.checked)
+									}
+								/>
+								<Text fz="xs" fw="200">
+									Beni Hatırla
+								</Text>
+							</Flex>
 
-				<Flex justify="flex-end">
-					<Button variant="light" color="indigo">
-						Giriş Yap
-					</Button>
-				</Flex>
-			</Stack>
-		</>
+							<Text component={Link} to={paths.resetPassword} fw="200" fz="xs">
+								Şifrenizi mi unuttunuz?
+							</Text>
+						</Flex>
+
+						<Flex justify="flex-end">
+							<Button
+								type="submit"
+								color="indigo"
+								variant="light"
+								loading={loading}
+							>
+								Giriş Yap
+							</Button>
+						</Flex>
+					</Stack>
+				</Stack>
+			</Form>
+		</FormikProvider>
 	);
 }
