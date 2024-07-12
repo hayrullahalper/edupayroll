@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -92,7 +93,12 @@ public class EmailService {
             var mustache = mf.compile(name);
 
             var writer = new StringWriter();
-            mustache.execute(writer, context).flush();
+            var variables = new HashMap<>(context);
+
+            variables.put("client_url", env.getProperty("app.client-url"));
+            variables.put("client_logo_path", env.getProperty("app.client-logo-path"));
+
+            mustache.execute(writer, variables).flush();
 
             return writer.toString();
         } catch (IOException e) {
