@@ -16,54 +16,54 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface LoginInput
+ * @interface ResetPasswordCompleteInput
  */
-export interface LoginInput {
+export interface ResetPasswordCompleteInput {
     /**
      * 
      * @type {string}
-     * @memberof LoginInput
+     * @memberof ResetPasswordCompleteInput
      */
-    email: string;
+    token: string;
     /**
      * 
      * @type {string}
-     * @memberof LoginInput
+     * @memberof ResetPasswordCompleteInput
      */
     password: string;
 }
 
 /**
- * Check if a given object implements the LoginInput interface.
+ * Check if a given object implements the ResetPasswordCompleteInput interface.
  */
-export function instanceOfLoginInput(value: object): value is LoginInput {
-    if (!('email' in value) || value['email'] === undefined) return false;
+export function instanceOfResetPasswordCompleteInput(value: object): value is ResetPasswordCompleteInput {
+    if (!('token' in value) || value['token'] === undefined) return false;
     if (!('password' in value) || value['password'] === undefined) return false;
     return true;
 }
 
-export function LoginInputFromJSON(json: any): LoginInput {
-    return LoginInputFromJSONTyped(json, false);
+export function ResetPasswordCompleteInputFromJSON(json: any): ResetPasswordCompleteInput {
+    return ResetPasswordCompleteInputFromJSONTyped(json, false);
 }
 
-export function LoginInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): LoginInput {
+export function ResetPasswordCompleteInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResetPasswordCompleteInput {
     if (json == null) {
         return json;
     }
     return {
         
-        'email': json['email'],
+        'token': json['token'],
         'password': json['password'],
     };
 }
 
-export function LoginInputToJSON(value?: LoginInput | null): any {
+export function ResetPasswordCompleteInputToJSON(value?: ResetPasswordCompleteInput | null): any {
     if (value == null) {
         return value;
     }
     return {
         
-        'email': value['email'],
+        'token': value['token'],
         'password': value['password'],
     };
 }

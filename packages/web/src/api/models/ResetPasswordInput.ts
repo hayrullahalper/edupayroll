@@ -16,30 +16,30 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface RegisterInput
+ * @interface ResetPasswordInput
  */
-export interface RegisterInput {
+export interface ResetPasswordInput {
     /**
      * 
      * @type {string}
-     * @memberof RegisterInput
+     * @memberof ResetPasswordInput
      */
     email: string;
 }
 
 /**
- * Check if a given object implements the RegisterInput interface.
+ * Check if a given object implements the ResetPasswordInput interface.
  */
-export function instanceOfRegisterInput(value: object): value is RegisterInput {
+export function instanceOfResetPasswordInput(value: object): value is ResetPasswordInput {
     if (!('email' in value) || value['email'] === undefined) return false;
     return true;
 }
 
-export function RegisterInputFromJSON(json: any): RegisterInput {
-    return RegisterInputFromJSONTyped(json, false);
+export function ResetPasswordInputFromJSON(json: any): ResetPasswordInput {
+    return ResetPasswordInputFromJSONTyped(json, false);
 }
 
-export function RegisterInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): RegisterInput {
+export function ResetPasswordInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResetPasswordInput {
     if (json == null) {
         return json;
     }
@@ -49,7 +49,7 @@ export function RegisterInputFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function RegisterInputToJSON(value?: RegisterInput | null): any {
+export function ResetPasswordInputToJSON(value?: ResetPasswordInput | null): any {
     if (value == null) {
         return value;
     }

@@ -13,69 +13,69 @@
  */
 
 import { mapValues } from '../runtime';
+import type { RegisterPayload } from './RegisterPayload';
+import {
+    RegisterPayloadFromJSON,
+    RegisterPayloadFromJSONTyped,
+    RegisterPayloadToJSON,
+} from './RegisterPayload';
 import type { ResponseErrorAuthErrorCode } from './ResponseErrorAuthErrorCode';
 import {
     ResponseErrorAuthErrorCodeFromJSON,
     ResponseErrorAuthErrorCodeFromJSONTyped,
     ResponseErrorAuthErrorCodeToJSON,
 } from './ResponseErrorAuthErrorCode';
-import type { TokenPayload } from './TokenPayload';
-import {
-    TokenPayloadFromJSON,
-    TokenPayloadFromJSONTyped,
-    TokenPayloadToJSON,
-} from './TokenPayload';
 
 /**
  * 
  * @export
- * @interface ResponseTokenPayloadAuthErrorCode
+ * @interface ResponseRegisterPayloadAuthErrorCode
  */
-export interface ResponseTokenPayloadAuthErrorCode {
+export interface ResponseRegisterPayloadAuthErrorCode {
     /**
      * 
-     * @type {TokenPayload}
-     * @memberof ResponseTokenPayloadAuthErrorCode
+     * @type {RegisterPayload}
+     * @memberof ResponseRegisterPayloadAuthErrorCode
      */
-    data?: TokenPayload;
+    data?: RegisterPayload;
     /**
      * 
      * @type {Array<ResponseErrorAuthErrorCode>}
-     * @memberof ResponseTokenPayloadAuthErrorCode
+     * @memberof ResponseRegisterPayloadAuthErrorCode
      */
     errors: Array<ResponseErrorAuthErrorCode>;
 }
 
 /**
- * Check if a given object implements the ResponseTokenPayloadAuthErrorCode interface.
+ * Check if a given object implements the ResponseRegisterPayloadAuthErrorCode interface.
  */
-export function instanceOfResponseTokenPayloadAuthErrorCode(value: object): value is ResponseTokenPayloadAuthErrorCode {
+export function instanceOfResponseRegisterPayloadAuthErrorCode(value: object): value is ResponseRegisterPayloadAuthErrorCode {
     if (!('errors' in value) || value['errors'] === undefined) return false;
     return true;
 }
 
-export function ResponseTokenPayloadAuthErrorCodeFromJSON(json: any): ResponseTokenPayloadAuthErrorCode {
-    return ResponseTokenPayloadAuthErrorCodeFromJSONTyped(json, false);
+export function ResponseRegisterPayloadAuthErrorCodeFromJSON(json: any): ResponseRegisterPayloadAuthErrorCode {
+    return ResponseRegisterPayloadAuthErrorCodeFromJSONTyped(json, false);
 }
 
-export function ResponseTokenPayloadAuthErrorCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResponseTokenPayloadAuthErrorCode {
+export function ResponseRegisterPayloadAuthErrorCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResponseRegisterPayloadAuthErrorCode {
     if (json == null) {
         return json;
     }
     return {
         
-        'data': json['data'] == null ? undefined : TokenPayloadFromJSON(json['data']),
+        'data': json['data'] == null ? undefined : RegisterPayloadFromJSON(json['data']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorAuthErrorCodeFromJSON)),
     };
 }
 
-export function ResponseTokenPayloadAuthErrorCodeToJSON(value?: ResponseTokenPayloadAuthErrorCode | null): any {
+export function ResponseRegisterPayloadAuthErrorCodeToJSON(value?: ResponseRegisterPayloadAuthErrorCode | null): any {
     if (value == null) {
         return value;
     }
     return {
         
-        'data': TokenPayloadToJSON(value['data']),
+        'data': RegisterPayloadToJSON(value['data']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorAuthErrorCodeToJSON)),
     };
 }

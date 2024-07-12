@@ -1,16 +1,32 @@
-import { Configuration } from '../runtime';
-import { AuthControllerApi, SchoolControllerApi, TeacherControllerApi } from '../apis';
+import Cookies from 'js-cookie';
+import { Configuration, FetchParams, RequestContext } from '../runtime';
+import { AuthControllerApi, SchoolControllerApi, TeacherControllerApi, UserControllerApi } from '../apis';
 
-type Controller = 'auth' | 'school' | 'teacher';
+type Controller = 'auth' | 'school' | 'teacher' | 'user';
 
 type ControllerAPI<T extends Controller> =
 	T extends 'auth' ? AuthControllerApi :
 	T extends 'school' ? SchoolControllerApi :
 	T extends 'teacher' ? TeacherControllerApi :
+	T extends 'user' ? UserControllerApi :
 	never;
 
 const config = new Configuration({
-	basePath: import.meta.env.VITE_API_BASE_PATH
+	middleware: [{
+		pre(context: RequestContext): Promise<FetchParams | void> {
+			const token = Cookies.get('access_token');
+
+			if (!!context.init.headers && !!token) {
+				context.init.headers = {
+					...context.init.headers,
+					Authorization: `Bearer ${token}`,
+				};
+			}
+
+			return Promise.resolve(context);
+		}
+	}],
+	basePath: import.meta.env.VITE_REST_API_BASE_URL
 });
 
 function client<T extends Controller>(controller: T): ControllerAPI<T> {
@@ -21,6 +37,8 @@ function client<T extends Controller>(controller: T): ControllerAPI<T> {
 		return new SchoolControllerApi(config) as any;
 	case 'teacher':
 		return new TeacherControllerApi(config) as any;
+	case 'user':
+		return new UserControllerApi(config) as any;
 	default:
 		throw new Error(`Unknown controller: ${controller}`);
 	}

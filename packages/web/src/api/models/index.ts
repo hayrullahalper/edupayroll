@@ -1,15 +1,34 @@
-/* tslint:disable */
-/* eslint-disable */
+// @ts-nocheck
+
 export * from './LoginInput';
 export * from './PageMeta';
 export * from './PageResponseTeacherObject';
+export * from './RegisterCompleteInput';
 export * from './RegisterInput';
+export * from './RegisterPayload';
+export * from './ResetPasswordCompleteInput';
+export * from './ResetPasswordInput';
+export * from './ResetPasswordPayload';
 export * from './ResponseErrorAuthErrorCode';
 export * from './ResponseErrorObject';
 export * from './ResponseErrorSchoolErrorCode';
+export * from './ResponseErrorTeacherErrorCode';
+export * from './ResponseErrorUserErrorCode';
+export * from './ResponseRegisterPayloadAuthErrorCode';
+export * from './ResponseResetPasswordPayloadAuthErrorCode';
 export * from './ResponseSchoolSchoolErrorCode';
+export * from './ResponseTeacherDeletePayloadTeacherErrorCode';
+export * from './ResponseTeacherTeacherErrorCode';
 export * from './ResponseTokenPayloadAuthErrorCode';
+export * from './ResponseUserChangePasswordPayloadAuthErrorCode';
+export * from './ResponseUserUserErrorCode';
 export * from './School';
 export * from './SchoolUpdateInput';
 export * from './Teacher';
+export * from './TeacherCreateInput';
+export * from './TeacherDeletePayload';
+export * from './TeacherUpdateInput';
 export * from './TokenPayload';
+export * from './User';
+export * from './UserChangePasswordInput';
+export * from './UserChangePasswordPayload';
