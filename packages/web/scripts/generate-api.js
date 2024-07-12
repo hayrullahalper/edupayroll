@@ -1,6 +1,7 @@
 import 'dotenv-flow/config';
+import { join } from 'path';
 import { execSync } from 'child_process';
-import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, statSync } from 'fs';
 
 const apiDestination = 'src/api';
 
@@ -55,7 +56,9 @@ mkdirSync(`${apiDestination}/client`);
 
 writeFileSync(`${apiDestination}/client/index.ts`, `export { default } from './client';`);
 
-let client = 'import { Configuration } from \'../runtime\';\nimport {';
+let client = 'import Cookies from \'js-cookie\';\n';
+
+client += 'import { Configuration, FetchParams, RequestContext } from \'../runtime\';\nimport {';
 
 apis.forEach((api, index) => {
 	client += ` ${api.replace('.ts', '')}${index < apis.length - 1 ? ',' : ' '}`;
@@ -74,7 +77,19 @@ controllers.forEach((controller, index) => {
 client += `\tnever;\n\n`;
 
 client += `const config = new Configuration({\n`;
-client += `\tbasePath: import.meta.env.VITE_API_BASE_PATH\n`;
+client += `\tmiddleware: [{\n`;
+client += `\t\tpre(context: RequestContext): Promise<FetchParams | void> {\n`;
+client += `\t\t\tconst token = Cookies.get('access_token');\n\n`;
+client += `\t\t\tif (!!context.init.headers && !!token) {\n`;
+client += `\t\t\t\tcontext.init.headers = {\n`;
+client += `\t\t\t\t\t...context.init.headers,\n`;
+client += `\t\t\t\t\tAuthorization: \`Bearer \${token}\`,\n`;
+client += `\t\t\t\t};\n`;
+client += `\t\t\t}\n\n`;
+client += `\t\t\treturn Promise.resolve(context);\n`;
+client += `\t\t}\n`;
+client += `\t}],\n`;
+client += `\tbasePath: import.meta.env.VITE_REST_API_BASE_URL\n`;
 client += `});\n\n`;
 
 client += `function client<T extends Controller>(controller: T): ControllerAPI<T> {\n`;
@@ -102,4 +117,38 @@ index += `export { default as client } from './client';\n`;
 
 writeFileSync(`${apiDestination}/index.ts`, index);
 
+// fix useless headers
 
+function discover(dir, list = []) {
+	const files = readdirSync(dir);
+
+	files.forEach((file) => {
+		const path = join(dir, file);
+		const stat = statSync(path);
+
+		if (stat.isDirectory()) {
+			discover(path, list);
+			return;
+		}
+
+		if (path.endsWith('.ts')) {
+			list.push(path);
+		}
+	});
+
+	return list;
+}
+
+const files = discover(apiDestination);
+
+const USEFUL_HEADER = '// @ts-nocheck\n\n';
+const USELESS_HEADER = '/* tslint:disable */\n/* eslint-disable */\n';
+
+files.forEach((file) => {
+	let content = readFileSync(file, 'utf8');
+
+	if (content.startsWith(USELESS_HEADER)) {
+		content = content.replace(USELESS_HEADER, USEFUL_HEADER);
+		writeFileSync(file, content);
+	}
+});
