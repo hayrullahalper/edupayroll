@@ -10,8 +10,10 @@ import Logout from './Logout';
 import Register from './Register';
 import Documents from './Documents';
 import RequireAuth from './RequireAuth';
+import ResetPassword from './ResetPassword';
 import RequireAnonymous from './RequireAnonymous';
 import RegisterComplete from './RegisterComplete';
+import ResetPasswordComplete from './ResetPasswordComplete';
 
 export default function Routes() {
 	return (
@@ -22,10 +24,13 @@ export default function Routes() {
 				<Route element={<AuthLayout />}>
 					<Route path={paths.login} element={<Login />} />
 					<Route path={paths.register} element={<Register />} />
+					<Route path={paths.resetPassword} element={<ResetPassword />} />
 					<Route path={paths.registerComplete} element={<RegisterComplete />} />
+					<Route
+						path={paths.resetPasswordComplete}
+						element={<ResetPasswordComplete />}
+					/>
 				</Route>
-
-				<Route path={paths.resetPassword} element="forgotPassword" />
 			</Route>
 
 			<Route element={<RequireAuth />}>

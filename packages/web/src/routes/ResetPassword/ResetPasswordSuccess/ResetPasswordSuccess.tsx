@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { Text, Flex, Paper, Stack, Button, Divider } from '@mantine/core';
+import { Button, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
 
-interface RegisterSuccessProps {
+interface ResetPasswordSuccessProps {
 	onRequestReset: () => void;
 	onRequestResend: () => void;
 }
 
-export default function RegisterSuccess({
+export default function ResetPasswordSuccess({
 	onRequestReset,
 	onRequestResend,
-}: RegisterSuccessProps) {
+}: ResetPasswordSuccessProps) {
 	const { t } = useTranslation();
 	const [resend, setResend] = useState(false);
 
@@ -24,22 +24,16 @@ export default function RegisterSuccess({
 							width={160}
 							height={160}
 							src="/assets/email-sent.png"
-							alt={t('auth.register.registerSuccess.alt')}
+							alt={t('auth.resetPassword.resetPasswordSuccess.alt')}
 						/>
 
 						<Stack gap="md" align="center">
-							<Text ta="center" lh="1" fz="2rem" ff="var(--ff-title)">
-								{t('auth.register.registerSuccess.title')}
+							<Text ta="center" lh="1.25" fz="1.75rem" ff="var(--ff-title)">
+								{t('auth.resetPassword.resetPasswordSuccess.title')}
 							</Text>
-							<Stack gap="xs">
-								<Trans
-									i18nKey="auth.register.registerSuccess.content"
-									components={[
-										<Text key="0" fz="sm" fw="200" ta="center" />,
-										<Text key="1" fz="sm" fw="200" ta="center" />,
-									]}
-								/>
-							</Stack>
+							<Text fz="sm" fw="200" ta="center">
+								{t('auth.resetPassword.resetPasswordSuccess.content')}
+							</Text>
 						</Stack>
 					</Stack>
 
@@ -56,7 +50,7 @@ export default function RegisterSuccess({
 								<img alt="Gmail" height={12} src="/assets/brands/gmail.svg" />
 							}
 						>
-							{t('auth.register.registerSuccess.openGmail')}
+							{t('auth.resetPassword.resetPasswordSuccess.openGmail')}
 						</Button>
 						<Button
 							size="sm"
@@ -72,7 +66,7 @@ export default function RegisterSuccess({
 								/>
 							}
 						>
-							{t('auth.register.registerSuccess.openOutlook')}
+							{t('auth.resetPassword.resetPasswordSuccess.openOutlook')}
 						</Button>
 					</Flex>
 				</Stack>
@@ -80,11 +74,11 @@ export default function RegisterSuccess({
 
 			<Stack gap={2} w={324} align="center">
 				<Text key="0" fz="xs" fw="200" ta="center">
-					{t('auth.register.registerSuccess.linkNotReceived')}
+					{t('auth.resetPassword.resetPasswordSuccess.linkNotReceived')}
 				</Text>
 				<Text key="1" fz="xs" fw="200" ta="center">
 					<Trans
-						i18nKey="auth.register.registerSuccess.checkSpam"
+						i18nKey="auth.resetPassword.resetPasswordSuccess.checkSpam"
 						components={[
 							<Text
 								inherit
