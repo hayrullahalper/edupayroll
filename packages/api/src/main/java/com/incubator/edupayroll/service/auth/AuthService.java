@@ -69,11 +69,11 @@ public class AuthService {
             String schoolName,
             String principalName) {
 
+        var editorName = firstName + " " + lastName;
         var passwordHash = passwordService.hash(password);
         var user = userService.create(firstName, lastName, email, passwordHash);
 
-        schoolService.create(user, schoolName, firstName + lastName, title, principalName);
-
+        schoolService.create(user, schoolName, editorName, title, principalName);
         emailService.sendRegisterCompleteEmail(email, firstName);
 
         return user;
