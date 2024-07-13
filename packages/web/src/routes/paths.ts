@@ -20,4 +20,7 @@ export default {
 	profile: '/settings/profile',
 	settings: '/settings',
 	changePassword: '/settings/change-password',
+
+	privacyPolicy: '/privacy-policy',
+	termsOfService: '/terms-of-service',
 } as const;

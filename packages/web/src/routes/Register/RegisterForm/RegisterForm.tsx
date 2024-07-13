@@ -1,6 +1,9 @@
 import { IconAt } from '@tabler/icons-react';
-import { Button, Flex, Stack, TextInput } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
+import { Button, Flex, Stack } from '@mantine/core';
 import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+
+import TextField from '../../../fields/TextField';
 
 import {
 	RegisterFormInput,
@@ -17,6 +20,8 @@ interface RegisterFormProps {
 }
 
 export default function RegisterForm({ loading, onSubmit }: RegisterFormProps) {
+	const { t } = useTranslation();
+
 	const formik = useFormik({
 		onSubmit,
 		validateOnBlur: true,
@@ -29,14 +34,13 @@ export default function RegisterForm({ loading, onSubmit }: RegisterFormProps) {
 		<FormikProvider value={formik}>
 			<Form noValidate onSubmit={formik.handleSubmit}>
 				<Stack gap="sm">
-					<TextInput
+					<TextField
 						size="sm"
+						name="email"
 						inputMode="email"
 						autoComplete="username"
-						error={formik.errors.email}
-						placeholder="E-posta adresiniz"
 						leftSection={<IconAt size={16} stroke={1.5} />}
-						{...formik.getFieldProps('email')}
+						placeholder={t('auth.register.form.email.placeholder')}
 					/>
 
 					<Flex justify="flex-end">
@@ -46,7 +50,7 @@ export default function RegisterForm({ loading, onSubmit }: RegisterFormProps) {
 							variant="light"
 							loading={loading}
 						>
-							Kayıt Ol
+							{t('auth.register.form.submit')}
 						</Button>
 					</Flex>
 				</Stack>

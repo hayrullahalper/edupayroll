@@ -1,17 +1,12 @@
-import {
-	Text,
-	Flex,
-	Stack,
-	Button,
-	Checkbox,
-	TextInput,
-	PasswordInput,
-} from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { IconAt, IconKey } from '@tabler/icons-react';
+import { Text, Flex, Stack, Button, Checkbox } from '@mantine/core';
 import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 import paths from '../../paths';
+import TextField from '../../../fields/TextField';
+import PasswordField from '../../../fields/PasswordField';
 
 import {
 	LoginFormInput,
@@ -28,6 +23,8 @@ interface LoginFormProps {
 }
 
 export default function LoginForm({ loading, onSubmit }: LoginFormProps) {
+	const { t } = useTranslation();
+
 	const formik = useFormik({
 		onSubmit,
 		validateOnBlur: true,
@@ -40,24 +37,22 @@ export default function LoginForm({ loading, onSubmit }: LoginFormProps) {
 		<FormikProvider value={formik}>
 			<Form noValidate onSubmit={formik.handleSubmit}>
 				<Stack gap="sm">
-					<TextInput
+					<TextField
 						size="sm"
+						name="email"
 						inputMode="email"
 						autoComplete="username"
-						error={formik.errors.email}
-						placeholder="E-posta adresiniz"
 						leftSection={<IconAt size={16} stroke={1.5} />}
-						{...formik.getFieldProps('email')}
+						placeholder={t('auth.login.form.email.placeholder')}
 					/>
 
-					<PasswordInput
+					<PasswordField
 						size="sm"
 						maxLength={32}
-						placeholder="Şifreniz"
-						error={formik.errors.password}
+						name="password"
 						autoComplete="current-password"
 						leftSection={<IconKey size={16} stroke={1.5} />}
-						{...formik.getFieldProps('password')}
+						placeholder={t('auth.login.form.password.placeholder')}
 					/>
 
 					<Stack gap="sm">
@@ -76,12 +71,12 @@ export default function LoginForm({ loading, onSubmit }: LoginFormProps) {
 									}
 								/>
 								<Text fz="xs" fw="200">
-									Beni Hatırla
+									{t('auth.login.form.remember')}
 								</Text>
 							</Flex>
 
 							<Text component={Link} to={paths.resetPassword} fw="200" fz="xs">
-								Şifrenizi mi unuttunuz?
+								{t('auth.login.form.forgotPassword')}
 							</Text>
 						</Flex>
 
@@ -92,7 +87,7 @@ export default function LoginForm({ loading, onSubmit }: LoginFormProps) {
 								variant="light"
 								loading={loading}
 							>
-								Giriş Yap
+								{t('auth.login.form.submit')}
 							</Button>
 						</Flex>
 					</Stack>

@@ -4,7 +4,7 @@ import { useUser } from '../../contexts/user';
 import paths from '../paths';
 
 export default function RequireAuth() {
-	const { user } = useUser();
+	const user = useUser<'optional'>();
 
 	if (!user) {
 		return <Navigate replace to={paths.login} />;

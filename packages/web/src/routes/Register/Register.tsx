@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FormikHelpers } from 'formik';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { Trans, useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
 import { Divider, Flex, Paper, Stack, Text } from '@mantine/core';
 
@@ -12,6 +13,7 @@ import RegisterSuccess from './RegisterSuccess';
 import RegisterForm, { RegisterFormInput } from './RegisterForm';
 
 export default function Register() {
+	const { t } = useTranslation();
 	const [email, setEmail] = useState<string>();
 	const [emailSent, setEmailSent] = useState(false);
 
@@ -29,16 +31,12 @@ export default function Register() {
 
 			if (!data || !!errors.length) {
 				if (errors.some(({ code }) => code === 'USER_ALREADY_REGISTERED')) {
-					helpers.setFieldError(
-						'email',
-						'Bu e-posta adresi zaten kullanılıyor. Lütfen farklı bir e-posta adresi deneyin.',
-					);
+					helpers.setFieldError('email', t('auth.register.error.emailExists'));
 					return;
 				}
 
 				notifications.show({
-					title: 'Kayıt olunurken bir hata oluştu.',
-					message: 'Lütfen tekrar deneyin.',
+					message: t('common.error.unknown'),
 					color: 'red',
 				});
 				return;
@@ -48,8 +46,7 @@ export default function Register() {
 			setEmailSent(true);
 		} catch (e) {
 			notifications.show({
-				title: 'Kayıt olunurken bir hata oluştu.',
-				message: 'Lütfen tekrar deneyin.',
+				message: t('common.error.unknown'),
 				color: 'red',
 			});
 		}
@@ -70,22 +67,20 @@ export default function Register() {
 
 			if (!data || !!errors.length) {
 				notifications.show({
-					title: 'E-posta gönderilirken bir hata oluştu.',
-					message: 'Lütfen tekrar deneyin.',
+					message: t('common.error.unknown'),
 					color: 'red',
 				});
 				return;
 			}
 
 			notifications.show({
-				title: 'E-posta gönderildi.',
-				message: 'Lütfen e-posta kutunuzu kontrol edin.',
+				message: t('auth.register.emailResend.content'),
+				title: t('auth.register.emailResend.title'),
 				color: 'green',
 			});
 		} catch (e) {
 			notifications.show({
-				title: 'E-posta gönderilirken bir hata oluştu.',
-				message: 'Lütfen tekrar deneyin.',
+				message: t('common.error.unknown'),
 				color: 'red',
 			});
 		}
@@ -108,16 +103,16 @@ export default function Register() {
 						<img
 							width={160}
 							height={160}
-							alt="Kayıt Ol"
 							src="/assets/register.png"
+							alt={t('auth.register.alt')}
 						/>
 
 						<Stack gap="md" align="center">
 							<Text ta="center" lh="1" fz="2rem" ff="var(--ff-title)">
-								Ücretsiz hesap oluşturun
+								{t('auth.register.title')}
 							</Text>
 							<Text fz="sm" fw="200" ta="center">
-								Birkaç adımda hesabınızı oluşturun ve hemen kullanmaya başlayın.
+								{t('auth.register.subtitle')}
 							</Text>
 						</Stack>
 					</Stack>
@@ -129,12 +124,20 @@ export default function Register() {
 			</Paper>
 
 			<Flex justify="center" pl="xs" gap=".25rem">
-				<Text fz="xs" fw="200">
-					Zaten bir hesabınız var mı?
-				</Text>
-				<Text component={Link} to={paths.login} fz="xs" fw="500" c="indigo">
-					Giriş yapın
-				</Text>
+				<Trans
+					i18nKey="auth.register.alreadyAccount"
+					components={[
+						<Text key="0" fz="xs" fw="200" />,
+						<Text
+							key="1"
+							fz="xs"
+							fw="500"
+							c="indigo"
+							to={paths.login}
+							component={Link}
+						/>,
+					]}
+				/>
 			</Flex>
 		</Stack>
 	);

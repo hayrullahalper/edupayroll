@@ -4,7 +4,7 @@ import paths from '../paths';
 import { useUser } from '../../contexts/user';
 
 export default function RequireAnonymous() {
-	const { user } = useUser();
+	const user = useUser<'optional'>();
 
 	if (!!user) {
 		return <Navigate replace to={paths.documents} />;

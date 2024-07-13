@@ -13,6 +13,7 @@ export default function UserProvider({ children }: PropsWithChildren<{}>) {
 	const { isLoading, data: { data: user } = {} } = useQuery({
 		enabled: !!token,
 		queryKey: ['user'],
+		refetchOnWindowFocus: true,
 		queryFn: () => client('user').getUser(),
 	});
 

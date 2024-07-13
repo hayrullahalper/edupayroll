@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { IconLockCancel } from '@tabler/icons-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
 import { Flex, Text, Paper, Stack, Divider, Alert } from '@mantine/core';
 
@@ -12,7 +13,7 @@ import useToken from '../../contexts/token/useToken';
 import LoginForm, { LoginFormInput } from './LoginForm';
 
 export default function Login() {
-	const navigate = useNavigate();
+	const { t } = useTranslation();
 	const { setToken } = useToken();
 	const [error, setError] = useState<string | null>(null);
 
@@ -27,24 +28,21 @@ export default function Login() {
 
 			if (!data || !!errors.length) {
 				if (errors.some(({ code }) => code === 'INVALID_CREDENTIALS')) {
-					setError('Kullanıcı adı veya şifre hatalı.');
+					setError(t('auth.login.error.invalidCredentials'));
 					return;
 				}
 
 				notifications.show({
-					title: 'Giriş yapılırken bir hata oluştu.',
-					message: 'Lütfen tekrar deneyin.',
+					message: t('common.error.unknown'),
 					color: 'red',
 				});
 				return;
 			}
 
 			setToken(data.token, input.remember);
-			navigate(paths.documents);
 		} catch (e) {
 			notifications.show({
-				title: 'Giriş yapılırken bir hata oluştu.',
-				message: 'Lütfen tekrar deneyin.',
+				message: t('common.error.unknown'),
 				color: 'red',
 			});
 		}
@@ -58,16 +56,16 @@ export default function Login() {
 						<img
 							width={96}
 							height={96}
-							alt="Giriş Yap"
 							src="/assets/auth.png"
+							alt={t('auth.login.alt')}
 						/>
 
 						<Stack px="3rem" gap="0" align="center">
 							<Text fz="2rem" ff="var(--ff-title)">
-								Hoşgeldiniz!
+								{t('auth.login.title')}
 							</Text>
 							<Text fz="sm" fw="200" ta="center">
-								Lütfen giriş yapmak için bilgilerinizi girin.
+								{t('auth.login.subtitle')}
 							</Text>
 						</Stack>
 					</Stack>
@@ -86,12 +84,20 @@ export default function Login() {
 				</Stack>
 			</Paper>
 			<Flex justify="center" pl="xs" gap=".25rem">
-				<Text fz="xs" fw="200">
-					Hesabınız yok mu?
-				</Text>
-				<Text component={Link} to={paths.register} fz="xs" fw="500" c="indigo">
-					Kayıt olun
-				</Text>
+				<Trans
+					i18nKey="auth.login.noAccount"
+					components={[
+						<Text key="0" fz="xs" fw="200" />,
+						<Text
+							key="1"
+							fz="xs"
+							fw="500"
+							c="indigo"
+							component={Link}
+							to={paths.register}
+						/>,
+					]}
+				/>
 			</Flex>
 		</Stack>
 	);

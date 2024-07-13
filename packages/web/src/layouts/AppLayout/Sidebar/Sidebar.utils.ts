@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import {
 	IconBooks,
 	IconUsers,
@@ -6,8 +5,10 @@ import {
 	IconTableExport,
 	TablerIconsProps,
 } from '@tabler/icons-react';
+import { ReactNode } from 'react';
 
-import paths from '../../routes/paths';
+import { i18n } from '../../../locales';
+import paths from '../../../routes/paths';
 
 type NavLink = {
 	to: string;
@@ -18,26 +19,26 @@ type NavLink = {
 
 export const links: NavLink[] = [
 	{
-		to: paths.documents,
 		icon: IconBooks,
-		label: 'Belgeler',
+		to: paths.documents,
 		relations: [paths.document],
+		label: i18n.t('layout.sidebar.links.documents'),
 	},
 	{
-		to: paths.teachers,
 		icon: IconUsers,
-		label: 'Öğretmenler',
+		to: paths.teachers,
 		relations: [paths.teacher],
+		label: i18n.t('layout.sidebar.links.teachers'),
 	},
 	{
 		to: paths.exports,
 		icon: IconTableExport,
-		label: 'Kaydedilenler',
+		label: i18n.t('layout.sidebar.links.exports'),
 	},
 	{
 		to: paths.settings,
 		icon: IconSettings,
-		label: 'Seçenekler',
+		label: i18n.t('layout.sidebar.links.settings'),
 		relations: [paths.school, paths.profile, paths.changePassword],
 	},
 ];

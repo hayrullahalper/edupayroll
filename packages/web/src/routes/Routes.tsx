@@ -1,4 +1,3 @@
-import Div100vh from 'react-div-100vh';
 import { Route, Routes as BaseRoutes } from 'react-router-dom';
 
 import AppLayout from '../layouts/AppLayout';
@@ -16,42 +15,37 @@ import RegisterComplete from './RegisterComplete';
 
 export default function Routes() {
 	return (
-		<Div100vh>
-			<BaseRoutes>
-				<Route path={paths.home} element={<Home />} />
+		<BaseRoutes>
+			<Route path={paths.home} element={<Home />} />
 
-				<Route element={<RequireAnonymous />}>
-					<Route element={<AuthLayout />}>
-						<Route path={paths.login} element={<Login />} />
-						<Route path={paths.register} element={<Register />} />
-						<Route
-							path={paths.registerComplete}
-							element={<RegisterComplete />}
-						/>
-					</Route>
-
-					<Route path={paths.resetPassword} element="forgotPassword" />
+			<Route element={<RequireAnonymous />}>
+				<Route element={<AuthLayout />}>
+					<Route path={paths.login} element={<Login />} />
+					<Route path={paths.register} element={<Register />} />
+					<Route path={paths.registerComplete} element={<RegisterComplete />} />
 				</Route>
 
-				<Route element={<RequireAuth />}>
-					<Route path={paths.logout} element={<Logout />} />
+				<Route path={paths.resetPassword} element="forgotPassword" />
+			</Route>
 
-					<Route element={<AppLayout />}>
-						<Route path={paths.document} element="document" />
-						<Route path={paths.documents} element={<Documents />} />
+			<Route element={<RequireAuth />}>
+				<Route path={paths.logout} element={<Logout />} />
 
-						<Route path={paths.teacher} element="teacher" />
-						<Route path={paths.teachers} element="teachers" />
+				<Route element={<AppLayout />}>
+					<Route path={paths.document} element="document" />
+					<Route path={paths.documents} element={<Documents />} />
 
-						<Route path={paths.exports} element="exports" />
+					<Route path={paths.teacher} element="teacher" />
+					<Route path={paths.teachers} element="teachers" />
 
-						<Route path={paths.school} element="school" />
-						<Route path={paths.profile} element="profile" />
-						<Route path={paths.settings} element="settings" />
-						<Route path={paths.changePassword} element="changePassword" />
-					</Route>
+					<Route path={paths.exports} element="exports" />
+
+					<Route path={paths.school} element="school" />
+					<Route path={paths.profile} element="profile" />
+					<Route path={paths.settings} element="settings" />
+					<Route path={paths.changePassword} element="changePassword" />
 				</Route>
-			</BaseRoutes>
-		</Div100vh>
+			</Route>
+		</BaseRoutes>
 	);
 }

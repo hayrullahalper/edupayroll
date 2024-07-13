@@ -1,5 +1,4 @@
 import {
-	Box,
 	Flex,
 	Text,
 	Paper,
@@ -10,66 +9,78 @@ import {
 	Tooltip,
 	ActionIcon,
 } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
 import { IconLogout } from '@tabler/icons-react';
 import { NavLink, matchRoutes, useLocation, Link } from 'react-router-dom';
 
-import Logo from '../Logo';
-import paths from '../../routes/paths';
+import paths from '../../../routes/paths';
+import Logo from '../../../components/Logo';
+import { useUser } from '../../../contexts/user';
 
-import styles from './Sidebar.module.scss';
 import { links } from './Sidebar.utils';
 
 export default function Sidebar() {
+	const { t } = useTranslation();
+
+	const user = useUser();
 	const location = useLocation();
 
 	return (
-		<Paper component={Stack} className={styles.container}>
+		<Paper component={Stack} w="12rem" h="100%">
 			<Flex py="sm" pb="xs" justify="center" align="center">
 				<Logo />
 			</Flex>
-			<Divider />
-			<Stack gap="xs" px="xs">
-				{links.map((link) => {
-					let match = matchRoutes([{ path: link.to }], location);
 
-					link.relations?.forEach((relation) => {
-						match = match || matchRoutes([{ path: relation }], location);
-					});
+			<Divider />
+
+			<Stack gap="xs" px="xs" flex="1">
+				{links.map(({ to, label, relations, icon: Icon }) => {
+					const match = !!matchRoutes(
+						[
+							{ path: to },
+							...(relations?.map((relation) => ({ path: relation })) ?? []),
+						],
+						location,
+					)?.length;
 
 					return (
 						<Button
 							fw="400"
-							to={link.to}
-							key={link.to}
+							to={to}
+							key={to}
 							color="indigo"
 							component={NavLink}
 							justify="flex-start"
 							variant={match ? 'filled' : 'light'}
-							leftSection={<link.icon size={18} stroke={1.5} />}
+							leftSection={<Icon size={18} stroke={1.5} />}
 						>
-							{link.label}
+							{label}
 						</Button>
 					);
 				})}
 			</Stack>
-			<Box flex="1" />
+
 			<Divider />
+
 			<Flex pt="0" pb="md" px="xs" justify="space-between" align="center">
 				<Flex
 					w={132}
-					td="none"
-					to={paths.profile}
 					gap="xs"
+					td="none"
 					align="center"
-					justify="flex-start"
 					component={Link}
+					to={paths.profile}
+					justify="flex-start"
 				>
-					<Avatar color="indigo">HY</Avatar>
+					<Avatar color="indigo">
+						{user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()}
+					</Avatar>
 					<Text fz="sm" fw="300" c="black" truncate>
-						Halis Yücel
+						{user.firstName} {user.lastName}
 					</Text>
 				</Flex>
-				<Tooltip label="Çıkış yap" position="right" withArrow>
+
+				<Tooltip position="right" withArrow label={t('layout.sidebar.logout')}>
 					<ActionIcon
 						size="md"
 						color="indigo"

@@ -10,8 +10,10 @@ export default function Logout() {
 	const { removeToken } = useToken();
 
 	useEffect(() => {
-		removeToken();
-		navigate(paths.home, { replace: true });
+		setTimeout(() => {
+			removeToken();
+			navigate(paths.home, { replace: true });
+		}, 1000);
 	}, [navigate, removeToken]);
 
 	return <LoadingOverlay />;

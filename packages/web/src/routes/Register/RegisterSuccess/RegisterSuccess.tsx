@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
 import { Text, Flex, Paper, Stack, Button, Divider } from '@mantine/core';
 
 interface RegisterSuccessProps {
@@ -11,6 +12,7 @@ export default function RegisterSuccess({
 	onRequestReset,
 	onRequestResend,
 }: RegisterSuccessProps) {
+	const { t } = useTranslation();
 	const [resend, setResend] = useState(false);
 
 	return (
@@ -22,22 +24,21 @@ export default function RegisterSuccess({
 							width={160}
 							height={160}
 							src="/assets/email-verify.png"
-							alt="E-posta Adresinizi Doğrulayın"
+							alt={t('auth.register.registerSuccess.alt')}
 						/>
 
 						<Stack gap="md" align="center">
 							<Text ta="center" lh="1" fz="2rem" ff="var(--ff-title)">
-								E-posta Adresinizi Doğrulayın
+								{t('auth.register.registerSuccess.title')}
 							</Text>
 							<Stack gap="xs">
-								<Text fz="sm" fw="200" ta="center">
-									E-posta adresinize kayıt işleminizi tamamlamanızı sağlayacak
-									bir bağlantı gönderdik.
-								</Text>
-								<Text fz="sm" fw="200" ta="center">
-									Kaydınızı tamamlamak için lütfen e-postanızı kontrol edin ve
-									içindeki bağlantıya tıklayın.
-								</Text>
+								<Trans
+									i18nKey="auth.register.registerSuccess.content"
+									components={[
+										<Text key="0" fz="sm" fw="200" ta="center" />,
+										<Text key="1" fz="sm" fw="200" ta="center" />,
+									]}
+								/>
 							</Stack>
 						</Stack>
 					</Stack>
@@ -55,7 +56,7 @@ export default function RegisterSuccess({
 								<img alt="Gmail" height={12} src="/assets/brands/gmail.svg" />
 							}
 						>
-							Gmail&apos;i Aç
+							{t('auth.register.registerSuccess.openGmail')}
 						</Button>
 						<Button
 							size="sm"
@@ -71,47 +72,47 @@ export default function RegisterSuccess({
 								/>
 							}
 						>
-							Outlook&apos;u Aç
+							{t('auth.register.registerSuccess.openOutlook')}
 						</Button>
 					</Flex>
 				</Stack>
 			</Paper>
 
 			<Stack gap={2} w={324} align="center">
-				<Text fz="xs" fw="200" ta="center">
-					E-posta adresinize bağlantı gelmedi mi?
+				<Text key="0" fz="xs" fw="200" ta="center">
+					{t('auth.register.registerSuccess.linkNotReceived')}
 				</Text>
-				<Text fz="xs" fw="200" ta="center">
-					Spam klasörünüzü kontrol edin,&nbsp;
-					<Text
-						inherit
-						fz="xs"
-						fw="500"
-						component="span"
-						c={resend ? 'gray' : 'indigo'}
-						style={{ cursor: resend ? 'not-allowed' : 'pointer' }}
-						onClick={() => {
-							if (!resend) {
-								onRequestResend();
-								setResend(true);
-							}
-						}}
-					>
-						tekrar gönderin
-					</Text>
-					&nbsp;veya&nbsp;
-					<Text
-						inherit
-						fz="xs"
-						fw="500"
-						c="indigo"
-						component="span"
-						onClick={onRequestReset}
-						style={{ cursor: 'pointer' }}
-					>
-						adresinizi değiştirin
-					</Text>
-					.
+				<Text key="1" fz="xs" fw="200" ta="center">
+					<Trans
+						i18nKey="auth.register.registerSuccess.checkSpam"
+						components={[
+							<Text
+								inherit
+								key="0"
+								fz="xs"
+								fw="500"
+								component="span"
+								c={resend ? 'gray' : 'indigo'}
+								style={{ cursor: resend ? 'not-allowed' : 'pointer' }}
+								onClick={() => {
+									if (!resend) {
+										onRequestResend();
+										setResend(true);
+									}
+								}}
+							/>,
+							<Text
+								inherit
+								key="1"
+								fz="xs"
+								fw="500"
+								c="indigo"
+								component="span"
+								onClick={onRequestReset}
+								style={{ cursor: 'pointer' }}
+							/>,
+						]}
+					/>
 				</Text>
 			</Stack>
 		</Stack>

@@ -1,0 +1,11 @@
+{
+  "sidebar": {
+    "logout": "Çıkış Yap",
+    "links": {
+      "documents": "Belgeler",
+      "teachers": "Öğretmenler",
+      "exports": "Kaydedilenler",
+      "settings": "Seçenekler"
+    }
+  }
+}

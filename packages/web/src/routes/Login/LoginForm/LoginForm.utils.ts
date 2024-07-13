@@ -1,5 +1,7 @@
 import { boolean, object, ObjectSchema, string } from 'yup';
 
+import { i18n } from '../../../locales';
+
 export interface LoginFormInput {
 	email: string;
 	password: string;
@@ -8,9 +10,9 @@ export interface LoginFormInput {
 
 export const loginFormSchema: ObjectSchema<LoginFormInput> = object({
 	email: string()
-		.email('Lütfen geçerli bir e-posta adresi giriniz.')
-		.required('Lütfen e-posta adresinizi giriniz.'),
-	password: string().required('Lütfen şifrenizi giriniz.'),
+		.email(i18n.t('auth.login.form.email.invalid'))
+		.required(i18n.t('auth.login.form.email.required')),
+	password: string().required(i18n.t('auth.login.form.password.required')),
 	remember: boolean(),
 });
 

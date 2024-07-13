@@ -8,9 +8,16 @@ import Routes from './routes/Routes';
 import { UserProvider } from './contexts/user';
 import { TokenProvider } from './contexts/token';
 
+import './locales';
 import './globals.scss';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false,
+		},
+	},
+});
 
 export default function App() {
 	return (

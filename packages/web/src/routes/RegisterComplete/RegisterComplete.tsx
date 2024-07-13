@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
+import { Trans, useTranslation } from 'react-i18next';
 import { notifications } from '@mantine/notifications';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
-import { Box, Divider, Paper, Stack, Text } from '@mantine/core';
+import { Link, Navigate, useSearchParams } from 'react-router-dom';
+import { Box, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
 
 import paths from '../paths';
 import { useToken } from '../../contexts/token';
@@ -12,7 +13,7 @@ import RegisterCompleteForm, {
 } from './RegisterCompleteForm';
 
 export default function RegisterComplete() {
-	const navigate = useNavigate();
+	const { t } = useTranslation();
 	const { setToken } = useToken();
 	const [searchParams] = useSearchParams();
 
@@ -36,19 +37,16 @@ export default function RegisterComplete() {
 
 			if (!data || !!errors.length) {
 				notifications.show({
-					title: 'Kayıt olunurken bir hata oluştu.',
-					message: 'Lütfen tekrar deneyin.',
+					message: t('common.error.unknown'),
 					color: 'red',
 				});
 				return;
 			}
 
 			setToken(data.token, true);
-			navigate(paths.documents);
 		} catch (e) {
 			notifications.show({
-				title: 'Kayıt olunurken bir hata oluştu.',
-				message: 'Lütfen tekrar deneyin.',
+				message: t('common.error.unknown'),
 				color: 'red',
 			});
 		}
@@ -67,17 +65,17 @@ export default function RegisterComplete() {
 							mt="-1rem"
 							width={160}
 							height={160}
-							alt="Kayıt Ol"
 							component="img"
 							src="/assets/register-complete.png"
+							alt={t('auth.registerComplete.alt')}
 						/>
 
 						<Stack gap="md" align="center">
 							<Text ta="center" lh="1" fz="2rem" ff="var(--ff-title)">
-								Hesap Bilgilerinizi Tamamlayın
+								{t('auth.registerComplete.title')}
 							</Text>
 							<Text fz="sm" fw="200" ta="center">
-								Son adım! Hesabınızı tamamlamak için lütfen bilgilerinizi girin.
+								{t('auth.registerComplete.subtitle')}
 							</Text>
 						</Stack>
 					</Stack>
@@ -90,6 +88,35 @@ export default function RegisterComplete() {
 					/>
 				</Stack>
 			</Paper>
+
+			<Flex justify="center" pl="xs" gap=".25rem" w={324}>
+				<Text fz="xs" fw="200" ta="center" px="lg">
+					<Trans
+						i18nKey="auth.registerComplete.acceptTerms"
+						components={[
+							<Text key="0" fz="xs" fw="500" c="black" component="span" />,
+							<Text
+								key="1"
+								fz="xs"
+								fw="500"
+								c="indigo"
+								target="_blank"
+								component={Link}
+								to={paths.termsOfService}
+							/>,
+							<Text
+								key="2"
+								fz="xs"
+								fw="500"
+								c="indigo"
+								target="_blank"
+								component={Link}
+								to={paths.privacyPolicy}
+							/>,
+						]}
+					/>
+				</Text>
+			</Flex>
 		</Stack>
 	);
 }

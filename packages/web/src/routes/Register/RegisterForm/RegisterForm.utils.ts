@@ -1,13 +1,15 @@
 import { object, ObjectSchema, string } from 'yup';
 
+import { i18n } from '../../../locales';
+
 export interface RegisterFormInput {
 	email: string;
 }
 
 export const registerFormSchema: ObjectSchema<RegisterFormInput> = object({
 	email: string()
-		.email('Lütfen geçerli bir e-posta adresi giriniz.')
-		.required('Lütfen e-posta adresinizi giriniz.'),
+		.email(i18n.t('auth.register.form.email.invalid'))
+		.required(i18n.t('auth.register.form.email.required')),
 });
 
 export const registerFormInitialValues: RegisterFormInput = {

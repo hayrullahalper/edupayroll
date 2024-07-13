@@ -1,5 +1,7 @@
 import { object, ObjectSchema, string } from 'yup';
 
+import { i18n } from '../../../locales';
+
 export interface RegisterCompleteFormInput {
 	title: string;
 	password: string;
@@ -12,33 +14,33 @@ export interface RegisterCompleteFormInput {
 export const registerCompleteFormSchema: ObjectSchema<RegisterCompleteFormInput> =
 	object({
 		firstName: string()
-			.required('Lütfen adınızı giriniz.')
-			.min(3, 'Lütfen en az 3 karakter giriniz.')
-			.max(50, 'Adınız en fazla 50 karakter olabilir.'),
+			.required(i18n.t('auth.registerComplete.form.firstName.required'))
+			.min(3, i18n.t('auth.registerComplete.form.firstName.minLength'))
+			.max(50, i18n.t('auth.registerComplete.form.firstName.maxLength')),
 		lastName: string()
-			.required('Lütfen soyadınızı giriniz.')
-			.min(3, 'Lütfen en az 3 karakter giriniz.')
-			.max(50, 'Soyadınız en fazla 50 karakter olabilir.'),
+			.required(i18n.t('auth.registerComplete.form.lastName.required'))
+			.min(3, i18n.t('auth.registerComplete.form.lastName.minLength'))
+			.max(50, i18n.t('auth.registerComplete.form.lastName.maxLength')),
 		title: string()
-			.required('Lütfen ünvanınızı giriniz.')
-			.min(3, 'Lütfen en az 3 karakter giriniz.')
-			.max(50, 'Ünvanınız en fazla 50 karakter olabilir.'),
+			.required(i18n.t('auth.registerComplete.form.title.required'))
+			.min(3, i18n.t('auth.registerComplete.form.title.minLength'))
+			.max(50, i18n.t('auth.registerComplete.form.title.maxLength')),
 		password: string()
-			.required('Lütfen şifrenizi giriniz.')
-			.min(6, 'Lütfen en az 6 karakter giriniz.')
-			.max(32, 'Şifreniz en fazla 32 karakter olabilir.')
+			.required(i18n.t('auth.registerComplete.form.password.required'))
+			.min(6, i18n.t('auth.registerComplete.form.password.minLength'))
+			.max(32, i18n.t('auth.registerComplete.form.password.maxLength'))
 			.matches(
 				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
-				'Şifreniz en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.',
+				i18n.t('auth.registerComplete.form.password.invalid'),
 			),
 		schoolName: string()
-			.required('Lütfen okul adını giriniz.')
-			.min(3, 'Lütfen en az 3 karakter giriniz.')
-			.max(50, 'Okul adı en fazla 50 karakter olabilir.'),
+			.required(i18n.t('auth.registerComplete.form.schoolName.required'))
+			.min(3, i18n.t('auth.registerComplete.form.schoolName.minLength'))
+			.max(50, i18n.t('auth.registerComplete.form.schoolName.maxLength')),
 		principalName: string()
-			.required('Lütfen okul müdürünüzün adını giriniz.')
-			.min(3, 'Lütfen en az 3 karakter giriniz.')
-			.max(50, 'Okul müdürünüzün adı en fazla 50 karakter olabilir.'),
+			.required(i18n.t('auth.registerComplete.form.principalName.required'))
+			.min(3, i18n.t('auth.registerComplete.form.principalName.minLength'))
+			.max(50, i18n.t('auth.registerComplete.form.principalName.maxLength')),
 	});
 
 export const registerCompleteFormInitialValues: RegisterCompleteFormInput = {

@@ -1,19 +1,16 @@
 import {
-	Flex,
-	Stack,
-	Button,
-	Divider,
-	TextInput,
-	PasswordInput,
-} from '@mantine/core';
-import {
 	IconLock,
 	IconIdBadge2,
 	IconUserBolt,
 	IconUserScan,
 	IconBuildingCommunity,
 } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
+import { Flex, Stack, Button, Divider } from '@mantine/core';
 import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+
+import TextField from '../../../fields/TextField';
+import PasswordField from '../../../fields/PasswordField';
 
 import {
 	RegisterCompleteFormInput,
@@ -33,6 +30,8 @@ export default function RegisterCompleteForm({
 	loading,
 	onSubmit,
 }: RegisterCompleteFormProps) {
+	const { t } = useTranslation();
+
 	const formik = useFormik({
 		onSubmit,
 		validateOnBlur: true,
@@ -45,65 +44,60 @@ export default function RegisterCompleteForm({
 		<FormikProvider value={formik}>
 			<Form noValidate onSubmit={formik.handleSubmit}>
 				<Stack gap="sm">
-					<TextInput
+					<TextField
 						size="sm"
 						maxLength={50}
 						inputMode="text"
-						placeholder="Adınız"
-						error={formik.errors.firstName}
+						name="firstName"
 						leftSection={<IconUserScan size={16} stroke={1.5} />}
-						{...formik.getFieldProps('firstName')}
+						placeholder={t('auth.registerComplete.form.firstName.placeholder')}
 					/>
-					<TextInput
+					<TextField
 						size="sm"
 						maxLength={50}
+						name="lastName"
 						inputMode="text"
-						placeholder="Soyadınız"
-						error={formik.errors.lastName}
 						leftSection={<IconUserScan size={16} stroke={1.5} />}
-						{...formik.getFieldProps('lastName')}
+						placeholder={t('auth.registerComplete.form.lastName.placeholder')}
 					/>
-					<TextInput
+					<TextField
 						size="sm"
+						name="title"
 						maxLength={50}
 						inputMode="text"
-						placeholder="Ünvanınız"
-						error={formik.errors.title}
 						leftSection={<IconIdBadge2 size={16} stroke={1.5} />}
-						{...formik.getFieldProps('title')}
+						placeholder={t('auth.registerComplete.form.title.placeholder')}
 					/>
 
 					<Divider />
 
-					<TextInput
+					<TextField
 						size="sm"
 						maxLength={50}
 						inputMode="text"
-						placeholder="Okulunuzun Adı"
-						error={formik.errors.schoolName}
+						name="schoolName"
 						leftSection={<IconBuildingCommunity size={16} stroke={1.5} />}
-						{...formik.getFieldProps('schoolName')}
+						placeholder={t('auth.registerComplete.form.schoolName.placeholder')}
 					/>
-
-					<TextInput
+					<TextField
 						size="sm"
 						maxLength={50}
 						inputMode="text"
-						placeholder="Okul Müdürünüzün Adı"
-						error={formik.errors.principalName}
+						name="principalName"
 						leftSection={<IconUserBolt size={16} stroke={1.5} />}
-						{...formik.getFieldProps('principalName')}
+						placeholder={t(
+							'auth.registerComplete.form.principalName.placeholder',
+						)}
 					/>
 
 					<Divider />
 
-					<PasswordInput
+					<PasswordField
 						size="sm"
 						maxLength={32}
-						placeholder="Şifreniz"
-						error={formik.errors.password}
+						name="password"
 						leftSection={<IconLock size={16} stroke={1.5} />}
-						{...formik.getFieldProps('password')}
+						placeholder={t('auth.registerComplete.form.password.placeholder')}
 					/>
 
 					<Flex justify="flex-end">
@@ -113,7 +107,7 @@ export default function RegisterCompleteForm({
 							variant="light"
 							loading={loading}
 						>
-							Kayıt Ol
+							{t('auth.registerComplete.form.submit')}
 						</Button>
 					</Flex>
 				</Stack>

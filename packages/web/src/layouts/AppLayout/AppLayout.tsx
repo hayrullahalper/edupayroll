@@ -1,22 +1,19 @@
+import Div100vh from 'react-div-100vh';
 import { Outlet } from 'react-router-dom';
-import { Box, Divider, Flex, ScrollArea } from '@mantine/core';
+import { Box, Divider, Flex } from '@mantine/core';
 
-import Sidebar from '../../components/Sidebar';
-
-import styles from './AppLayout.module.scss';
+import Sidebar from './Sidebar';
 
 export default function AppLayout() {
 	return (
-		<Flex className={styles.container}>
+		<Flex component={Div100vh}>
 			<Flex p="xs" gap="xs">
 				<Sidebar />
 				<Divider orientation="vertical" />
 			</Flex>
-			<ScrollArea className={styles.content}>
-				<Box pt="xs" pr="xs">
-					<Outlet />
-				</Box>
-			</ScrollArea>
+			<Box pt="xs" pr="xs" w="100%">
+				<Outlet />
+			</Box>
 		</Flex>
 	);
 }
