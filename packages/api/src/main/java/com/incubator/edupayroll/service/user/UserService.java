@@ -87,4 +87,26 @@ public class UserService {
         this.passwordService = passwordService;
     }
 
+    public void changeName(UserEntity user, String firstName, String lastName) {
+
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+
+        userRepository.save(user);
+    }
+
+    public void changeMail(UserEntity user, String email, String password) {
+        var matched = passwordService.match(password, user.getPasswordHash());
+
+        if (!matched)
+            throw UserPasswordMismatchException.byUser(user);
+
+        if (existsByEmail(email))
+            throw UserExistsByEmailException.byUser(user);
+
+        user.setEmail(email);
+
+        userRepository.save(user);
+    }
+
 }
