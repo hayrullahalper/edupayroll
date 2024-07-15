@@ -31,7 +31,7 @@ public class RegisterCompleteInput {
     @NotEmpty(message = "Password is required")
     public String password;
 
-    @Size(min = 3, max = 50, message = "School name must be between 3 and 50 characters")
+    @Size(min = 3, max = 100, message = "School name must be between 3 and 100 characters")
     @NotEmpty(message = "School name is required")
     public String schoolName;
 
