@@ -88,8 +88,13 @@ public class UserService {
 
   public UserEntity changeName(UserEntity user, String firstName, String lastName) {
 
-    user.setFirstName(firstName);
-    user.setLastName(lastName);
+    if (firstName != null) {
+      user.setFirstName(firstName);
+    }
+
+    if (lastName != null) {
+      user.setLastName(lastName);
+    }
 
     userRepository.save(user);
 
