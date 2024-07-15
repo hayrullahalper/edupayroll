@@ -5,5 +5,6 @@ import lombok.Value;
 
 @Value
 public class TeacherDeletePayload {
+
   @NotNull public boolean success;
 }

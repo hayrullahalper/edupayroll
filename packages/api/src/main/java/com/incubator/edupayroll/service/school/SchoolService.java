@@ -39,13 +39,22 @@ public class SchoolService {
       String editorName,
       String editorTitle,
       String principalName) {
-    if (schoolName != null) school.setName(schoolName);
 
-    if (editorName != null) school.setEditorName(editorName);
+    if (schoolName != null) {
+      school.setName(schoolName);
+    }
 
-    if (editorTitle != null) school.setEditorTitle(editorTitle);
+    if (editorName != null) {
+      school.setEditorName(editorName);
+    }
 
-    if (principalName != null) school.setPrincipalName(principalName);
+    if (editorTitle != null) {
+      school.setEditorTitle(editorTitle);
+    }
+
+    if (principalName != null) {
+      school.setPrincipalName(principalName);
+    }
 
     return schoolRepository.saveAndFlush(school);
   }

@@ -27,20 +27,20 @@ public class UserController {
     return ResponseEntity.ok().body(Response.data(UserMapper.toDTO(user)).build());
   }
 
-  @PostMapping("/change-password")
-  public ResponseEntity<Response<UserChangePasswordPayload, UserErrorCode>> changePassword(
-      @RequestBody UserChangePasswordInput input) {
+  @PutMapping("/password")
+  public ResponseEntity<Response<UserUpdatePasswordPayload, UserErrorCode>> updatePassword(
+      @RequestBody UserUpdatePasswordInput input) {
     Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
     userService.changePassword(user, input.getCurrentPassword(), input.getNewPassword());
 
-    return ResponseEntity.ok().body(Response.data(new UserChangePasswordPayload(true)).build());
+    return ResponseEntity.ok().body(Response.data(new UserUpdatePasswordPayload(true)).build());
   }
 
   @PutMapping("/")
   public ResponseEntity<Response<User, UserErrorCode>> updateName(
-      @RequestBody UserNameUpdateInput input) {
+      @RequestBody UserUpdateNameInput input) {
     Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
@@ -51,11 +51,11 @@ public class UserController {
 
   @PutMapping("/email")
   public ResponseEntity<Response<User, UserErrorCode>> updateEmail(
-      @RequestBody UserEmailUpdateInput input) {
+      @RequestBody UserUpdateEmailInput input) {
     Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
-    var updatedUser = userService.changeMail(user, input.getEmail(), input.getPassword());
+    var updatedUser = userService.changeEmail(user, input.getEmail(), input.getPassword());
 
     return ResponseEntity.ok().body(Response.data(UserMapper.toDTO(updatedUser)).build());
   }

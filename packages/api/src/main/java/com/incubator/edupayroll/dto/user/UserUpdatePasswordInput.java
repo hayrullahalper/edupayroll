@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class UserChangePasswordInput {
+public class UserUpdatePasswordInput {
 
   @NotEmpty(message = "Current password is required")
   public String currentPassword;

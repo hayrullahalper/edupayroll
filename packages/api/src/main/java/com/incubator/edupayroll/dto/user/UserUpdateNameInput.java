@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Value;
 
 @Value
-public class UserNameUpdateInput {
+public class UserUpdateNameInput {
 
   @Size(min = 3, max = 50, message = "Teacher's first name must be between 3 and 50 characters")
   public String firstName;

@@ -88,25 +88,29 @@ public class UserService {
 
   public UserEntity changeName(UserEntity user, String firstName, String lastName) {
 
-    user.setFirstName(firstName);
-    user.setLastName(lastName);
+    if (firstName != null) {
+      user.setFirstName(firstName);
+    }
 
-    userRepository.save(user);
+    if (lastName != null) {
+      user.setLastName(lastName);
+    }
 
-    return user;
+    return userRepository.save(user);
   }
 
-  public UserEntity changeMail(UserEntity user, String email, String password) {
+  public UserEntity changeEmail(UserEntity user, String email, String password) {
     var matched = passwordService.match(password, user.getPasswordHash());
 
-    if (!matched) throw UserPasswordMismatchException.byUser(user);
+    if (!matched) {
+      throw UserPasswordMismatchException.byUser(user);
+    }
 
-    if (existsByEmail(email)) throw UserExistsByEmailException.byUser(user);
+    if (existsByEmail(email)) {
+      throw UserExistsByEmailException.byUser(user);
+    }
 
     user.setEmail(email);
-
-    userRepository.save(user);
-
-    return user;
+    return userRepository.save(user);
   }
 }
