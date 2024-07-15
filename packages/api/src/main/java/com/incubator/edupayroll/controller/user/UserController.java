@@ -1,6 +1,5 @@
 package com.incubator.edupayroll.controller.user;
 
-import com.incubator.edupayroll.controller.auth.AuthErrorCode;
 import com.incubator.edupayroll.dto.user.UserChangePasswordInput;
 import com.incubator.edupayroll.dto.user.User;
 import com.incubator.edupayroll.dto.user.UserChangePasswordPayload;
@@ -31,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity<Response<UserChangePasswordPayload, AuthErrorCode>> changePassword(
+    public ResponseEntity<Response<UserChangePasswordPayload, UserErrorCode>> changePassword(
             @RequestBody UserChangePasswordInput input) {
         Validation.validate(input);
 
