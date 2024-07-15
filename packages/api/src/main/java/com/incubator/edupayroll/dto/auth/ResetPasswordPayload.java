@@ -6,7 +6,5 @@ import lombok.Value;
 @Value
 public class ResetPasswordPayload {
 
-    @NotNull
-    public boolean success;
-
+  @NotNull public boolean success;
 }

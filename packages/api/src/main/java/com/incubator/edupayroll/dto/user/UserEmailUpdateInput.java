@@ -1,13 +1,16 @@
-package com.incubator.edupayroll.dto.auth;
+package com.incubator.edupayroll.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
+import lombok.Value;
 
-@Getter
-public class RegisterInput {
+@Value
+public class UserEmailUpdateInput {
 
   @Email(message = "Invalid email")
   @NotEmpty(message = "Email is required")
   public String email;
+
+  @NotEmpty(message = "Password is required")
+  public String password;
 }
