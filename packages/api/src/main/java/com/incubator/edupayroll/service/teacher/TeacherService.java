@@ -4,67 +4,67 @@ import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.repository.TeacherRepository;
 import com.incubator.edupayroll.util.exception.AccessDeniedException;
+import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
-
 @Service
 public class TeacherService {
-    private final TeacherRepository teacherRepository;
+  private final TeacherRepository teacherRepository;
 
-    @Autowired
-    public TeacherService(TeacherRepository teacherRepository) {
-        this.teacherRepository = teacherRepository;
-    }
+  @Autowired
+  public TeacherService(TeacherRepository teacherRepository) {
+    this.teacherRepository = teacherRepository;
+  }
 
-    public long count(UserEntity user) {
-        return teacherRepository.countByUser(user);
-    }
+  public long count(UserEntity user) {
+    return teacherRepository.countByUser(user);
+  }
 
-    public List<TeacherEntity> getAll(UserEntity user, int limit, int offset) {
-        int number = Math.round((float) offset / limit);
+  public List<TeacherEntity> getAll(UserEntity user, int limit, int offset) {
+    int number = Math.round((float) offset / limit);
 
-        var sort = Sort.by(Sort.Direction.DESC, "createdAt").and(Sort.by(Sort.Direction.DESC, "id"));
+    var sort = Sort.by(Sort.Direction.DESC, "createdAt").and(Sort.by(Sort.Direction.DESC, "id"));
 
-        var pr = PageRequest.of(number, limit, sort);
-        var page = teacherRepository.findAllByUser(user, pr);
+    var pr = PageRequest.of(number, limit, sort);
+    var page = teacherRepository.findAllByUser(user, pr);
 
-        return page.get().toList();
-    }
+    return page.get().toList();
+  }
 
-    public TeacherEntity getById(UserEntity user, UUID uuid) {
-        var maybeTeacher = teacherRepository.findById(uuid);
+  public TeacherEntity getById(UserEntity user, UUID uuid) {
+    var maybeTeacher = teacherRepository.findById(uuid);
 
-        var teacher = maybeTeacher.orElseThrow(() -> TeacherNotFoundException.byUser(user));
+    var teacher = maybeTeacher.orElseThrow(() -> TeacherNotFoundException.byUser(user));
 
-        if (!teacher.getUser().getId().equals(user.getId())) throw AccessDeniedException.byUser(user);
+    if (!teacher.getUser().getId().equals(user.getId())) throw AccessDeniedException.byUser(user);
 
-        return teacher;
-    }
+    return teacher;
+  }
 
-    public TeacherEntity update(TeacherEntity teacher, String firstName, String lastName, String branch, String idNumber) {
-        if (firstName != null) teacher.setFirstName(firstName);
+  public TeacherEntity update(
+      TeacherEntity teacher, String firstName, String lastName, String branch, String idNumber) {
+    if (firstName != null) teacher.setFirstName(firstName);
 
-        if (lastName != null) teacher.setLastName(lastName);
+    if (lastName != null) teacher.setLastName(lastName);
 
-        if (branch != null) teacher.setBranch(branch);
+    if (branch != null) teacher.setBranch(branch);
 
-        if (idNumber != null) teacher.setIdNumber(idNumber);
+    if (idNumber != null) teacher.setIdNumber(idNumber);
 
-        return teacherRepository.saveAndFlush(teacher);
-    }
+    return teacherRepository.saveAndFlush(teacher);
+  }
 
-    public TeacherEntity create(String firstName, String lastName, String branch, String idNumber, UserEntity user) {
-        var teacher = new TeacherEntity(firstName, lastName, branch, idNumber, user);
-        return teacherRepository.saveAndFlush(teacher);
-    }
+  public TeacherEntity create(
+      String firstName, String lastName, String branch, String idNumber, UserEntity user) {
+    var teacher = new TeacherEntity(firstName, lastName, branch, idNumber, user);
+    return teacherRepository.saveAndFlush(teacher);
+  }
 
-    public void remove(TeacherEntity teacher) {
-        teacherRepository.delete(teacher);
-    }
-
+  public void remove(TeacherEntity teacher) {
+    teacherRepository.delete(teacher);
+  }
 }

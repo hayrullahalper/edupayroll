@@ -8,21 +8,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TestHelper {
-    @Autowired
-    private Faker faker;
+  @Autowired private Faker faker;
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired private UserRepository userRepository;
 
-    public UserEntity createUser() {
-        var user = new UserEntity();
+  public UserEntity createUser() {
+    var user = new UserEntity();
 
-        user.setFirstName(faker.name().firstName());
-        user.setLastName(faker.name().lastName());
-        user.setEmail(faker.internet().emailAddress());
-        user.setPasswordHash(faker.internet().password());
+    user.setFirstName(faker.name().firstName());
+    user.setLastName(faker.name().lastName());
+    user.setEmail(faker.internet().emailAddress());
+    user.setPasswordHash(faker.internet().password());
 
-        return userRepository.saveAndFlush(user);
-    }
-
+    return userRepository.saveAndFlush(user);
+  }
 }

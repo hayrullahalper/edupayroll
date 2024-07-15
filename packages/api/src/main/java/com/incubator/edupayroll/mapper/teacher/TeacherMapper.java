@@ -4,9 +4,8 @@ import com.incubator.edupayroll.dto.teacher.Teacher;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 
 public class TeacherMapper {
-    public static Teacher toDTO(TeacherEntity teacher) {
-        return new Teacher(
-                teacher.getId(), teacher.getFirstName(), teacher.getBranch(), teacher.getIdNumber());
-    }
-
+  public static Teacher toDTO(TeacherEntity teacher) {
+    return new Teacher(
+        teacher.getId(), teacher.getFirstName(), teacher.getBranch(), teacher.getIdNumber());
+  }
 }

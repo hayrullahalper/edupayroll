@@ -4,109 +4,105 @@ import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.entity.user.UserRole;
 import com.incubator.edupayroll.repository.UserRepository;
 import com.incubator.edupayroll.service.password.PasswordService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class UserService {
-    private final UserRepository userRepository;
-    private PasswordService passwordService;
+  private final UserRepository userRepository;
+  private PasswordService passwordService;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+  @Autowired
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public UserEntity create(String firstName, String lastName, String email, String passwordHash) {
+    if (userRepository.existsByEmail(email)) {
+      throw UserAlreadyRegisteredException.byEmail(email);
     }
 
-    public UserEntity create(String firstName, String lastName, String email, String passwordHash) {
-        if (userRepository.existsByEmail(email)) {
-            throw UserAlreadyRegisteredException.byEmail(email);
+    List<UserRole> roles = List.of(UserRole.USER);
+
+    var user = new UserEntity();
+
+    user.setFirstName(firstName);
+    user.setLastName(lastName);
+    user.setEmail(email);
+    user.setRoles(roles);
+    user.setPasswordHash(passwordHash);
+
+    return userRepository.save(user);
+  }
+
+  public UserEntity getByEmail(String email) {
+    var maybeUser = userRepository.findByEmail(email);
+    return maybeUser.orElseThrow(() -> UserNotFoundException.byEmail(email));
+  }
+
+  public boolean existsByEmail(String email) {
+    return userRepository.existsByEmail(email);
+  }
+
+  public UserEntity getAuthenticatedUser() {
+    var auth = SecurityContextHolder.getContext().getAuthentication();
+
+    try {
+      if (auth != null && auth.isAuthenticated()) {
+        var detail = auth.getPrincipal();
+
+        if (detail instanceof UserDetails) {
+          var email = ((UserDetails) detail).getUsername();
+          return getByEmail(email);
         }
 
-        List<UserRole> roles = List.of(UserRole.USER);
+        return null;
+      }
 
-        var user = new UserEntity();
+      return null;
+    } catch (Exception e) {
+      return null;
+    }
+  }
 
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setRoles(roles);
-        user.setPasswordHash(passwordHash);
+  public void changePassword(UserEntity user, String password, String newPassword) {
+    var matched = passwordService.match(password, user.getPasswordHash());
 
-        return userRepository.save(user);
+    if (!matched) {
+      throw UserPasswordMismatchException.byUser(user);
     }
 
-    public UserEntity getByEmail(String email) {
-        var maybeUser = userRepository.findByEmail(email);
-        return maybeUser.orElseThrow(() -> UserNotFoundException.byEmail(email));
-    }
+    user.setPasswordHash(passwordService.hash(newPassword));
+    userRepository.save(user);
+  }
 
-    public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
-    }
+  @Autowired
+  @Lazy
+  private void setPasswordService(PasswordService passwordService) {
+    this.passwordService = passwordService;
+  }
 
-    public UserEntity getAuthenticatedUser() {
-        var auth = SecurityContextHolder.getContext().getAuthentication();
+  public void changeName(UserEntity user, String firstName, String lastName) {
 
-        try {
-            if (auth != null && auth.isAuthenticated()) {
-                var detail = auth.getPrincipal();
+    user.setFirstName(firstName);
+    user.setLastName(lastName);
 
-                if (detail instanceof UserDetails) {
-                    var email = ((UserDetails) detail).getUsername();
-                    return getByEmail(email);
-                }
+    userRepository.save(user);
+  }
 
-                return null;
-            }
+  public void changeMail(UserEntity user, String email, String password) {
+    var matched = passwordService.match(password, user.getPasswordHash());
 
-            return null;
-        } catch (Exception e) {
-            return null;
-        }
-    }
+    if (!matched) throw UserPasswordMismatchException.byUser(user);
 
-    public void changePassword(UserEntity user, String password, String newPassword) {
-        var matched = passwordService.match(password, user.getPasswordHash());
+    if (existsByEmail(email)) throw UserExistsByEmailException.byUser(user);
 
-        if (!matched) {
-            throw UserPasswordMismatchException.byUser(user);
-        }
+    user.setEmail(email);
 
-        user.setPasswordHash(passwordService.hash(newPassword));
-        userRepository.save(user);
-    }
-
-    @Autowired
-    @Lazy
-    private void setPasswordService(PasswordService passwordService) {
-        this.passwordService = passwordService;
-    }
-
-    public void changeName(UserEntity user, String firstName, String lastName) {
-
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-
-        userRepository.save(user);
-    }
-
-    public void changeMail(UserEntity user, String email, String password) {
-        var matched = passwordService.match(password, user.getPasswordHash());
-
-        if (!matched)
-            throw UserPasswordMismatchException.byUser(user);
-
-        if (existsByEmail(email))
-            throw UserExistsByEmailException.byUser(user);
-
-        user.setEmail(email);
-
-        userRepository.save(user);
-    }
-
+    userRepository.save(user);
+  }
 }

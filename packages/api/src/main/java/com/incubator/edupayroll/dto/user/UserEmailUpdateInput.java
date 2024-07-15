@@ -7,11 +7,10 @@ import lombok.Value;
 @Value
 public class UserEmailUpdateInput {
 
-    @Email(message = "Invalid email")
-    @NotEmpty(message = "Email is required")
-    public String email;
+  @Email(message = "Invalid email")
+  @NotEmpty(message = "Email is required")
+  public String email;
 
-    @NotEmpty(message = "Password is required")
-    public String password;
-
+  @NotEmpty(message = "Password is required")
+  public String password;
 }

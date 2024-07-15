@@ -6,7 +6,5 @@ import lombok.Value;
 @Value
 public class UserUpdatePayload {
 
-    @NotNull
-    public boolean success;
-
+  @NotNull public boolean success;
 }

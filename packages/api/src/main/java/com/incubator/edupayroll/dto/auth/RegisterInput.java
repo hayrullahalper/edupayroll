@@ -7,8 +7,7 @@ import lombok.Getter;
 @Getter
 public class RegisterInput {
 
-    @Email(message = "Invalid email")
-    @NotEmpty(message = "Email is required")
-    public String email;
-
+  @Email(message = "Invalid email")
+  @NotEmpty(message = "Email is required")
+  public String email;
 }
