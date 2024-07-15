@@ -38,8 +38,8 @@ public class UserController {
         return ResponseEntity.ok().body(Response.data(new UserChangePasswordPayload(true)).build());
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Response<UserUpdatePayload, UserErrorCode>> updateUser(@RequestBody UserNameUpdateInput input) {
+    @PutMapping("/")
+    public ResponseEntity<Response<UserUpdatePayload, UserErrorCode>> updateName(@RequestBody UserNameUpdateInput input) {
         Validation.validate(input);
 
         var user = userService.getAuthenticatedUser();
@@ -48,8 +48,8 @@ public class UserController {
         return ResponseEntity.ok().body(Response.data(new UserUpdatePayload(true)).build());
     }
 
-    @PutMapping("/update/email")
-    public ResponseEntity<Response<UserUpdatePayload, UserErrorCode>> updateUser(@RequestBody UserEmailUpdateInput input) {
+    @PutMapping("/email")
+    public ResponseEntity<Response<UserUpdatePayload, UserErrorCode>> updateEmail(@RequestBody UserEmailUpdateInput input) {
         Validation.validate(input);
 
         var user = userService.getAuthenticatedUser();
