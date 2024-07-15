@@ -39,25 +39,24 @@ public class UserController {
   }
 
   @PutMapping("/")
-  public ResponseEntity<Response<UserUpdatePayload, UserErrorCode>> updateName(
+  public ResponseEntity<Response<User, UserErrorCode>> updateName(
       @RequestBody UserNameUpdateInput input) {
     Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
-    userService.changeName(user, input.getFirstName(), input.getLastName());
+    var updatedUser = userService.changeName(user, input.getFirstName(), input.getLastName());
 
-    return ResponseEntity.ok().body(Response.data(new UserUpdatePayload(true)).build());
+    return ResponseEntity.ok().body(Response.data(UserMapper.toDTO(updatedUser)).build());
   }
 
   @PutMapping("/email")
-  public ResponseEntity<Response<UserUpdatePayload, UserErrorCode>> updateEmail(
+  public ResponseEntity<Response<User, UserErrorCode>> updateEmail(
       @RequestBody UserEmailUpdateInput input) {
     Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
+    var updatedUser = userService.changeMail(user, input.getEmail(), input.getPassword());
 
-    userService.changeMail(user, input.getEmail(), input.getPassword());
-
-    return ResponseEntity.ok().body(Response.data(new UserUpdatePayload(true)).build());
+    return ResponseEntity.ok().body(Response.data(UserMapper.toDTO(updatedUser)).build());
   }
 }
