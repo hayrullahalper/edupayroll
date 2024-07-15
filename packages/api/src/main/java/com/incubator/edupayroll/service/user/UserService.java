@@ -96,9 +96,7 @@ public class UserService {
       user.setLastName(lastName);
     }
 
-    userRepository.save(user);
-
-    return user;
+    return userRepository.save(user);
   }
 
   public UserEntity changeEmail(UserEntity user, String email, String password) {
@@ -113,9 +111,6 @@ public class UserService {
     }
 
     user.setEmail(email);
-
-    userRepository.save(user);
-
-    return user;
+    return userRepository.save(user);
   }
 }
