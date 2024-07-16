@@ -8,22 +8,22 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@Value
 public class DocumentCreateInput {
 
     @NotNull
-    private String name;
+    public String name;
 
     @NotNull
-    private LocalDateTime time;
+    public LocalDateTime time;
 
     @NotNull
-    private String description;
+    public String description;
 
     @NotNull
-    private List<ExportEntity> exports;
+    public List<ExportEntity> exports;
 
     @NotNull
-    private List<RecordEntity> records;
+    public List<RecordEntity> records;
 
 }
