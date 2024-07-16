@@ -60,7 +60,7 @@ public class AuthService {
     var passwordHash = passwordService.hash(password);
 
     user.setPasswordHash(passwordHash);
-    userRepository.save(user);
+    userRepository.saveAndFlush(user);
   }
 
   public UserEntity completeRegister(

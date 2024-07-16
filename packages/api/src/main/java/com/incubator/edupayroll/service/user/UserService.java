@@ -36,7 +36,7 @@ public class UserService {
     user.setRoles(roles);
     user.setPasswordHash(passwordHash);
 
-    return userRepository.save(user);
+    return userRepository.saveAndFlush(user);
   }
 
   public UserEntity getByEmail(String email) {
@@ -77,7 +77,7 @@ public class UserService {
     }
 
     user.setPasswordHash(passwordService.hash(newPassword));
-    userRepository.save(user);
+    userRepository.saveAndFlush(user);
   }
 
   @Autowired
@@ -96,7 +96,7 @@ public class UserService {
       user.setLastName(lastName);
     }
 
-    return userRepository.save(user);
+    return userRepository.saveAndFlush(user);
   }
 
   public UserEntity changeEmail(UserEntity user, String email, String password) {
@@ -111,6 +111,6 @@ public class UserService {
     }
 
     user.setEmail(email);
-    return userRepository.save(user);
+    return userRepository.saveAndFlush(user);
   }
 }

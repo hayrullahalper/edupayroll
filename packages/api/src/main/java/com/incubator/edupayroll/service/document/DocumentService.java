@@ -1,3 +1,36 @@
 package com.incubator.edupayroll.service.document;
 
-public class DocumentService {}
+import com.incubator.edupayroll.entity.document.DocumentEntity;
+import com.incubator.edupayroll.repository.DocumentRepository;
+import java.time.LocalDateTime;
+import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class DocumentService {
+
+  final DocumentRepository documentRepository;
+
+  @Autowired
+  public DocumentService(DocumentRepository documentRepository) {
+    this.documentRepository = documentRepository;
+  }
+
+  public DocumentEntity getById(UUID uuid) {
+    return documentRepository
+        .findById(uuid)
+        .orElseThrow(() -> DocumentNotFoundException.byId(uuid));
+  }
+
+  public DocumentEntity update(
+      DocumentEntity document, String name, LocalDateTime time, String description) {
+    if (name != null) document.setName(name);
+
+    if (time != null) document.setTime(time);
+
+    if (description != null) document.setDescription(description);
+
+    return documentRepository.saveAndFlush(document);
+  }
+}
