@@ -3,7 +3,7 @@ package com.incubator.edupayroll.dto.document;
 import com.incubator.edupayroll.entity.export.ExportEntity;
 import com.incubator.edupayroll.entity.record.RecordEntity;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.Value;
 
 import java.time.LocalDateTime;
 import java.util.List;
