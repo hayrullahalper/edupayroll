@@ -1,5 +1,5 @@
-import { Flex, Paper, PaperProps, Text } from '@mantine/core';
 import { PropsWithChildren } from 'react';
+import { Flex, Paper, PaperProps, Text } from '@mantine/core';
 
 type HeaderProps = PaperProps & {
 	title: string;
@@ -13,7 +13,7 @@ export default function Header({
 	return (
 		<Paper py="sm" px="md" {...otherProps}>
 			<Flex gap="lg" justify="space-between" align="center">
-				<Text fz="xl" fw="200">
+				<Text fz="xl" fw="300">
 					{title}
 				</Text>
 				<Flex justify="center" align="center">
