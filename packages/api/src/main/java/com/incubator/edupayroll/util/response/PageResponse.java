@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 public class PageResponse<D, E> {
-  private List<D> data = null;
+  private List<D> nodes = null;
   private PageMeta meta = null;
 
   @NotNull private final List<ResponseError<E>> errors = new ArrayList<>();
@@ -26,8 +26,8 @@ public class PageResponse<D, E> {
     return new ErrorBuilder<>(code, messages);
   }
 
-  private PageResponse<D, E> withData(List<D> data) {
-    this.data = data;
+  private PageResponse<D, E> withData(List<D> nodes) {
+    this.nodes = nodes;
     return this;
   }
 

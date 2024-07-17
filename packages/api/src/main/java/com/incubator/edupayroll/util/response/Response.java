@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 public class Response<D, E> {
-  private D data = null;
+  private D node = null;
 
   @NotNull private final List<ResponseError<E>> errors = new ArrayList<>();
 
@@ -25,8 +25,8 @@ public class Response<D, E> {
     return new ErrorBuilder<>(code, messages);
   }
 
-  private Response<D, E> withData(D data) {
-    this.data = data;
+  private Response<D, E> withData(D node) {
+    this.node = node;
     return this;
   }
 
