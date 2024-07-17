@@ -24,9 +24,9 @@ export default function Login() {
 
 	const handleSubmit = async (input: LoginFormInput) => {
 		try {
-			const { data, errors } = await login.mutateAsync(input);
+			const { node, errors } = await login.mutateAsync(input);
 
-			if (!data || !!errors.length) {
+			if (!node?.token || !!errors.length) {
 				if (errors.some(({ code }) => code === 'INVALID_CREDENTIALS')) {
 					setError(t('auth.login.error.invalidCredentials'));
 					return;
@@ -39,7 +39,7 @@ export default function Login() {
 				return;
 			}
 
-			setToken(data.token, input.remember);
+			setToken(node.token, input.remember);
 		} catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
@@ -80,7 +80,7 @@ export default function Login() {
 						</Alert>
 					)}
 
-					<LoginForm loading={login.isPending} onSubmit={handleSubmit} />
+					<LoginForm onSubmit={handleSubmit} />
 				</Stack>
 			</Paper>
 			<Flex justify="center" pl="xs" gap=".25rem">

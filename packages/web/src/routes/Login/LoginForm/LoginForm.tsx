@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { IconAt, IconKey } from '@tabler/icons-react';
 import { Text, Flex, Stack, Button, Checkbox } from '@mantine/core';
 import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
-import { useTranslation } from 'react-i18next';
 
 import paths from '../../paths';
 import TextField from '../../../fields/TextField';
@@ -15,14 +15,13 @@ import {
 } from './LoginForm.utils';
 
 interface LoginFormProps {
-	loading?: boolean;
 	onSubmit: (
 		values: LoginFormInput,
 		helpers: FormikHelpers<LoginFormInput>,
-	) => void;
+	) => Promise<void>;
 }
 
-export default function LoginForm({ loading, onSubmit }: LoginFormProps) {
+export default function LoginForm({ onSubmit }: LoginFormProps) {
 	const { t } = useTranslation();
 
 	const formik = useFormik({
@@ -85,7 +84,7 @@ export default function LoginForm({ loading, onSubmit }: LoginFormProps) {
 								type="submit"
 								color="indigo"
 								variant="light"
-								loading={loading}
+								loading={formik.isSubmitting}
 							>
 								{t('auth.login.form.submit')}
 							</Button>
