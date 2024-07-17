@@ -1,7 +1,8 @@
 import Div100vh from 'react-div-100vh';
 import { Outlet } from 'react-router-dom';
-import { Box, Divider, Flex } from '@mantine/core';
+import { Divider, Flex, ScrollArea } from '@mantine/core';
 
+import styles from './AppLayout.module.scss';
 import Sidebar from './Sidebar';
 
 export default function AppLayout() {
@@ -11,9 +12,9 @@ export default function AppLayout() {
 				<Sidebar />
 				<Divider orientation="vertical" />
 			</Flex>
-			<Box pt="xs" pr="xs" w="100%">
+			<ScrollArea w="100%" h="100%" classNames={{ viewport: styles.viewport }}>
 				<Outlet />
-			</Box>
+			</ScrollArea>
 		</Flex>
 	);
 }
