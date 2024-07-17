@@ -35,7 +35,7 @@ public class AuthController {
     Validation.validate(input);
 
     var user = authService.login(input.getEmail(), input.getPassword());
-    var token = generateVerifiedToken(user.getEmail());
+    var token = generateVerifiedToken(user.getId().toString());
 
     return ResponseEntity.ok().body(Response.data(new TokenPayload(token)).build());
   }
@@ -101,7 +101,7 @@ public class AuthController {
   }
 
   private String generateVerifiedToken(String email) {
-    return tokenService.encode(new HashMap<>(Map.of("email", email, "verified", true)));
+    return tokenService.encode(new HashMap<>(Map.of("userId", email, "verified", true)));
   }
 
   private String generateUnverifiedToken(String email) {

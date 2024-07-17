@@ -15,8 +15,8 @@ public class UserDetailsServiceImpl
   }
 
   @Override
-  public UserDetails loadUserByUsername(String email) {
-    var user = userService.getByEmail(email);
+  public UserDetails loadUserByUsername(String userId) {
+    var user = userService.getById(userId);
     return UserDetailsImpl.build(user);
   }
 }
