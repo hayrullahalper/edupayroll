@@ -5,7 +5,7 @@ import com.incubator.edupayroll.entity.export.ExportEntity;
 import com.incubator.edupayroll.entity.record.RecordEntity;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.List;
 import lombok.*;
 
@@ -22,7 +22,7 @@ public class DocumentEntity extends BaseEntity {
   private String name;
 
   @Column(name = "time", nullable = false)
-  private LocalDateTime time;
+  private YearMonth time;
 
   @Column(name = "description", nullable = false)
   private String description;
