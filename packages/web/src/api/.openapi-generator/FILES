@@ -25,7 +25,7 @@ models/ResponseSchoolSchoolErrorCode.ts
 models/ResponseTeacherDeletePayloadTeacherErrorCode.ts
 models/ResponseTeacherTeacherErrorCode.ts
 models/ResponseTokenPayloadAuthErrorCode.ts
-models/ResponseUserChangePasswordPayloadAuthErrorCode.ts
+models/ResponseUserUpdatePasswordPayloadUserErrorCode.ts
 models/ResponseUserUserErrorCode.ts
 models/School.ts
 models/SchoolUpdateInput.ts
@@ -35,7 +35,9 @@ models/TeacherDeletePayload.ts
 models/TeacherUpdateInput.ts
 models/TokenPayload.ts
 models/User.ts
-models/UserChangePasswordInput.ts
-models/UserChangePasswordPayload.ts
+models/UserUpdateEmailInput.ts
+models/UserUpdateNameInput.ts
+models/UserUpdatePasswordInput.ts
+models/UserUpdatePasswordPayload.ts
 models/index.ts
 runtime.ts

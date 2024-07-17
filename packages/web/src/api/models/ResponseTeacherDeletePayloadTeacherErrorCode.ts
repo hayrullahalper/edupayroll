@@ -37,7 +37,7 @@ export interface ResponseTeacherDeletePayloadTeacherErrorCode {
      * @type {TeacherDeletePayload}
      * @memberof ResponseTeacherDeletePayloadTeacherErrorCode
      */
-    data?: TeacherDeletePayload;
+    node?: TeacherDeletePayload;
     /**
      * 
      * @type {Array<ResponseErrorTeacherErrorCode>}
@@ -64,7 +64,7 @@ export function ResponseTeacherDeletePayloadTeacherErrorCodeFromJSONTyped(json: 
     }
     return {
         
-        'data': json['data'] == null ? undefined : TeacherDeletePayloadFromJSON(json['data']),
+        'node': json['node'] == null ? undefined : TeacherDeletePayloadFromJSON(json['node']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorTeacherErrorCodeFromJSON)),
     };
 }
@@ -75,7 +75,7 @@ export function ResponseTeacherDeletePayloadTeacherErrorCodeToJSON(value?: Respo
     }
     return {
         
-        'data': TeacherDeletePayloadToJSON(value['data']),
+        'node': TeacherDeletePayloadToJSON(value['node']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorTeacherErrorCodeToJSON)),
     };
 }

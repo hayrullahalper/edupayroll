@@ -16,30 +16,30 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface UserChangePasswordPayload
+ * @interface UserUpdatePasswordPayload
  */
-export interface UserChangePasswordPayload {
+export interface UserUpdatePasswordPayload {
     /**
      * 
      * @type {boolean}
-     * @memberof UserChangePasswordPayload
+     * @memberof UserUpdatePasswordPayload
      */
     success: boolean;
 }
 
 /**
- * Check if a given object implements the UserChangePasswordPayload interface.
+ * Check if a given object implements the UserUpdatePasswordPayload interface.
  */
-export function instanceOfUserChangePasswordPayload(value: object): value is UserChangePasswordPayload {
+export function instanceOfUserUpdatePasswordPayload(value: object): value is UserUpdatePasswordPayload {
     if (!('success' in value) || value['success'] === undefined) return false;
     return true;
 }
 
-export function UserChangePasswordPayloadFromJSON(json: any): UserChangePasswordPayload {
-    return UserChangePasswordPayloadFromJSONTyped(json, false);
+export function UserUpdatePasswordPayloadFromJSON(json: any): UserUpdatePasswordPayload {
+    return UserUpdatePasswordPayloadFromJSONTyped(json, false);
 }
 
-export function UserChangePasswordPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserChangePasswordPayload {
+export function UserUpdatePasswordPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserUpdatePasswordPayload {
     if (json == null) {
         return json;
     }
@@ -49,7 +49,7 @@ export function UserChangePasswordPayloadFromJSONTyped(json: any, ignoreDiscrimi
     };
 }
 
-export function UserChangePasswordPayloadToJSON(value?: UserChangePasswordPayload | null): any {
+export function UserUpdatePasswordPayloadToJSON(value?: UserUpdatePasswordPayload | null): any {
     if (value == null) {
         return value;
     }

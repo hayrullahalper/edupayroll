@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
-import { Configuration, FetchParams, RequestContext } from '../runtime';
+import paths from '../../routes/paths';
+import { Configuration, FetchParams, RequestContext, ResponseContext } from '../runtime';
 import { AuthControllerApi, SchoolControllerApi, TeacherControllerApi, UserControllerApi } from '../apis';
 
 type Controller = 'auth' | 'school' | 'teacher' | 'user';
@@ -24,6 +25,14 @@ const config = new Configuration({
 			}
 
 			return Promise.resolve(context);
+		},
+		post(context: ResponseContext): Promise<Response | void> {
+			if (context.response.status === 401 && !context.response.url.includes('auth')) {
+				Cookies.remove('access_token');
+				window.location.assign(paths.login);
+			}
+
+			return Promise.resolve(context.response);
 		}
 	}],
 	basePath: import.meta.env.VITE_REST_API_BASE_URL

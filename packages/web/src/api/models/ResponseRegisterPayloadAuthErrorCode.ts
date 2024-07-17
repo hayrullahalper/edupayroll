@@ -37,7 +37,7 @@ export interface ResponseRegisterPayloadAuthErrorCode {
      * @type {RegisterPayload}
      * @memberof ResponseRegisterPayloadAuthErrorCode
      */
-    data?: RegisterPayload;
+    node?: RegisterPayload;
     /**
      * 
      * @type {Array<ResponseErrorAuthErrorCode>}
@@ -64,7 +64,7 @@ export function ResponseRegisterPayloadAuthErrorCodeFromJSONTyped(json: any, ign
     }
     return {
         
-        'data': json['data'] == null ? undefined : RegisterPayloadFromJSON(json['data']),
+        'node': json['node'] == null ? undefined : RegisterPayloadFromJSON(json['node']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorAuthErrorCodeFromJSON)),
     };
 }
@@ -75,7 +75,7 @@ export function ResponseRegisterPayloadAuthErrorCodeToJSON(value?: ResponseRegis
     }
     return {
         
-        'data': RegisterPayloadToJSON(value['data']),
+        'node': RegisterPayloadToJSON(value['node']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorAuthErrorCodeToJSON)),
     };
 }

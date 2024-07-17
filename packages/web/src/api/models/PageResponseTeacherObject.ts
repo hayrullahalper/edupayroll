@@ -43,7 +43,7 @@ export interface PageResponseTeacherObject {
      * @type {Array<Teacher>}
      * @memberof PageResponseTeacherObject
      */
-    data?: Array<Teacher>;
+    nodes?: Array<Teacher>;
     /**
      * 
      * @type {PageMeta}
@@ -76,7 +76,7 @@ export function PageResponseTeacherObjectFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'data': json['data'] == null ? undefined : ((json['data'] as Array<any>).map(TeacherFromJSON)),
+        'nodes': json['nodes'] == null ? undefined : ((json['nodes'] as Array<any>).map(TeacherFromJSON)),
         'meta': json['meta'] == null ? undefined : PageMetaFromJSON(json['meta']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorObjectFromJSON)),
     };
@@ -88,7 +88,7 @@ export function PageResponseTeacherObjectToJSON(value?: PageResponseTeacherObjec
     }
     return {
         
-        'data': value['data'] == null ? undefined : ((value['data'] as Array<any>).map(TeacherToJSON)),
+        'nodes': value['nodes'] == null ? undefined : ((value['nodes'] as Array<any>).map(TeacherToJSON)),
         'meta': PageMetaToJSON(value['meta']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorObjectToJSON)),
     };

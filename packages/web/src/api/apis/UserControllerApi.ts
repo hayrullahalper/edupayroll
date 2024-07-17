@@ -15,61 +15,41 @@
 
 import * as runtime from '../runtime';
 import type {
-  ResponseUserChangePasswordPayloadAuthErrorCode,
+  ResponseUserUpdatePasswordPayloadUserErrorCode,
   ResponseUserUserErrorCode,
-  UserChangePasswordInput,
+  UserUpdateEmailInput,
+  UserUpdateNameInput,
+  UserUpdatePasswordInput,
 } from '../models/index';
 import {
-    ResponseUserChangePasswordPayloadAuthErrorCodeFromJSON,
-    ResponseUserChangePasswordPayloadAuthErrorCodeToJSON,
+    ResponseUserUpdatePasswordPayloadUserErrorCodeFromJSON,
+    ResponseUserUpdatePasswordPayloadUserErrorCodeToJSON,
     ResponseUserUserErrorCodeFromJSON,
     ResponseUserUserErrorCodeToJSON,
-    UserChangePasswordInputFromJSON,
-    UserChangePasswordInputToJSON,
+    UserUpdateEmailInputFromJSON,
+    UserUpdateEmailInputToJSON,
+    UserUpdateNameInputFromJSON,
+    UserUpdateNameInputToJSON,
+    UserUpdatePasswordInputFromJSON,
+    UserUpdatePasswordInputToJSON,
 } from '../models/index';
 
-export interface ChangePasswordRequest {
-    userChangePasswordInput: UserChangePasswordInput;
+export interface UpdateEmailRequest {
+    userUpdateEmailInput: UserUpdateEmailInput;
+}
+
+export interface UpdateNameRequest {
+    userUpdateNameInput: UserUpdateNameInput;
+}
+
+export interface UpdatePasswordRequest {
+    userUpdatePasswordInput: UserUpdatePasswordInput;
 }
 
 /**
  * 
  */
 export class UserControllerApi extends runtime.BaseAPI {
-
-    /**
-     */
-    async changePasswordRaw(requestParameters: ChangePasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseUserChangePasswordPayloadAuthErrorCode>> {
-        if (requestParameters['userChangePasswordInput'] == null) {
-            throw new runtime.RequiredError(
-                'userChangePasswordInput',
-                'Required parameter "userChangePasswordInput" was null or undefined when calling changePassword().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/user/change-password`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: UserChangePasswordInputToJSON(requestParameters['userChangePasswordInput']),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseUserChangePasswordPayloadAuthErrorCodeFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async changePassword(requestParameters: ChangePasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseUserChangePasswordPayloadAuthErrorCode> {
-        const response = await this.changePasswordRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
 
     /**
      */
@@ -92,6 +72,108 @@ export class UserControllerApi extends runtime.BaseAPI {
      */
     async getUser(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseUserUserErrorCode> {
         const response = await this.getUserRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async updateEmailRaw(requestParameters: UpdateEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseUserUserErrorCode>> {
+        if (requestParameters['userUpdateEmailInput'] == null) {
+            throw new runtime.RequiredError(
+                'userUpdateEmailInput',
+                'Required parameter "userUpdateEmailInput" was null or undefined when calling updateEmail().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/user/email`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UserUpdateEmailInputToJSON(requestParameters['userUpdateEmailInput']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseUserUserErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async updateEmail(requestParameters: UpdateEmailRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseUserUserErrorCode> {
+        const response = await this.updateEmailRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async updateNameRaw(requestParameters: UpdateNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseUserUserErrorCode>> {
+        if (requestParameters['userUpdateNameInput'] == null) {
+            throw new runtime.RequiredError(
+                'userUpdateNameInput',
+                'Required parameter "userUpdateNameInput" was null or undefined when calling updateName().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/user/`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UserUpdateNameInputToJSON(requestParameters['userUpdateNameInput']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseUserUserErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async updateName(requestParameters: UpdateNameRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseUserUserErrorCode> {
+        const response = await this.updateNameRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async updatePasswordRaw(requestParameters: UpdatePasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseUserUpdatePasswordPayloadUserErrorCode>> {
+        if (requestParameters['userUpdatePasswordInput'] == null) {
+            throw new runtime.RequiredError(
+                'userUpdatePasswordInput',
+                'Required parameter "userUpdatePasswordInput" was null or undefined when calling updatePassword().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/user/password`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UserUpdatePasswordInputToJSON(requestParameters['userUpdatePasswordInput']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseUserUpdatePasswordPayloadUserErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async updatePassword(requestParameters: UpdatePasswordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseUserUpdatePasswordPayloadUserErrorCode> {
+        const response = await this.updatePasswordRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -39,7 +39,8 @@ export interface ResponseErrorUserErrorCode {
  */
 export const ResponseErrorUserErrorCodeCodeEnum = {
     UserNotFound: 'USER_NOT_FOUND',
-    PasswordMismatch: 'PASSWORD_MISMATCH'
+    PasswordMismatch: 'PASSWORD_MISMATCH',
+    UserEmailExists: 'USER_EMAIL_EXISTS'
 } as const;
 export type ResponseErrorUserErrorCodeCodeEnum = typeof ResponseErrorUserErrorCodeCodeEnum[keyof typeof ResponseErrorUserErrorCodeCodeEnum];
 

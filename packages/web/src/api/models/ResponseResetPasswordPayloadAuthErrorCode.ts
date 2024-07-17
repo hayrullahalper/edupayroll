@@ -37,7 +37,7 @@ export interface ResponseResetPasswordPayloadAuthErrorCode {
      * @type {ResetPasswordPayload}
      * @memberof ResponseResetPasswordPayloadAuthErrorCode
      */
-    data?: ResetPasswordPayload;
+    node?: ResetPasswordPayload;
     /**
      * 
      * @type {Array<ResponseErrorAuthErrorCode>}
@@ -64,7 +64,7 @@ export function ResponseResetPasswordPayloadAuthErrorCodeFromJSONTyped(json: any
     }
     return {
         
-        'data': json['data'] == null ? undefined : ResetPasswordPayloadFromJSON(json['data']),
+        'node': json['node'] == null ? undefined : ResetPasswordPayloadFromJSON(json['node']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorAuthErrorCodeFromJSON)),
     };
 }
@@ -75,7 +75,7 @@ export function ResponseResetPasswordPayloadAuthErrorCodeToJSON(value?: Response
     }
     return {
         
-        'data': ResetPasswordPayloadToJSON(value['data']),
+        'node': ResetPasswordPayloadToJSON(value['node']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorAuthErrorCodeToJSON)),
     };
 }

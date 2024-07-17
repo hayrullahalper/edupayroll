@@ -37,7 +37,7 @@ export interface ResponseSchoolSchoolErrorCode {
      * @type {School}
      * @memberof ResponseSchoolSchoolErrorCode
      */
-    data?: School;
+    node?: School;
     /**
      * 
      * @type {Array<ResponseErrorSchoolErrorCode>}
@@ -64,7 +64,7 @@ export function ResponseSchoolSchoolErrorCodeFromJSONTyped(json: any, ignoreDisc
     }
     return {
         
-        'data': json['data'] == null ? undefined : SchoolFromJSON(json['data']),
+        'node': json['node'] == null ? undefined : SchoolFromJSON(json['node']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorSchoolErrorCodeFromJSON)),
     };
 }
@@ -75,7 +75,7 @@ export function ResponseSchoolSchoolErrorCodeToJSON(value?: ResponseSchoolSchool
     }
     return {
         
-        'data': SchoolToJSON(value['data']),
+        'node': SchoolToJSON(value['node']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorSchoolErrorCodeToJSON)),
     };
 }

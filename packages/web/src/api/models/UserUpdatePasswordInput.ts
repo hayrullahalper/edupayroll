@@ -16,37 +16,37 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface UserChangePasswordInput
+ * @interface UserUpdatePasswordInput
  */
-export interface UserChangePasswordInput {
+export interface UserUpdatePasswordInput {
     /**
      * 
      * @type {string}
-     * @memberof UserChangePasswordInput
+     * @memberof UserUpdatePasswordInput
      */
     currentPassword: string;
     /**
      * 
      * @type {string}
-     * @memberof UserChangePasswordInput
+     * @memberof UserUpdatePasswordInput
      */
     newPassword: string;
 }
 
 /**
- * Check if a given object implements the UserChangePasswordInput interface.
+ * Check if a given object implements the UserUpdatePasswordInput interface.
  */
-export function instanceOfUserChangePasswordInput(value: object): value is UserChangePasswordInput {
+export function instanceOfUserUpdatePasswordInput(value: object): value is UserUpdatePasswordInput {
     if (!('currentPassword' in value) || value['currentPassword'] === undefined) return false;
     if (!('newPassword' in value) || value['newPassword'] === undefined) return false;
     return true;
 }
 
-export function UserChangePasswordInputFromJSON(json: any): UserChangePasswordInput {
-    return UserChangePasswordInputFromJSONTyped(json, false);
+export function UserUpdatePasswordInputFromJSON(json: any): UserUpdatePasswordInput {
+    return UserUpdatePasswordInputFromJSONTyped(json, false);
 }
 
-export function UserChangePasswordInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserChangePasswordInput {
+export function UserUpdatePasswordInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserUpdatePasswordInput {
     if (json == null) {
         return json;
     }
@@ -57,7 +57,7 @@ export function UserChangePasswordInputFromJSONTyped(json: any, ignoreDiscrimina
     };
 }
 
-export function UserChangePasswordInputToJSON(value?: UserChangePasswordInput | null): any {
+export function UserUpdatePasswordInputToJSON(value?: UserUpdatePasswordInput | null): any {
     if (value == null) {
         return value;
     }

@@ -37,7 +37,7 @@ export interface ResponseTokenPayloadAuthErrorCode {
      * @type {TokenPayload}
      * @memberof ResponseTokenPayloadAuthErrorCode
      */
-    data?: TokenPayload;
+    node?: TokenPayload;
     /**
      * 
      * @type {Array<ResponseErrorAuthErrorCode>}
@@ -64,7 +64,7 @@ export function ResponseTokenPayloadAuthErrorCodeFromJSONTyped(json: any, ignore
     }
     return {
         
-        'data': json['data'] == null ? undefined : TokenPayloadFromJSON(json['data']),
+        'node': json['node'] == null ? undefined : TokenPayloadFromJSON(json['node']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorAuthErrorCodeFromJSON)),
     };
 }
@@ -75,7 +75,7 @@ export function ResponseTokenPayloadAuthErrorCodeToJSON(value?: ResponseTokenPay
     }
     return {
         
-        'data': TokenPayloadToJSON(value['data']),
+        'node': TokenPayloadToJSON(value['node']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorAuthErrorCodeToJSON)),
     };
 }
