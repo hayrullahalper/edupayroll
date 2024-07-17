@@ -12,15 +12,13 @@ import {
 } from './ResetPasswordCompleteForm.utils';
 
 interface ResetPasswordCompleteFormProps {
-	loading?: boolean;
 	onSubmit: (
 		values: ResetPasswordCompleteFormInput,
 		helpers: FormikHelpers<ResetPasswordCompleteFormInput>,
-	) => void;
+	) => Promise<void>;
 }
 
 export default function ResetPasswordCompleteForm({
-	loading,
 	onSubmit,
 }: ResetPasswordCompleteFormProps) {
 	const { t } = useTranslation();
@@ -51,7 +49,7 @@ export default function ResetPasswordCompleteForm({
 						type="submit"
 						color="indigo"
 						variant="light"
-						loading={loading}
+						loading={formik.isSubmitting}
 					>
 						{t('auth.resetPasswordComplete.form.submit')}
 					</Button>

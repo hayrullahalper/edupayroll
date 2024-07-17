@@ -32,12 +32,12 @@ export default function ResetPasswordComplete() {
 				return;
 			}
 
-			const { data, errors } = await resetPasswordComplete.mutateAsync({
+			const { node, errors } = await resetPasswordComplete.mutateAsync({
 				token,
 				...input,
 			});
 
-			if (!data || !!errors.length) {
+			if (!node?.success || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',
@@ -88,10 +88,7 @@ export default function ResetPasswordComplete() {
 
 					<Divider />
 
-					<ResetPasswordCompleteForm
-						onSubmit={handleSubmit}
-						loading={resetPasswordComplete.isPending}
-					/>
+					<ResetPasswordCompleteForm onSubmit={handleSubmit} />
 				</Stack>
 			</Paper>
 
