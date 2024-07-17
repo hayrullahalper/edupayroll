@@ -5,6 +5,7 @@ import com.incubator.edupayroll.entity.user.UserRole;
 import com.incubator.edupayroll.repository.UserRepository;
 import com.incubator.edupayroll.service.password.PasswordService;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,6 +38,11 @@ public class UserService {
     user.setPasswordHash(passwordHash);
 
     return userRepository.saveAndFlush(user);
+  }
+
+  public UserEntity getById(String id) {
+    var maybeUser = userRepository.findById(UUID.fromString(id));
+    return maybeUser.orElseThrow(() -> UserNotFoundException.byId(id));
   }
 
   public UserEntity getByEmail(String email) {
