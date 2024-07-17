@@ -24,9 +24,9 @@ export default function ResetPassword() {
 
 	const handleSubmit = async (input: ResetPasswordFormInput) => {
 		try {
-			const { data, errors } = await resetPassword.mutateAsync(input);
+			const { node, errors } = await resetPassword.mutateAsync(input);
 
-			if (!data || !!errors.length) {
+			if (!node?.success || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',
@@ -55,9 +55,9 @@ export default function ResetPassword() {
 				return;
 			}
 
-			const { data, errors } = await resetPassword.mutateAsync({ email });
+			const { node, errors } = await resetPassword.mutateAsync({ email });
 
-			if (!data || !!errors.length) {
+			if (!node?.success || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',
@@ -113,10 +113,7 @@ export default function ResetPassword() {
 
 					<Divider />
 
-					<ResetPasswordForm
-						onSubmit={handleSubmit}
-						loading={resetPassword.isPending}
-					/>
+					<ResetPasswordForm onSubmit={handleSubmit} />
 				</Stack>
 			</Paper>
 
