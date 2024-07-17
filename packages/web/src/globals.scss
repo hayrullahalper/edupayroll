@@ -3,8 +3,33 @@
 
 :root {
 	--ff-title: 'DM Serif Display', serif;
+	--scrollbar-color-thumb: var(--mantine-color-gray-3);
+	--scrollbar-color-track: transparent;
+	--scrollbar-width: thin;
+	--scrollbar-width-legacy: 6px;
 }
 
 .mantine-active:active {
 	transform: unset;
+}
+
+@supports (scrollbar-width: auto) {
+	:root {
+		scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
+		scrollbar-width: var(--scrollbar-width);
+	}
+}
+
+@supports selector(::-webkit-scrollbar) {
+	:root::-webkit-scrollbar-thumb {
+		background: var(--scrollbar-color-thumb);
+		border-radius: var(--scrollbar-width-legacy)
+	}
+	:root::-webkit-scrollbar-track {
+		background: var(--scrollbar-color-track);
+	}
+	:root::-webkit-scrollbar {
+		max-width: var(--scrollbar-width-legacy);
+		max-height: var(--scrollbar-width-legacy);
+	}
 }

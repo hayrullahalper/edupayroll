@@ -4,8 +4,6 @@ import { use100vh } from 'react-div-100vh';
 
 import Logo from '../../components/Logo';
 
-import './AuthLayout.scss';
-
 export default function AuthLayout() {
 	const height = use100vh();
 
