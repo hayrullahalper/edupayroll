@@ -57,8 +57,9 @@ mkdirSync(`${apiDestination}/client`);
 writeFileSync(`${apiDestination}/client/index.ts`, `export { default } from './client';`);
 
 let client = 'import Cookies from \'js-cookie\';\n';
+client += 'import paths from \'../../routes/paths\';\n';
 
-client += 'import { Configuration, FetchParams, RequestContext } from \'../runtime\';\nimport {';
+client += 'import { Configuration, FetchParams, RequestContext, ResponseContext } from \'../runtime\';\nimport {';
 
 apis.forEach((api, index) => {
 	client += ` ${api.replace('.ts', '')}${index < apis.length - 1 ? ',' : ' '}`;
@@ -87,6 +88,13 @@ client += `\t\t\t\t\tAuthorization: \`Bearer \${token}\`,\n`;
 client += `\t\t\t\t};\n`;
 client += `\t\t\t}\n\n`;
 client += `\t\t\treturn Promise.resolve(context);\n`;
+client += `\t\t},\n`;
+client += `\t\tpost(context: ResponseContext): Promise<Response | void> {\n`;
+client += `\t\t\tif (context.response.status === 401 && !context.response.url.includes('auth')) {\n`;
+client += `\t\t\t\tCookies.remove('access_token');\n`;
+client += `\t\t\t\twindow.location.assign(paths.login);\n`;
+client += `\t\t\t}\n\n`;
+client += `\t\t\treturn Promise.resolve(context.response);\n`;
 client += `\t\t}\n`;
 client += `\t}],\n`;
 client += `\tbasePath: import.meta.env.VITE_REST_API_BASE_URL\n`;
