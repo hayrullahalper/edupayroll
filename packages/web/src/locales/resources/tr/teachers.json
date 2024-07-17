@@ -1,0 +1,70 @@
+{
+  "createTeacher": {
+    "title": "Öğretmen Ekle",
+    "success": "Öğretmen başarıyla oluşturuldu.",
+    "form": {
+      "firstName": {
+        "label": "Öğretmenin Adı",
+        "placeholder": "Öğretmenin adını giriniz",
+        "required": "Lütfen öğretmenin adını giriniz.",
+        "minLength": "Lütfen en az 3 karakter giriniz.",
+        "maxLength": "Öğretmenin adı en fazla 50 karakter olmalıdır."
+      },
+      "lastName": {
+        "label": "Öğretmenin Soyadı",
+        "placeholder": "Öğretmenin soyadını giriniz",
+        "required": "Lütfen öğretmenin soyadını giriniz.",
+        "minLength": "Lütfen en az 3 karakter giriniz.",
+        "maxLength": "Öğretmenin soyadı en fazla 50 karakter olmalıdır."
+      },
+      "branch": {
+        "label": "Öğretmenin Branşı",
+        "placeholder": "Öğretmenin branşını giriniz",
+        "required": "Lütfen öğretmenin branşını giriniz.",
+        "minLength": "Lütfen en az 3 karakter giriniz.",
+        "maxLength": "Öğretmenin branşı en fazla 50 karakter olmalıdır."
+      },
+      "idNumber": {
+        "label": "Öğretmenin TC Kimlik Numarası",
+        "placeholder": "Öğretmenin TC kimlik numarasını giriniz",
+        "required": "Lütfen öğretmenin TC kimlik numarasını giriniz.",
+        "minLength": "Lütfen en az 11 karakter giriniz.",
+        "maxLength": "Öğretmenin TC kimlik numarası en fazla 11 karakter olmalıdır."
+      }
+    }
+  },
+  "updateTeacher": {
+    "title": "Öğretmeni Güncelle",
+    "success": "Öğretmen başarıyla güncellendi.",
+    "form": {
+      "firstName": {
+        "label": "Öğretmenin Adı",
+        "placeholder": "Öğretmenin adını giriniz",
+        "required": "Lütfen öğretmenin adını giriniz.",
+        "minLength": "Lütfen en az 3 karakter giriniz.",
+        "maxLength": "Öğretmenin adı en fazla 50 karakter olmalıdır."
+      },
+      "lastName": {
+        "label": "Öğretmenin Soyadı",
+        "placeholder": "Öğretmenin soyadını giriniz",
+        "required": "Lütfen öğretmenin soyadını giriniz.",
+        "minLength": "Lütfen en az 3 karakter giriniz.",
+        "maxLength": "Öğretmenin soyadı en fazla 50 karakter olmalıdır."
+      },
+      "branch": {
+        "label": "Öğretmenin Branşı",
+        "placeholder": "Öğretmenin branşını giriniz",
+        "required": "Lütfen öğretmenin branşını giriniz.",
+        "minLength": "Lütfen en az 3 karakter giriniz.",
+        "maxLength": "Öğretmenin branşı en fazla 50 karakter olmalıdır."
+      },
+      "idNumber": {
+        "label": "Öğretmenin TC Kimlik Numarası",
+        "placeholder": "Öğretmenin TC kimlik numarasını giriniz",
+        "required": "Lütfen öğretmenin TC kimlik numarasını giriniz.",
+        "minLength": "Lütfen en az 11 karakter giriniz.",
+        "maxLength": "Öğretmenin TC kimlik numarası en fazla 11 karakter olmalıdır."
+      }
+    }
+  }
+}

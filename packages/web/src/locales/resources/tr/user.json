@@ -1,0 +1,101 @@
+{
+  "updatePassword": {
+    "form": {
+      "submit": "Şifremi Değiştir",
+      "currentPassword": {
+        "label": "Mevcut Şifreniz",
+        "required": "Lütfen mevcut şifrenizi giriniz.",
+        "description": "Mevcut şifrenizi doğru girdiğinizden emin olun."
+      },
+      "newPassword": {
+        "label": "Yeni Şifreniz",
+        "required": "Lütfen yeni şifrenizi giriniz.",
+        "minLength": "Lütfen en az 6 karakter giriniz.",
+        "maxLength": "Şifreniz en fazla 32 karakter olmalıdır.",
+        "invalid": "Şifreniz en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.",
+        "description": "Yeni şifreniz en az 6 karakterden oluşmalı ve en az bir büyük harf, bir küçük harf ve bir rakam içermelidir."
+      },
+      "confirmPassword": {
+        "label": "Yeni Şifrenizi Doğrulayın",
+        "required": "Lütfen yeni şifrenizi doğrulayın.",
+        "invalid": "Şifreleriniz eşleşmiyor.",
+        "description": "Yeni şifrenizi doğru girdiğinizden emin olun."
+      },
+      "success": "Şifreniz başarıyla değiştirildi.",
+      "passwordMismatch": "Mevcut şifreniz yanlış."
+    }
+  },
+  "updateSchool": {
+    "form": {
+      "name": {
+        "label": "Okulunuzun Adı",
+        "required": "Lütfen okulunuzun adını giriniz.",
+        "minLength": "Okulunuzun adı en az 3 karakter olmalıdır.",
+        "maxLength": "Okulunuzun adı en fazla 100 karakter olmalıdır.",
+        "description": "Okulunuzun adı kaydedilen belgelerde yer alacaktır."
+      },
+      "principalName": {
+        "label": "Okul Müdürünüzün Adı",
+        "required": "Lütfen okul müdürünüzün adını giriniz.",
+        "minLength": "Okul müdürünüzün adı en az 3 karakter olmalıdır.",
+        "maxLength": "Okul müdürünüzün adı en fazla 50 karakter olmalıdır.",
+        "description": "Okul müdürünüzün adı kaydedilen belgelerde yer alacaktır."
+      },
+      "editorName": {
+        "label": "Düzenleyen Kişi",
+        "required": "Lütfen düzenleyen kişinin adını giriniz.",
+        "minLength": "Düzenleyen kişinin adı en az 3 karakter olmalıdır.",
+        "maxLength": "Düzenleyen kişinin adı en fazla 50 karakter olmalıdır.",
+        "description": "Kaydedilen belgelerde \"Düzenleyen\" başlığı altında yer alacaktır."
+      },
+      "editorTitle": {
+        "label": "Düzenleyen Kişinin Ünvanı",
+        "required": "Lütfen düzenleyen kişinin ünvanını giriniz.",
+        "minLength": "Düzenleyen kişinin ünvanı en az 3 karakter olmalıdır.",
+        "maxLength": "Düzenleyen kişinin ünvanı en fazla 50 karakter olmalıdır.",
+        "description": "Kaydedilen belgelerde \"Düzenleyen\" başlığı altında yer alacaktır."
+      },
+      "success": "Okul bilgileriniz başarıyla güncellendi."
+    }
+  },
+  "updateName": {
+    "form": {
+      "firstName": {
+        "label": "Adınız",
+        "required": "Lütfen adınızı giriniz.",
+        "minLength": "Lütfen en az 3 karakter giriniz.",
+        "maxLength": "Adınız en fazla 50 karakter olmalıdır.",
+        "description": "Adınızı doğru şekilde yazdığınızdan emin olun."
+      },
+      "lastName": {
+        "label": "Soyadınız",
+        "required": "Lütfen soyadınızı giriniz.",
+        "minLength": "Lütfen en az 3 karakter giriniz.",
+        "maxLength": "Soyadınız en fazla 50 karakter olmalıdır.",
+        "description": "Soyadınızı doğru şekilde yazdığınızdan emin olun."
+      },
+      "success": "Adınız ve soyadınız başarıyla güncellendi."
+    }
+  },
+  "updateEmail": {
+    "form": {
+      "email": {
+        "label": "E-posta Adresiniz",
+        "required": "Lütfen e-posta adresinizi giriniz.",
+        "invalid": "Lütfen geçerli bir e-posta adresi giriniz.",
+        "description": "Size ulaşabilmemiz için geçerli bir e-posta adresi girmeniz gerekmektedir.",
+        "alreadyExists": "Bu e-posta adresi zaten kullanılmaktadır."
+      },
+      "success": "E-posta adresiniz başarıyla güncellendi."
+    },
+    "modal": {
+      "title": "E-posta Adresinizi Değiştirin",
+      "password": {
+        "label": "Şifrenizi Onaylayın",
+        "required": "Lütfen şifrenizi giriniz.",
+        "mismatch": "Girmiş olduğunuz şifre mevcut şifrenizle eşleşmiyor.",
+        "description": "E-posta adresinizi güncellemek için şifrenizi doğru girdiğinizden emin olun."
+      }
+    }
+  }
+}

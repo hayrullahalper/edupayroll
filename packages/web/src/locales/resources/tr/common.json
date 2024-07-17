@@ -1,4 +1,11 @@
 {
+  "form": {
+    "edit": "Düzenle",
+    "save": "Kaydet",
+    "cancel": "Vazgeç",
+    "update": "Güncelle",
+    "submit": "Değişiklikleri Kaydet"
+  },
   "error": {
 	"unknown": "Beklenmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin."
   }

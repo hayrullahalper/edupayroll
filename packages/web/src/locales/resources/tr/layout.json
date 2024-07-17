@@ -7,5 +7,24 @@
       "exports": "Kaydedilenler",
       "settings": "Seçenekler"
     }
+  },
+  "settings": {
+    "title": "Seçenekler",
+    "user": {
+      "title": "Kullanıcı Bilgileri",
+      "description": "Kullanıcı bilgilerinizi düzenleyebilirsiniz"
+    },
+    "password": {
+      "title": "Şifre Değiştir",
+      "description": "Şifrenizi değiştirmek için mevcut şifrenizi girin"
+    },
+    "school": {
+      "title": "Okul Bilgileri",
+      "description": "Okul bilgilerinizi düzenleyebilirsiniz"
+    }
+  },
+  "teachers": {
+    "title": "Öğretmenler",
+    "new": "Yeni Öğretmen Ekle"
   }
 }
