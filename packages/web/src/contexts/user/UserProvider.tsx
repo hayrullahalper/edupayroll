@@ -10,9 +10,10 @@ import UserContext from './UserContext';
 export default function UserProvider({ children }: PropsWithChildren<{}>) {
 	const { token } = useToken();
 
-	const { isLoading, data: { data: user } = {} } = useQuery({
+	const { isLoading, data: { node: user } = {} } = useQuery({
 		enabled: !!token,
 		queryKey: ['user'],
+		refetchOnMount: 'always',
 		refetchOnWindowFocus: true,
 		queryFn: () => client('user').getUser(),
 	});
