@@ -27,7 +27,6 @@ export const links: NavLink[] = [
 	{
 		icon: IconUsers,
 		to: paths.teachers,
-		relations: [paths.teacher],
 		label: i18n.t('layout.sidebar.links.teachers'),
 	},
 	{
@@ -39,6 +38,6 @@ export const links: NavLink[] = [
 		to: paths.settings,
 		icon: IconSettings,
 		label: i18n.t('layout.sidebar.links.settings'),
-		relations: [paths.school, paths.profile, paths.changePassword],
+		relations: [paths.school, paths.changePassword],
 	},
 ];

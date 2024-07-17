@@ -69,7 +69,7 @@ export default function Sidebar() {
 					td="none"
 					align="center"
 					component={Link}
-					to={paths.profile}
+					to={paths.settings}
 					justify="flex-start"
 				>
 					<Avatar color="indigo">

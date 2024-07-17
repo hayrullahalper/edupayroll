@@ -4,10 +4,8 @@ export default {
 	document: '/documents/:documentId',
 	documents: '/documents',
 
-	teacher: '/teachers/:teacherId',
-	teachers: '/teachers',
-
 	exports: '/exports',
+	teachers: '/teachers',
 
 	login: '/login',
 	logout: '/logout',
@@ -17,7 +15,6 @@ export default {
 	resetPasswordComplete: '/reset-password/complete',
 
 	school: '/settings/school',
-	profile: '/settings/profile',
 	settings: '/settings',
 	changePassword: '/settings/change-password',
 
