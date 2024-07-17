@@ -1,21 +1,29 @@
-import { TextInput, TextInputProps } from '@mantine/core';
+import { forwardRef } from 'react';
 import { useFormikContext } from 'formik';
+import { TextInput, TextInputProps } from '@mantine/core';
 
 interface TextFieldProps extends Omit<TextInputProps, 'name'> {
 	name: string;
 }
 
-export default function TextField({ name, ...inputProps }: TextFieldProps) {
-	const { getFieldProps, getFieldMeta } = useFormikContext();
-	const { error, touched } = getFieldMeta(name);
+const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
+	({ name, ...inputProps }, ref) => {
+		const { getFieldProps, getFieldMeta } = useFormikContext();
+		const { error, touched } = getFieldMeta(name);
 
-	return (
-		<TextInput
-			spellCheck={false}
-			autoComplete="off"
-			error={touched && error}
-			{...inputProps}
-			{...getFieldProps(name)}
-		/>
-	);
-}
+		return (
+			<TextInput
+				ref={ref}
+				spellCheck={false}
+				autoComplete="off"
+				error={touched && error}
+				{...inputProps}
+				{...getFieldProps(name)}
+			/>
+		);
+	},
+);
+
+TextField.displayName = 'TextField';
+
+export default TextField;
