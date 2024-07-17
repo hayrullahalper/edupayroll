@@ -12,14 +12,13 @@ import {
 } from './RegisterForm.utils';
 
 interface RegisterFormProps {
-	loading?: boolean;
 	onSubmit: (
 		values: RegisterFormInput,
 		helpers: FormikHelpers<RegisterFormInput>,
-	) => void;
+	) => Promise<void>;
 }
 
-export default function RegisterForm({ loading, onSubmit }: RegisterFormProps) {
+export default function RegisterForm({ onSubmit }: RegisterFormProps) {
 	const { t } = useTranslation();
 
 	const formik = useFormik({
@@ -48,7 +47,7 @@ export default function RegisterForm({ loading, onSubmit }: RegisterFormProps) {
 							type="submit"
 							color="indigo"
 							variant="light"
-							loading={loading}
+							loading={formik.isSubmitting}
 						>
 							{t('auth.register.form.submit')}
 						</Button>

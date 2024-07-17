@@ -27,9 +27,9 @@ export default function Register() {
 		helpers: FormikHelpers<RegisterFormInput>,
 	) => {
 		try {
-			const { data, errors } = await register.mutateAsync(input);
+			const { node, errors } = await register.mutateAsync(input);
 
-			if (!data || !!errors.length) {
+			if (!node || !!errors.length) {
 				if (errors.some(({ code }) => code === 'USER_ALREADY_REGISTERED')) {
 					helpers.setFieldError('email', t('auth.register.error.emailExists'));
 					return;
@@ -63,9 +63,9 @@ export default function Register() {
 				return;
 			}
 
-			const { data, errors } = await register.mutateAsync({ email });
+			const { node, errors } = await register.mutateAsync({ email });
 
-			if (!data || !!errors.length) {
+			if (!node?.success || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',
@@ -119,7 +119,7 @@ export default function Register() {
 
 					<Divider />
 
-					<RegisterForm onSubmit={handleSubmit} loading={register.isPending} />
+					<RegisterForm onSubmit={handleSubmit} />
 				</Stack>
 			</Paper>
 
