@@ -19,7 +19,7 @@ public class TeacherCreateInput {
   @NotEmpty(message = "Branch name is required")
   public String branch;
 
-  @Size(min = 3, max = 50, message = "ID number must be between 3 and 50 characters")
+  @Size(min = 11, max = 11, message = "ID number must be 11 characters")
   @NotEmpty(message = "ID number is required")
   public String idNumber;
 }
