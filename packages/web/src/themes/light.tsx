@@ -18,7 +18,7 @@ const light = createTheme({
 		}),
 		Paper: Paper.extend({
 			defaultProps: {
-				bg: 'gray.2',
+				bg: 'gray.0',
 				radius: 'md',
 			},
 		}),
