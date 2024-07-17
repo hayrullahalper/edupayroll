@@ -19,15 +19,13 @@ import {
 } from './RegisterCompleteForm.utils';
 
 interface RegisterCompleteFormProps {
-	loading?: boolean;
 	onSubmit: (
 		values: RegisterCompleteFormInput,
 		helpers: FormikHelpers<RegisterCompleteFormInput>,
-	) => void;
+	) => Promise<void>;
 }
 
 export default function RegisterCompleteForm({
-	loading,
 	onSubmit,
 }: RegisterCompleteFormProps) {
 	const { t } = useTranslation();
@@ -105,7 +103,7 @@ export default function RegisterCompleteForm({
 							type="submit"
 							color="indigo"
 							variant="light"
-							loading={loading}
+							loading={formik.isSubmitting}
 						>
 							{t('auth.registerComplete.form.submit')}
 						</Button>

@@ -30,12 +30,12 @@ export default function RegisterComplete() {
 				return;
 			}
 
-			const { data, errors } = await registerComplete.mutateAsync({
+			const { node, errors } = await registerComplete.mutateAsync({
 				token,
 				...input,
 			});
 
-			if (!data || !!errors.length) {
+			if (!node?.token || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',
@@ -43,7 +43,7 @@ export default function RegisterComplete() {
 				return;
 			}
 
-			setToken(data.token, true);
+			setToken(node.token, true);
 		} catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
@@ -82,10 +82,7 @@ export default function RegisterComplete() {
 
 					<Divider />
 
-					<RegisterCompleteForm
-						onSubmit={handleSubmit}
-						loading={registerComplete.isPending}
-					/>
+					<RegisterCompleteForm onSubmit={handleSubmit} />
 				</Stack>
 			</Paper>
 
