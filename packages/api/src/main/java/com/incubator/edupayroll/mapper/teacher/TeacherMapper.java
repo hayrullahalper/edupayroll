@@ -6,6 +6,10 @@ import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 public class TeacherMapper {
   public static Teacher toDTO(TeacherEntity teacher) {
     return new Teacher(
-        teacher.getId(), teacher.getFirstName(), teacher.getBranch(), teacher.getIdNumber());
+        teacher.getId(),
+        teacher.getFirstName(),
+        teacher.getLastName(),
+        teacher.getBranch(),
+        teacher.getIdNumber());
   }
 }
