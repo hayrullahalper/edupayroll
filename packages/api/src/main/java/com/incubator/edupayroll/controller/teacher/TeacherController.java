@@ -6,7 +6,7 @@ import com.incubator.edupayroll.service.teacher.TeacherService;
 import com.incubator.edupayroll.service.user.UserService;
 import com.incubator.edupayroll.util.response.PageResponse;
 import com.incubator.edupayroll.util.response.Response;
-import com.incubator.edupayroll.util.selection.DeleteSelectionType;
+import com.incubator.edupayroll.util.selection.SelectionType;
 import com.incubator.edupayroll.util.validation.Validation;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +94,7 @@ public class TeacherController {
 
     var user = userService.getAuthenticatedUser();
 
-    if (input.getType().equals(DeleteSelectionType.INCLUDE))
+    if (input.getType().equals(SelectionType.INCLUDE))
       teacherService.removeAllIncluding(user, input.getIds());
     else teacherService.removeAllExcluding(user, input.getIds());
 
