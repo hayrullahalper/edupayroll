@@ -1,14 +1,12 @@
 package com.incubator.edupayroll.controller.teacher;
 
-import com.incubator.edupayroll.dto.teacher.Teacher;
-import com.incubator.edupayroll.dto.teacher.TeacherCreateInput;
-import com.incubator.edupayroll.dto.teacher.TeacherDeletePayload;
-import com.incubator.edupayroll.dto.teacher.TeacherUpdateInput;
+import com.incubator.edupayroll.dto.teacher.*;
 import com.incubator.edupayroll.mapper.teacher.TeacherMapper;
 import com.incubator.edupayroll.service.teacher.TeacherService;
 import com.incubator.edupayroll.service.user.UserService;
 import com.incubator.edupayroll.util.response.PageResponse;
 import com.incubator.edupayroll.util.response.Response;
+import com.incubator.edupayroll.util.selection.DeleteSelectionType;
 import com.incubator.edupayroll.util.validation.Validation;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +84,19 @@ public class TeacherController {
     var teacher = teacherService.getById(user, UUID.fromString(id));
 
     teacherService.remove(teacher);
+
+    return ResponseEntity.ok().body(Response.data(new TeacherDeletePayload(true)).build());
+  }
+
+  @DeleteMapping("/bulk")
+  public ResponseEntity<Response<TeacherDeletePayload, TeacherErrorCode>> bulkDeleteTeachers(
+      @RequestBody TeacherDeleteDTO input) {
+
+    var user = userService.getAuthenticatedUser();
+
+    if (input.getType().equals(DeleteSelectionType.INCLUDE))
+      teacherService.removeAllIncluding(user, input.getIds());
+    else teacherService.removeAllExcluding(user, input.getIds());
 
     return ResponseEntity.ok().body(Response.data(new TeacherDeletePayload(true)).build());
   }

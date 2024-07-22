@@ -6,6 +6,7 @@ import com.incubator.edupayroll.repository.TeacherRepository;
 import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -66,5 +67,27 @@ public class TeacherService {
 
   public void remove(TeacherEntity teacher) {
     teacherRepository.delete(teacher);
+  }
+
+  public void removeAllIncluding(UserEntity user, List<UUID> ids) {
+    List<TeacherEntity> teachersToRemove =
+        teacherRepository.findAllById(ids).stream()
+            .filter(teacher -> teacher.getUser().getId().equals(user.getId()))
+            .collect(Collectors.toList());
+
+    teacherRepository.deleteAll(teachersToRemove);
+  }
+
+  public void removeAllExcluding(UserEntity user, List<UUID> ids) {
+    List<TeacherEntity> allTeachers = teacherRepository.findAll();
+    List<TeacherEntity> teachersToRemove =
+        allTeachers.stream()
+            .filter(
+                teacher ->
+                    !ids.contains(teacher.getId())
+                        && teacher.getUser().getId().equals(user.getId()))
+            .collect(Collectors.toList());
+
+    teacherRepository.deleteAll(teachersToRemove);
   }
 }
