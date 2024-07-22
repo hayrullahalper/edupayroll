@@ -21,17 +21,26 @@ public class TeacherService {
     this.teacherRepository = teacherRepository;
   }
 
-  public long count(UserEntity user) {
-    return teacherRepository.countByUser(user);
+  public long count(
+      UserEntity user, String firstName, String lastName, String branch, String idNumber) {
+    return teacherRepository.countFilteredTeachers(user, firstName, lastName, branch, idNumber);
   }
 
-  public List<TeacherEntity> getAll(UserEntity user, int limit, int offset) {
+  public List<TeacherEntity> getAll(
+      UserEntity user,
+      int limit,
+      int offset,
+      String firstName,
+      String lastName,
+      String branch,
+      String idNumber) {
     int number = Math.round((float) offset / limit);
 
     var sort = Sort.by(Sort.Direction.DESC, "createdAt").and(Sort.by(Sort.Direction.DESC, "id"));
 
     var pr = PageRequest.of(number, limit, sort);
-    var page = teacherRepository.findAllByUser(user, pr);
+    var page =
+        teacherRepository.findFilteredTeachers(user, firstName, lastName, branch, idNumber, pr);
 
     return page.get().toList();
   }

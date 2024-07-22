@@ -81,11 +81,11 @@ public class TeacherServiceTest {
     var user = helper.createUser();
     var teacher = createTeacher(user);
 
-    assertEquals(1, teacherService.count(user));
+    assertEquals(1, teacherService.count(user, null, null, null, null));
 
     teacherService.remove(teacher);
 
-    assertEquals(0, teacherService.count(user));
+    assertEquals(0, teacherService.count(user, null, null, null, null));
   }
 
   @Test
@@ -123,8 +123,8 @@ public class TeacherServiceTest {
 
     for (int i = 0; i < 5; i++) createTeacher(anotherUser);
 
-    var teachersPageOne = teacherService.getAll(user, 10, 0);
-    var teachersPageTwo = teacherService.getAll(user, 10, 10);
+    var teachersPageOne = teacherService.getAll(user, 10, 0, null, null, null, null);
+    var teachersPageTwo = teacherService.getAll(user, 10, 10, null, null, null, null);
 
     assertEquals(10, teachersPageOne.size());
     assertEquals(2, teachersPageTwo.size());
@@ -143,11 +143,11 @@ public class TeacherServiceTest {
   public void testTeacherServiceCount() {
     var user = helper.createUser();
 
-    assertEquals(0, teacherService.count(user));
+    assertEquals(0, teacherService.count(user, null, null, null, null));
 
     for (int i = 0; i < 5; i++) createTeacher(user);
 
-    assertEquals(5, teacherService.count(user));
+    assertEquals(5, teacherService.count(user, null, null, null, null));
   }
 
   @Test
