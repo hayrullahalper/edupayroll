@@ -79,12 +79,9 @@ public class TeacherService {
   }
 
   public void removeAllExcluding(UserEntity user, List<UUID> ids) {
-    List<TeacherEntity> allTeachers = teacherRepository.findAllByUser(user);
     List<TeacherEntity> teachersToRemove =
-        allTeachers.stream()
-            .filter(
-                teacher ->
-                    !ids.contains(teacher.getId()))
+        teacherRepository.findAllByUser(user).stream()
+            .filter(teacher -> !ids.contains(teacher.getId()))
             .collect(Collectors.toList());
 
     teacherRepository.deleteAll(teachersToRemove);
