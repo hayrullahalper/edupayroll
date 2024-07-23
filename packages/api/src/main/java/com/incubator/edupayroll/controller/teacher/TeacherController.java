@@ -8,6 +8,7 @@ import com.incubator.edupayroll.util.response.PageResponse;
 import com.incubator.edupayroll.util.response.Response;
 import com.incubator.edupayroll.util.selection.SelectionType;
 import com.incubator.edupayroll.util.validation.Validation;
+import java.util.Map;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,21 @@ public class TeacherController {
 
   @GetMapping("")
   public ResponseEntity<PageResponse<Teacher, ?>> getTeachers(
-      @RequestParam("limit") int limit, @RequestParam("offset") int offset) {
+      @RequestParam("limit") int limit,
+      @RequestParam("offset") int offset,
+      @RequestParam Map<String, String> filterParams) {
     var user = userService.getAuthenticatedUser();
 
-    var count = teacherService.count(user);
+    String firstName = filterParams.get("firstName");
+    String lastName = filterParams.get("lastName");
+    String branch = filterParams.get("branch");
+    String idNumber = filterParams.get("idNumber");
+
+    var count = teacherService.count(user, firstName, lastName, branch, idNumber);
     var teachers =
-        teacherService.getAll(user, limit, offset).stream().map(TeacherMapper::toDTO).toList();
+        teacherService.getAll(user, limit, offset, firstName, lastName, branch, idNumber).stream()
+            .map(TeacherMapper::toDTO)
+            .toList();
 
     var page = offset / limit + 1;
     var total = (int) Math.ceil((double) count / limit);
