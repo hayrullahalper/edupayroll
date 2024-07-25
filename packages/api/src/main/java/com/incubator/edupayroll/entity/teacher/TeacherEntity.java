@@ -1,8 +1,10 @@
 package com.incubator.edupayroll.entity.teacher;
 
 import com.incubator.edupayroll.entity.base.BaseEntity;
+import com.incubator.edupayroll.entity.record.RecordEntity;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.*;
 
 @Entity
@@ -30,4 +32,8 @@ public class TeacherEntity extends BaseEntity {
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private UserEntity user;
+
+  @OneToMany
+  @JoinColumn(name = "record_id")
+  private List<RecordEntity> record;
 }

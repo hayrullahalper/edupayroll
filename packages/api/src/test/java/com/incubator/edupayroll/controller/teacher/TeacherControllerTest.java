@@ -180,7 +180,7 @@ public class TeacherControllerTest {
     var branch = faker.name().fullName();
     var idNumber = faker.idNumber().valid();
 
-    var teacher = new TeacherEntity(firstName, lastName, branch, idNumber, mockedUser);
+    var teacher = new TeacherEntity(firstName, lastName, branch, idNumber, mockedUser, null);
 
     return teacherRepository.saveAndFlush(teacher);
   }

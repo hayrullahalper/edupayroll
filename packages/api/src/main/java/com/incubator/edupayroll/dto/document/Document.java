@@ -4,12 +4,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.YearMonthDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.YearMonthSerializer;
-import com.incubator.edupayroll.entity.export.ExportEntity;
-import com.incubator.edupayroll.entity.record.RecordEntity;
-import com.incubator.edupayroll.entity.user.UserEntity;
+import com.incubator.edupayroll.dto.export.Export;
+import com.incubator.edupayroll.dto.record.Record;
 import jakarta.validation.constraints.NotNull;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.UUID;
 import lombok.Value;
 
 @Value
@@ -24,9 +24,9 @@ public class Document {
 
   @NotNull public String description;
 
-  @NotNull public UserEntity user;
+  @NotNull public UUID user;
 
-  @NotNull public List<ExportEntity> exports;
+  @NotNull public List<Export> exports;
 
-  @NotNull public List<RecordEntity> records;
+  @NotNull public List<Record> records;
 }
