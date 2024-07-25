@@ -10,6 +10,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecordUpdateInformationDTO {
-    String information;
-
+  String information;
 }
