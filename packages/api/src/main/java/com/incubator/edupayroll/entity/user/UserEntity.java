@@ -36,10 +36,10 @@ public class UserEntity extends BaseEntity {
   private List<UserRole> roles;
 
   @ToString.Exclude
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   private List<TeacherEntity> teachers;
 
   @ToString.Exclude
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   private List<DocumentEntity> documents;
 }

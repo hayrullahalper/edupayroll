@@ -25,8 +25,9 @@ public class RecordEntity extends BaseEntity {
   @Column(name = "information", nullable = false)
   private String information;
 
-  @OneToOne
-  @JoinColumn(name = "teacher_id", nullable = false)
+  @ToString.Exclude
+  @ManyToOne
+  @JoinColumn(name = "teacher_id")
   private TeacherEntity teacher;
 
   @ToString.Exclude

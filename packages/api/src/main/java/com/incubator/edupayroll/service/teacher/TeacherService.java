@@ -70,7 +70,7 @@ public class TeacherService {
 
   public TeacherEntity create(
       String firstName, String lastName, String branch, String idNumber, UserEntity user) {
-    var teacher = new TeacherEntity(firstName, lastName, branch, idNumber, user);
+    var teacher = new TeacherEntity(firstName, lastName, branch, idNumber, user, null);
     return teacherRepository.saveAndFlush(teacher);
   }
 

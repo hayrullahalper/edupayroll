@@ -5,6 +5,7 @@ import com.incubator.edupayroll.entity.document.DocumentEntity;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.repository.DocumentRepository;
 import java.time.YearMonth;
+import java.util.ArrayList;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,8 +43,8 @@ public class DocumentService {
     document.setTime(input.getTime());
     document.setDescription(input.getDescription());
     document.setUser(user);
-    document.setExports(input.getExports());
-    document.setRecords(input.getRecords());
+    document.setExports(new ArrayList<>());
+    document.setRecords(new ArrayList<>());
 
     return documentRepository.save(document);
   }
