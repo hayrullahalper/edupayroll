@@ -8,11 +8,9 @@ import lombok.Value;
 public class Teacher {
   @NotNull public UUID id;
 
-  @NotNull public String firstName;
-
-  @NotNull public String lastName;
+  @NotNull public String name;
 
   @NotNull public String branch;
 
-  @NotNull public String identityNo;
+  @NotNull public String idNumber;
 }

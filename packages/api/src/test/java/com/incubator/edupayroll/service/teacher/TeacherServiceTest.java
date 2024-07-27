@@ -9,6 +9,7 @@ import com.incubator.edupayroll.helper.TestHelper;
 import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,17 +32,15 @@ public class TeacherServiceTest {
   public void testTeacherServiceCreate() {
     var user = helper.createUser();
 
-    var firstName = faker.name().firstName();
-    var lastName = faker.name().lastName();
+    var name = faker.name().fullName();
     var branch = faker.job().field();
     var idNumber = faker.number().digits(11);
 
-    var teacher = teacherService.create(firstName, lastName, branch, idNumber, user);
+    var teacher = teacherService.create(name, branch, idNumber, user);
 
     assertNotNull(teacher);
 
-    assertEquals(teacher.getFirstName(), firstName);
-    assertEquals(teacher.getLastName(), lastName);
+    assertEquals(teacher.getName(), name);
     assertEquals(teacher.getBranch(), branch);
     assertEquals(teacher.getIdNumber(), idNumber);
     assertEquals(teacher.getUser().getId(), user.getId());
@@ -55,19 +54,16 @@ public class TeacherServiceTest {
     var user = helper.createUser();
     var teacher = createTeacher(user);
 
-    var name = teacher.getFirstName();
+    var name = teacher.getName();
     var branch = teacher.getBranch();
-    var updatedFirstName = faker.name().firstName();
-    var updatedLastName = faker.name().lastName();
+    var updatedName = faker.name().fullName();
 
-    var updatedTeacher =
-        teacherService.update(teacher, updatedFirstName, updatedLastName, null, null);
+    var updatedTeacher = teacherService.update(teacher, updatedName, null, null);
 
     assertNotNull(updatedTeacher);
 
-    assertNotEquals(updatedTeacher.getFirstName(), name);
-    assertEquals(updatedTeacher.getFirstName(), updatedFirstName);
-    assertEquals(updatedTeacher.getLastName(), updatedLastName);
+    assertNotEquals(updatedTeacher.getName(), name);
+    assertEquals(updatedTeacher.getName(), updatedName);
 
     assertEquals(updatedTeacher.getBranch(), branch);
     assertEquals(updatedTeacher.getId(), teacher.getId());
@@ -81,11 +77,11 @@ public class TeacherServiceTest {
     var user = helper.createUser();
     var teacher = createTeacher(user);
 
-    assertEquals(1, teacherService.count(user, null, null, null, null));
+    assertEquals(1, teacherService.count(user, Optional.empty()));
 
     teacherService.remove(teacher);
 
-    assertEquals(0, teacherService.count(user, null, null, null, null));
+    assertEquals(0, teacherService.count(user, Optional.empty()));
   }
 
   @Test
@@ -101,7 +97,7 @@ public class TeacherServiceTest {
     assertNotNull(foundTeacher);
 
     assertEquals(foundTeacher.getId(), teacher.getId());
-    assertEquals(foundTeacher.getFirstName(), teacher.getFirstName());
+    assertEquals(foundTeacher.getName(), teacher.getName());
     assertEquals(foundTeacher.getUser().getId(), user.getId());
     assertEquals(foundTeacher.getBranch(), teacher.getBranch());
     assertEquals(foundTeacher.getIdNumber(), teacher.getIdNumber());
@@ -123,8 +119,8 @@ public class TeacherServiceTest {
 
     for (int i = 0; i < 5; i++) createTeacher(anotherUser);
 
-    var teachersPageOne = teacherService.getAll(user, 10, 0, null, null, null, null);
-    var teachersPageTwo = teacherService.getAll(user, 10, 10, null, null, null, null);
+    var teachersPageOne = teacherService.getAll(user, 10, 0, Optional.empty());
+    var teachersPageTwo = teacherService.getAll(user, 10, 10, Optional.empty());
 
     assertEquals(10, teachersPageOne.size());
     assertEquals(2, teachersPageTwo.size());
@@ -143,11 +139,27 @@ public class TeacherServiceTest {
   public void testTeacherServiceCount() {
     var user = helper.createUser();
 
-    assertEquals(0, teacherService.count(user, null, null, null, null));
+    assertEquals(0, teacherService.count(user, Optional.empty()));
 
     for (int i = 0; i < 5; i++) createTeacher(user);
 
-    assertEquals(5, teacherService.count(user, null, null, null, null));
+    assertEquals(5, teacherService.count(user, Optional.empty()));
+  }
+
+  @Test
+  @Transactional
+  @Rollback
+  @DisplayName("should count teachers correctly with name filter")
+  public void testTeacherServiceCountWithNameFilter() {
+    var user = helper.createUser();
+
+    var teacher1 = createTeacher(user);
+    var teacher2 = createTeacher(user);
+
+    assertEquals(2, teacherService.count(user, Optional.empty()));
+
+    assertEquals(1, teacherService.count(user, Optional.of(teacher1.getName())));
+    assertEquals(1, teacherService.count(user, Optional.of(teacher2.getName())));
   }
 
   @Test
@@ -174,11 +186,10 @@ public class TeacherServiceTest {
   }
 
   private TeacherEntity createTeacher(UserEntity user) {
-    var firstName = faker.name().firstName();
-    var lastName = faker.name().lastName();
+    var name = faker.name().fullName();
     var branch = faker.job().field();
     var idNumber = faker.number().digits(11);
 
-    return teacherService.create(firstName, lastName, branch, idNumber, user);
+    return teacherService.create(name, branch, idNumber, user);
   }
 }

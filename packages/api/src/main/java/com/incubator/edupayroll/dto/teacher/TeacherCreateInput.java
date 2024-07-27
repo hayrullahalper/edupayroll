@@ -7,13 +7,9 @@ import lombok.Value;
 @Value
 public class TeacherCreateInput {
 
-  @Size(min = 3, max = 50, message = "Teacher's first name must be between 3 and 50 characters")
-  @NotEmpty(message = "Teacher's first name is required")
-  public String firstName;
-
-  @Size(min = 3, max = 50, message = "Teacher's last name must be between 3 and 50 characters")
-  @NotEmpty(message = "Teacher's last name is required")
-  public String lastName;
+  @Size(min = 3, max = 50, message = "Teacher's name must be between 3 and 50 characters")
+  @NotEmpty(message = "Teacher's name is required")
+  public String name;
 
   @Size(min = 3, max = 50, message = "Branch name must be between 3 and 50 characters")
   @NotEmpty(message = "Branch name is required")

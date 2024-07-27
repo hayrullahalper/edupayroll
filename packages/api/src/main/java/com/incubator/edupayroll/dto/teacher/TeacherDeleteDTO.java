@@ -1,20 +1,17 @@
 package com.incubator.edupayroll.dto.teacher;
 
 import com.incubator.edupayroll.util.selection.SelectionType;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
-import java.util.UUID;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Value;
 
-@Getter
-@Setter
+@Value
 public class TeacherDeleteDTO {
 
-  private List<UUID> ids;
-  private SelectionType type;
+  @NotEmpty(message = "Teacher's ID is required")
+  public List<@NotBlank String> ids;
 
-  public TeacherDeleteDTO(List<UUID> ids, SelectionType type) {
-    this.ids = ids;
-    this.type = type == null ? SelectionType.INCLUDE : type;
-  }
+  @Nullable public SelectionType type;
 }
