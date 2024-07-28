@@ -49,7 +49,7 @@ export interface DataTableProps<T> {
 export interface DataTableContextType<T>
 	extends Omit<
 			DataTableProps<T>,
-			| 'hegiht'
+			| 'height'
 			| 'toolbar'
 			| 'skeleton'
 			| 'emptyState'
