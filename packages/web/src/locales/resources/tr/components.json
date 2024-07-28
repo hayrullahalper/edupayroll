@@ -1,0 +1,11 @@
+{
+  "datatable": {
+    "menu": {
+      "clearAll": "Tüm seçimleri temizle",
+      "clearPage": "Bu sayfayı temizle",
+      "selectAll": "Bütün kayıtları seç",
+      "selectPage": "Bu sayfayı seç"
+    },
+    "emptyState": "Kayıt bulunamadı, henüz kayıt eklenmemiş olabilir."
+  }
+}
