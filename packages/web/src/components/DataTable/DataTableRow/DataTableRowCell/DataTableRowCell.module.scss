@@ -1,0 +1,8 @@
+.label {
+	cursor: pointer;
+	display: inline-flex !important;
+
+	&:global(.disabled) {
+		cursor: default;
+	}
+}
