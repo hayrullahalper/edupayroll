@@ -15,21 +15,24 @@
 
 import * as runtime from '../runtime';
 import type {
-  PageResponseTeacherObject,
+  PageResponseTeacherTeacherErrorCode,
   ResponseTeacherDeletePayloadTeacherErrorCode,
   ResponseTeacherTeacherErrorCode,
   TeacherCreateInput,
+  TeacherDeleteInput,
   TeacherUpdateInput,
 } from '../models/index';
 import {
-    PageResponseTeacherObjectFromJSON,
-    PageResponseTeacherObjectToJSON,
+    PageResponseTeacherTeacherErrorCodeFromJSON,
+    PageResponseTeacherTeacherErrorCodeToJSON,
     ResponseTeacherDeletePayloadTeacherErrorCodeFromJSON,
     ResponseTeacherDeletePayloadTeacherErrorCodeToJSON,
     ResponseTeacherTeacherErrorCodeFromJSON,
     ResponseTeacherTeacherErrorCodeToJSON,
     TeacherCreateInputFromJSON,
     TeacherCreateInputToJSON,
+    TeacherDeleteInputFromJSON,
+    TeacherDeleteInputToJSON,
     TeacherUpdateInputFromJSON,
     TeacherUpdateInputToJSON,
 } from '../models/index';
@@ -42,9 +45,14 @@ export interface DeleteTeacherRequest {
     id: string;
 }
 
+export interface DeleteTeachersRequest {
+    teacherDeleteInput: TeacherDeleteInput;
+}
+
 export interface GetTeachersRequest {
     limit: number;
     offset: number;
+    query?: string;
 }
 
 export interface UpdateTeacherRequest {
@@ -124,7 +132,41 @@ export class TeacherControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async getTeachersRaw(requestParameters: GetTeachersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageResponseTeacherObject>> {
+    async deleteTeachersRaw(requestParameters: DeleteTeachersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseTeacherDeletePayloadTeacherErrorCode>> {
+        if (requestParameters['teacherDeleteInput'] == null) {
+            throw new runtime.RequiredError(
+                'teacherDeleteInput',
+                'Required parameter "teacherDeleteInput" was null or undefined when calling deleteTeachers().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/teachers/bulk`,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TeacherDeleteInputToJSON(requestParameters['teacherDeleteInput']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseTeacherDeletePayloadTeacherErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async deleteTeachers(requestParameters: DeleteTeachersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseTeacherDeletePayloadTeacherErrorCode> {
+        const response = await this.deleteTeachersRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getTeachersRaw(requestParameters: GetTeachersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageResponseTeacherTeacherErrorCode>> {
         if (requestParameters['limit'] == null) {
             throw new runtime.RequiredError(
                 'limit',
@@ -149,6 +191,10 @@ export class TeacherControllerApi extends runtime.BaseAPI {
             queryParameters['offset'] = requestParameters['offset'];
         }
 
+        if (requestParameters['query'] != null) {
+            queryParameters['query'] = requestParameters['query'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
@@ -158,12 +204,12 @@ export class TeacherControllerApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PageResponseTeacherObjectFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PageResponseTeacherTeacherErrorCodeFromJSON(jsonValue));
     }
 
     /**
      */
-    async getTeachers(requestParameters: GetTeachersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageResponseTeacherObject> {
+    async getTeachers(requestParameters: GetTeachersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageResponseTeacherTeacherErrorCode> {
         const response = await this.getTeachersRaw(requestParameters, initOverrides);
         return await response.value();
     }

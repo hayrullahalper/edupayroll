@@ -16,36 +16,36 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface ResponseErrorObject
+ * @interface ResponseErrorDocumentErrorCode
  */
-export interface ResponseErrorObject {
-    /**
-     * 
-     * @type {object}
-     * @memberof ResponseErrorObject
-     */
-    code: object;
+export interface ResponseErrorDocumentErrorCode {
     /**
      * 
      * @type {string}
-     * @memberof ResponseErrorObject
+     * @memberof ResponseErrorDocumentErrorCode
+     */
+    code: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponseErrorDocumentErrorCode
      */
     message?: string;
 }
 
 /**
- * Check if a given object implements the ResponseErrorObject interface.
+ * Check if a given object implements the ResponseErrorDocumentErrorCode interface.
  */
-export function instanceOfResponseErrorObject(value: object): value is ResponseErrorObject {
+export function instanceOfResponseErrorDocumentErrorCode(value: object): value is ResponseErrorDocumentErrorCode {
     if (!('code' in value) || value['code'] === undefined) return false;
     return true;
 }
 
-export function ResponseErrorObjectFromJSON(json: any): ResponseErrorObject {
-    return ResponseErrorObjectFromJSONTyped(json, false);
+export function ResponseErrorDocumentErrorCodeFromJSON(json: any): ResponseErrorDocumentErrorCode {
+    return ResponseErrorDocumentErrorCodeFromJSONTyped(json, false);
 }
 
-export function ResponseErrorObjectFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResponseErrorObject {
+export function ResponseErrorDocumentErrorCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResponseErrorDocumentErrorCode {
     if (json == null) {
         return json;
     }
@@ -56,7 +56,7 @@ export function ResponseErrorObjectFromJSONTyped(json: any, ignoreDiscriminator:
     };
 }
 
-export function ResponseErrorObjectToJSON(value?: ResponseErrorObject | null): any {
+export function ResponseErrorDocumentErrorCodeToJSON(value?: ResponseErrorDocumentErrorCode | null): any {
     if (value == null) {
         return value;
     }

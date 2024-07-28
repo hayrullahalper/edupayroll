@@ -42,7 +42,13 @@ export interface Teacher {
      * @type {string}
      * @memberof Teacher
      */
-    identityNo: string;
+    idNumber: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Teacher
+     */
+    description: string;
 }
 
 /**
@@ -52,7 +58,8 @@ export function instanceOfTeacher(value: object): value is Teacher {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('branch' in value) || value['branch'] === undefined) return false;
-    if (!('identityNo' in value) || value['identityNo'] === undefined) return false;
+    if (!('idNumber' in value) || value['idNumber'] === undefined) return false;
+    if (!('description' in value) || value['description'] === undefined) return false;
     return true;
 }
 
@@ -69,7 +76,8 @@ export function TeacherFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
         'id': json['id'],
         'name': json['name'],
         'branch': json['branch'],
-        'identityNo': json['identityNo'],
+        'idNumber': json['idNumber'],
+        'description': json['description'],
     };
 }
 
@@ -82,7 +90,8 @@ export function TeacherToJSON(value?: Teacher | null): any {
         'id': value['id'],
         'name': value['name'],
         'branch': value['branch'],
-        'identityNo': value['identityNo'],
+        'idNumber': value['idNumber'],
+        'description': value['description'],
     };
 }
 

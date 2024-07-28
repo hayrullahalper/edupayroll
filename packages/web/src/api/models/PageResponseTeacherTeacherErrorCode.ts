@@ -19,58 +19,58 @@ import {
     PageMetaFromJSONTyped,
     PageMetaToJSON,
 } from './PageMeta';
-import type { ResponseErrorObject } from './ResponseErrorObject';
-import {
-    ResponseErrorObjectFromJSON,
-    ResponseErrorObjectFromJSONTyped,
-    ResponseErrorObjectToJSON,
-} from './ResponseErrorObject';
 import type { Teacher } from './Teacher';
 import {
     TeacherFromJSON,
     TeacherFromJSONTyped,
     TeacherToJSON,
 } from './Teacher';
+import type { ResponseErrorTeacherErrorCode } from './ResponseErrorTeacherErrorCode';
+import {
+    ResponseErrorTeacherErrorCodeFromJSON,
+    ResponseErrorTeacherErrorCodeFromJSONTyped,
+    ResponseErrorTeacherErrorCodeToJSON,
+} from './ResponseErrorTeacherErrorCode';
 
 /**
  * 
  * @export
- * @interface PageResponseTeacherObject
+ * @interface PageResponseTeacherTeacherErrorCode
  */
-export interface PageResponseTeacherObject {
+export interface PageResponseTeacherTeacherErrorCode {
     /**
      * 
      * @type {Array<Teacher>}
-     * @memberof PageResponseTeacherObject
+     * @memberof PageResponseTeacherTeacherErrorCode
      */
     nodes?: Array<Teacher>;
     /**
      * 
      * @type {PageMeta}
-     * @memberof PageResponseTeacherObject
+     * @memberof PageResponseTeacherTeacherErrorCode
      */
     meta?: PageMeta;
     /**
      * 
-     * @type {Array<ResponseErrorObject>}
-     * @memberof PageResponseTeacherObject
+     * @type {Array<ResponseErrorTeacherErrorCode>}
+     * @memberof PageResponseTeacherTeacherErrorCode
      */
-    errors: Array<ResponseErrorObject>;
+    errors: Array<ResponseErrorTeacherErrorCode>;
 }
 
 /**
- * Check if a given object implements the PageResponseTeacherObject interface.
+ * Check if a given object implements the PageResponseTeacherTeacherErrorCode interface.
  */
-export function instanceOfPageResponseTeacherObject(value: object): value is PageResponseTeacherObject {
+export function instanceOfPageResponseTeacherTeacherErrorCode(value: object): value is PageResponseTeacherTeacherErrorCode {
     if (!('errors' in value) || value['errors'] === undefined) return false;
     return true;
 }
 
-export function PageResponseTeacherObjectFromJSON(json: any): PageResponseTeacherObject {
-    return PageResponseTeacherObjectFromJSONTyped(json, false);
+export function PageResponseTeacherTeacherErrorCodeFromJSON(json: any): PageResponseTeacherTeacherErrorCode {
+    return PageResponseTeacherTeacherErrorCodeFromJSONTyped(json, false);
 }
 
-export function PageResponseTeacherObjectFromJSONTyped(json: any, ignoreDiscriminator: boolean): PageResponseTeacherObject {
+export function PageResponseTeacherTeacherErrorCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): PageResponseTeacherTeacherErrorCode {
     if (json == null) {
         return json;
     }
@@ -78,11 +78,11 @@ export function PageResponseTeacherObjectFromJSONTyped(json: any, ignoreDiscrimi
         
         'nodes': json['nodes'] == null ? undefined : ((json['nodes'] as Array<any>).map(TeacherFromJSON)),
         'meta': json['meta'] == null ? undefined : PageMetaFromJSON(json['meta']),
-        'errors': ((json['errors'] as Array<any>).map(ResponseErrorObjectFromJSON)),
+        'errors': ((json['errors'] as Array<any>).map(ResponseErrorTeacherErrorCodeFromJSON)),
     };
 }
 
-export function PageResponseTeacherObjectToJSON(value?: PageResponseTeacherObject | null): any {
+export function PageResponseTeacherTeacherErrorCodeToJSON(value?: PageResponseTeacherTeacherErrorCode | null): any {
     if (value == null) {
         return value;
     }
@@ -90,7 +90,7 @@ export function PageResponseTeacherObjectToJSON(value?: PageResponseTeacherObjec
         
         'nodes': value['nodes'] == null ? undefined : ((value['nodes'] as Array<any>).map(TeacherToJSON)),
         'meta': PageMetaToJSON(value['meta']),
-        'errors': ((value['errors'] as Array<any>).map(ResponseErrorObjectToJSON)),
+        'errors': ((value['errors'] as Array<any>).map(ResponseErrorTeacherErrorCodeToJSON)),
     };
 }
 

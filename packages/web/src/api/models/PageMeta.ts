@@ -24,13 +24,13 @@ export interface PageMeta {
      * @type {number}
      * @memberof PageMeta
      */
-    page: number;
+    limit: number;
     /**
      * 
      * @type {number}
      * @memberof PageMeta
      */
-    size: number;
+    offset: number;
     /**
      * 
      * @type {number}
@@ -43,8 +43,8 @@ export interface PageMeta {
  * Check if a given object implements the PageMeta interface.
  */
 export function instanceOfPageMeta(value: object): value is PageMeta {
-    if (!('page' in value) || value['page'] === undefined) return false;
-    if (!('size' in value) || value['size'] === undefined) return false;
+    if (!('limit' in value) || value['limit'] === undefined) return false;
+    if (!('offset' in value) || value['offset'] === undefined) return false;
     if (!('total' in value) || value['total'] === undefined) return false;
     return true;
 }
@@ -59,8 +59,8 @@ export function PageMetaFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'page': json['page'],
-        'size': json['size'],
+        'limit': json['limit'],
+        'offset': json['offset'],
         'total': json['total'],
     };
 }
@@ -71,8 +71,8 @@ export function PageMetaToJSON(value?: PageMeta | null): any {
     }
     return {
         
-        'page': value['page'],
-        'size': value['size'],
+        'limit': value['limit'],
+        'offset': value['offset'],
         'total': value['total'],
     };
 }
