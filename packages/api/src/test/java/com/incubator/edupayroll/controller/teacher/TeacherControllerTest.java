@@ -13,6 +13,7 @@ import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.helper.TestHelper;
 import com.incubator.edupayroll.repository.TeacherRepository;
 import com.incubator.edupayroll.service.user.UserService;
+import com.incubator.edupayroll.util.selection.SelectionType;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Map;
@@ -82,20 +83,25 @@ public class TeacherControllerTest {
   @Test
   @Transactional
   @Rollback
-  @DisplayName("should get all teachers with name filter")
+  @DisplayName("should get all teachers with search query")
   public void testGetTeachersWithNameFilter() throws Exception {
     var teacher1 = createTeacher();
     var teacher2 = createTeacher();
 
-    mvc.perform(get("/teachers?limit=10&offset=0&name=" + teacher1.getName()))
+    mvc.perform(get("/teachers?limit=10&offset=0&query=" + teacher1.getName()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("nodes.length()").value(1))
         .andExpect(jsonPath("nodes[0].name").value(teacher1.getName()));
 
-    mvc.perform(get("/teachers?limit=10&offset=0&name=" + teacher2.getName()))
+    mvc.perform(get("/teachers?limit=10&offset=0&query=" + teacher2.getName()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("nodes.length()").value(1))
         .andExpect(jsonPath("nodes[0].name").value(teacher2.getName()));
+
+    mvc.perform(get("/teachers?limit=10&offset=0&query=notfound"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("nodes").isArray())
+        .andExpect(jsonPath("nodes.length()").value(0));
   }
 
   @Test
@@ -106,6 +112,7 @@ public class TeacherControllerTest {
     var name = faker.name().fullName();
     var branch = faker.name().fullName();
     var idNumber = faker.idNumber().valid();
+    var description = faker.name().title();
 
     mvc.perform(
             post("/teachers")
@@ -113,14 +120,20 @@ public class TeacherControllerTest {
                 .content(
                     mapper.writeValueAsString(
                         Map.of(
-                            "name", name,
-                            "branch", branch,
-                            "idNumber", idNumber))))
+                            "name",
+                            name,
+                            "branch",
+                            branch,
+                            "idNumber",
+                            idNumber,
+                            "description",
+                            description))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
         .andExpect(jsonPath("node.name").value(name))
         .andExpect(jsonPath("node.branch").value(branch))
-        .andExpect(jsonPath("node.idNumber").value(idNumber));
+        .andExpect(jsonPath("node.idNumber").value(idNumber))
+        .andExpect(jsonPath("node.description").value(description));
   }
 
   @Test
@@ -166,6 +179,45 @@ public class TeacherControllerTest {
   @Test
   @Transactional
   @Rollback
+  @DisplayName("should bulk delete teachers")
+  public void testBulkDeleteTeachers() throws Exception {
+    var teacher1 = createTeacher();
+    var teacher2 = createTeacher();
+    var teacher3 = createTeacher();
+    createTeacher();
+
+    mvc.perform(
+            delete("/teachers/bulk")
+                .contentType("application/json")
+                .content(
+                    mapper.writeValueAsString(
+                        Map.of(
+                            "ids",
+                            new String[] {
+                              teacher1.getId().toString(), teacher2.getId().toString()
+                            }))))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("errors").isEmpty())
+        .andExpect(jsonPath("node.success").value(true));
+
+    mvc.perform(
+            delete("/teachers/bulk")
+                .contentType("application/json")
+                .content(
+                    mapper.writeValueAsString(
+                        Map.of(
+                            "ids",
+                            new String[] {teacher3.getId().toString()},
+                            "type",
+                            SelectionType.EXCLUDE))))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("errors").isEmpty())
+        .andExpect(jsonPath("node.success").value(true));
+  }
+
+  @Test
+  @Transactional
+  @Rollback
   @DisplayName("should return not found error when teacher not found")
   public void testTeacherNotFound() throws Exception {
     mvc.perform(
@@ -198,8 +250,10 @@ public class TeacherControllerTest {
     var name = faker.name().fullName();
     var branch = faker.name().fullName();
     var idNumber = faker.idNumber().valid();
+    var description = faker.name().title();
 
-    var teacher = new TeacherEntity(name, branch, idNumber, mockedUser, new ArrayList<>());
+    var teacher =
+        new TeacherEntity(name, branch, idNumber, description, mockedUser, new ArrayList<>());
 
     return teacherRepository.saveAndFlush(teacher);
   }

@@ -18,14 +18,14 @@ public interface TeacherRepository extends JpaRepository<TeacherEntity, UUID> {
 
   @Query(
       "SELECT COUNT(t) FROM TeacherEntity t WHERE t.user = :user"
-          + " AND (:name IS NULL OR t.name LIKE %:name%)")
-  long count(@Param("user") UserEntity user, @Param("name") Optional<String> name);
+          + " AND (:query IS NULL OR t.name LIKE %:query% OR t.idNumber LIKE %:query% OR t.branch LIKE %:query% OR t.description LIKE %:query%)")
+  int count(@Param("user") UserEntity user, @Param("query") Optional<String> query);
 
   @Query(
       "SELECT t FROM TeacherEntity t WHERE t.user = :user"
-          + " AND (:name IS NULL OR t.name LIKE %:name%)")
+          + " AND (:query IS NULL OR t.name LIKE %:query% OR t.idNumber LIKE %:query% OR t.branch LIKE %:query% OR t.description LIKE %:query%)")
   Page<TeacherEntity> findAllByUser(
-      @Param("user") UserEntity user, @Param("name") Optional<String> name, Pageable pageable);
+      @Param("user") UserEntity user, @Param("query") Optional<String> query, Pageable pageable);
 
   @Modifying
   @Query("DELETE FROM TeacherEntity t WHERE t.user = :user AND t.id IN :ids")

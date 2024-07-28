@@ -14,4 +14,7 @@ public class TeacherUpdateInput {
 
   @Size(min = 11, max = 11, message = "ID number must be 11 characters")
   public String idNumber;
+
+  @Size(min = 3, max = 50, message = "Description must be between 3 and 50 characters")
+  public String description;
 }

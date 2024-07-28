@@ -31,12 +31,12 @@ public class TeacherController {
   public ResponseEntity<PageResponse<Teacher, TeacherErrorCode>> getTeachers(
       @RequestParam("limit") int limit,
       @RequestParam("offset") int offset,
-      @RequestParam(value = "name", required = false) Optional<String> name) {
+      @RequestParam(value = "query", required = false) Optional<String> query) {
     var user = userService.getAuthenticatedUser();
 
-    var count = teacherService.count(user, name);
+    var count = teacherService.count(user, query);
     var teachers =
-        teacherService.getAll(user, limit, offset, name).stream()
+        teacherService.getAll(user, limit, offset, query).stream()
             .map(TeacherMapper::toDTO)
             .toList();
 
@@ -52,7 +52,12 @@ public class TeacherController {
     var teacher = teacherService.getById(user, UUID.fromString(id));
 
     var updatedTeacher =
-        teacherService.update(teacher, input.getName(), input.getBranch(), input.getIdNumber());
+        teacherService.update(
+            teacher,
+            input.getName(),
+            input.getBranch(),
+            input.getIdNumber(),
+            input.getDescription());
 
     return ResponseEntity.ok().body(Response.data(TeacherMapper.toDTO(updatedTeacher)).build());
   }
@@ -64,7 +69,8 @@ public class TeacherController {
 
     var user = userService.getAuthenticatedUser();
     var createdTeacher =
-        teacherService.create(input.getName(), input.getBranch(), input.getIdNumber(), user);
+        teacherService.create(
+            input.getName(), input.getBranch(), input.getIdNumber(), input.getDescription(), user);
 
     return ResponseEntity.ok().body(Response.data(TeacherMapper.toDTO(createdTeacher)).build());
   }
@@ -82,7 +88,7 @@ public class TeacherController {
 
   @DeleteMapping("/bulk")
   public ResponseEntity<Response<TeacherDeletePayload, TeacherErrorCode>> deleteTeachers(
-      @RequestBody TeacherDeleteDTO input) {
+      @RequestBody TeacherDeleteInput input) {
 
     var user = userService.getAuthenticatedUser();
     var selectionType = input.getType() != null ? input.getType() : SelectionType.INCLUDE;

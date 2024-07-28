@@ -18,4 +18,8 @@ public class TeacherCreateInput {
   @Size(min = 11, max = 11, message = "ID number must be 11 characters")
   @NotEmpty(message = "ID number is required")
   public String idNumber;
+
+  @Size(min = 3, max = 50, message = "Description must be between 3 and 50 characters")
+  @NotEmpty(message = "Description is required")
+  public String description;
 }

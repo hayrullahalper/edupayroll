@@ -13,4 +13,6 @@ public class Teacher {
   @NotNull public String branch;
 
   @NotNull public String idNumber;
+
+  @NotNull public String description;
 }

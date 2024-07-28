@@ -25,6 +25,9 @@ public class TeacherEntity extends BaseEntity {
   @Column(name = "id_number", nullable = false)
   private String idNumber;
 
+  @Column(name = "description", nullable = false)
+  private String description;
+
   @ToString.Exclude
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)

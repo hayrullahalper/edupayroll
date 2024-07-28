@@ -5,6 +5,7 @@ import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.repository.TeacherRepository;
 import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import com.incubator.edupayroll.util.selection.SelectionType;
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,18 +24,19 @@ public class TeacherService {
     this.teacherRepository = teacherRepository;
   }
 
-  public long count(UserEntity user, Optional<String> name) {
-    return teacherRepository.count(user, name);
+  public long count(UserEntity user, Optional<String> query) {
+    return teacherRepository.count(user, query.map(String::trim));
   }
 
-  public List<TeacherEntity> getAll(UserEntity user, int limit, int offset, Optional<String> name) {
+  public List<TeacherEntity> getAll(
+      UserEntity user, int limit, int offset, Optional<String> query) {
     int number = Math.round((float) offset / limit);
-    var teacherName = name.map(String::trim);
+    var searchQuery = query.map(String::trim);
 
     var sort = Sort.by(Sort.Direction.DESC, "createdAt").and(Sort.by(Sort.Direction.DESC, "id"));
 
     var pr = PageRequest.of(number, limit, sort);
-    var page = teacherRepository.findAllByUser(user, teacherName, pr);
+    var page = teacherRepository.findAllByUser(user, searchQuery, pr);
 
     return page.get().toList();
   }
@@ -44,12 +46,15 @@ public class TeacherService {
 
     var teacher = maybeTeacher.orElseThrow(() -> TeacherNotFoundException.byUser(user));
 
-    if (!teacher.getUser().getId().equals(user.getId())) throw AccessDeniedException.byUser(user);
+    if (!teacher.getUser().getId().equals(user.getId())) {
+      throw AccessDeniedException.byUser(user);
+    }
 
     return teacher;
   }
 
-  public TeacherEntity update(TeacherEntity teacher, String name, String branch, String idNumber) {
+  public TeacherEntity update(
+      TeacherEntity teacher, String name, String branch, String idNumber, String description) {
     if (name != null) {
       teacher.setName(name);
     }
@@ -62,11 +67,16 @@ public class TeacherService {
       teacher.setIdNumber(idNumber);
     }
 
+    if (description != null) {
+      teacher.setDescription(description);
+    }
+
     return teacherRepository.saveAndFlush(teacher);
   }
 
-  public TeacherEntity create(String name, String branch, String idNumber, UserEntity user) {
-    var teacher = new TeacherEntity(name, branch, idNumber, user, new ArrayList<>());
+  public TeacherEntity create(
+      String name, String branch, String idNumber, String description, UserEntity user) {
+    var teacher = new TeacherEntity(name, branch, idNumber, description, user, new ArrayList<>());
     return teacherRepository.saveAndFlush(teacher);
   }
 
@@ -74,6 +84,7 @@ public class TeacherService {
     teacherRepository.delete(teacher);
   }
 
+  @Transactional
   public void bulkRemove(UserEntity user, SelectionType type, List<UUID> ids) {
     if (type == SelectionType.INCLUDE) {
       teacherRepository.deleteAll(user, ids);

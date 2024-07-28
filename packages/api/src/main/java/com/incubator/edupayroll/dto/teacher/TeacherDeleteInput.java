@@ -8,7 +8,7 @@ import java.util.List;
 import lombok.Value;
 
 @Value
-public class TeacherDeleteDTO {
+public class TeacherDeleteInput {
 
   @NotEmpty(message = "Teacher's ID is required")
   public List<@NotBlank String> ids;
