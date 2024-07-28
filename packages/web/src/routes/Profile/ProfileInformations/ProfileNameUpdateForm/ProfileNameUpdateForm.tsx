@@ -111,6 +111,7 @@ export default function ProfileNameUpdateForm({
 									type="reset"
 									variant="subtle"
 									onClick={handleCancel}
+									disabled={formik.isSubmitting}
 								>
 									{t('common.form.cancel')}
 								</Button>

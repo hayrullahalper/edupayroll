@@ -140,6 +140,7 @@ export default function SchoolUpdateForm({
 									type="reset"
 									variant="subtle"
 									onClick={handleCancel}
+									disabled={formik.isSubmitting}
 								>
 									{t('common.form.cancel')}
 								</Button>

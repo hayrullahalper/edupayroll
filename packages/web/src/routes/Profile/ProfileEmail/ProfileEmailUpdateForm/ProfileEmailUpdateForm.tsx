@@ -82,9 +82,8 @@ export default function ProfileEmailUpdateForm({
 									color="teal"
 									type="submit"
 									variant="light"
-									disabled={
-										!formik.isValid || !formik.dirty || formik.isSubmitting
-									}
+									loading={formik.isSubmitting}
+									disabled={!formik.isValid || !formik.dirty}
 								>
 									{t('common.form.submit')}
 								</Button>
@@ -94,6 +93,7 @@ export default function ProfileEmailUpdateForm({
 									type="reset"
 									variant="subtle"
 									onClick={handleCancel}
+									disabled={formik.isSubmitting}
 								>
 									{t('common.form.cancel')}
 								</Button>
