@@ -42,10 +42,12 @@ module.exports = {
 		'no-extra-boolean-cast': 'off',
 		'no-restricted-exports': 'off',
 		'react/react-in-jsx-scope': 'off',
+		'react/no-array-index-key': 'off',
+		'@typescript-eslint/indent': 'off',
 		'react/require-default-props': 'off',
+		'@typescript-eslint/no-shadow': 'off',
 		'import/prefer-default-export': 'off',
 		'react/jsx-props-no-spreading': 'off',
-		'@typescript-eslint/indent': ['error', 'tab'],
 		'react-refresh/only-export-components': [
 			'warn',
 			{ allowConstantExport: true }
