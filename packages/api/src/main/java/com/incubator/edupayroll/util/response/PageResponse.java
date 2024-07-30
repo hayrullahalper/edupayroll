@@ -48,8 +48,8 @@ public class PageResponse<D, E> {
       this.data = data;
     }
 
-    public MetaBuilder<D> meta(int page, int size, int total) {
-      return new MetaBuilder<>(data, page, size, total);
+    public MetaBuilder<D> meta(int limit, int offset, long total) {
+      return new MetaBuilder<>(data, limit, offset, total);
     }
 
     public <E> PageResponse<D, E> build() {
@@ -61,9 +61,9 @@ public class PageResponse<D, E> {
     private final PageMeta meta;
     private final List<D> data;
 
-    MetaBuilder(List<D> data, int page, int size, int total) {
+    MetaBuilder(List<D> data, int limit, int offset, long total) {
       this.data = data;
-      this.meta = new PageMeta(page, size, total);
+      this.meta = new PageMeta(limit, offset, total);
     }
 
     public <E> PageResponse<D, E> build() {

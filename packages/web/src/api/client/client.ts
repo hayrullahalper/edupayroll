@@ -1,12 +1,14 @@
 import Cookies from 'js-cookie';
 import paths from '../../routes/paths';
 import { Configuration, FetchParams, RequestContext, ResponseContext } from '../runtime';
-import { AuthControllerApi, SchoolControllerApi, TeacherControllerApi, UserControllerApi } from '../apis';
+import { AuthControllerApi, DocumentControllerApi, RecordControllerApi, SchoolControllerApi, TeacherControllerApi, UserControllerApi } from '../apis';
 
-type Controller = 'auth' | 'school' | 'teacher' | 'user';
+type Controller = 'auth' | 'document' | 'record' | 'school' | 'teacher' | 'user';
 
 type ControllerAPI<T extends Controller> =
 	T extends 'auth' ? AuthControllerApi :
+	T extends 'document' ? DocumentControllerApi :
+	T extends 'record' ? RecordControllerApi :
 	T extends 'school' ? SchoolControllerApi :
 	T extends 'teacher' ? TeacherControllerApi :
 	T extends 'user' ? UserControllerApi :
@@ -42,6 +44,10 @@ function client<T extends Controller>(controller: T): ControllerAPI<T> {
 	switch (controller) {
 	case 'auth':
 		return new AuthControllerApi(config) as any;
+	case 'document':
+		return new DocumentControllerApi(config) as any;
+	case 'record':
+		return new RecordControllerApi(config) as any;
 	case 'school':
 		return new SchoolControllerApi(config) as any;
 	case 'teacher':

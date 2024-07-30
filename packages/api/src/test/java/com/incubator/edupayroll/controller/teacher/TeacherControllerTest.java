@@ -13,7 +13,9 @@ import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.helper.TestHelper;
 import com.incubator.edupayroll.repository.TeacherRepository;
 import com.incubator.edupayroll.service.user.UserService;
+import com.incubator.edupayroll.util.selection.SelectionType;
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -62,20 +64,44 @@ public class TeacherControllerTest {
     mvc.perform(get("/teachers?limit=10&offset=0"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("data").isArray())
-        .andExpect(jsonPath("meta.page").value(1))
-        .andExpect(jsonPath("meta.size").value(10))
-        .andExpect(jsonPath("meta.total").value(2))
-        .andExpect(jsonPath("data.length()").value(10));
+        .andExpect(jsonPath("nodes").isArray())
+        .andExpect(jsonPath("meta.limit").value(10))
+        .andExpect(jsonPath("meta.offset").value(0))
+        .andExpect(jsonPath("meta.total").value(12))
+        .andExpect(jsonPath("nodes.length()").value(10));
 
     mvc.perform(get("/teachers?limit=10&offset=10"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("data").isArray())
-        .andExpect(jsonPath("meta.page").value(2))
-        .andExpect(jsonPath("meta.size").value(10))
-        .andExpect(jsonPath("meta.total").value(2))
-        .andExpect(jsonPath("data.length()").value(2));
+        .andExpect(jsonPath("nodes").isArray())
+        .andExpect(jsonPath("meta.limit").value(10))
+        .andExpect(jsonPath("meta.offset").value(10))
+        .andExpect(jsonPath("meta.total").value(12))
+        .andExpect(jsonPath("nodes.length()").value(2));
+  }
+
+  @Test
+  @Transactional
+  @Rollback
+  @DisplayName("should get all teachers with search query")
+  public void testGetTeachersWithNameFilter() throws Exception {
+    var teacher1 = createTeacher();
+    var teacher2 = createTeacher();
+
+    mvc.perform(get("/teachers?limit=10&offset=0&query=" + teacher1.getName()))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("nodes.length()").value(1))
+        .andExpect(jsonPath("nodes[0].name").value(teacher1.getName()));
+
+    mvc.perform(get("/teachers?limit=10&offset=0&query=" + teacher2.getName()))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("nodes.length()").value(1))
+        .andExpect(jsonPath("nodes[0].name").value(teacher2.getName()));
+
+    mvc.perform(get("/teachers?limit=10&offset=0&query=notfound"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("nodes").isArray())
+        .andExpect(jsonPath("nodes.length()").value(0));
   }
 
   @Test
@@ -86,6 +112,7 @@ public class TeacherControllerTest {
     var name = faker.name().fullName();
     var branch = faker.name().fullName();
     var idNumber = faker.idNumber().valid();
+    var description = faker.name().title();
 
     mvc.perform(
             post("/teachers")
@@ -93,14 +120,20 @@ public class TeacherControllerTest {
                 .content(
                     mapper.writeValueAsString(
                         Map.of(
-                            "name", name,
-                            "branch", branch,
-                            "idNumber", idNumber))))
+                            "name",
+                            name,
+                            "branch",
+                            branch,
+                            "idNumber",
+                            idNumber,
+                            "description",
+                            description))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("data.name").value(name))
-        .andExpect(jsonPath("data.branch").value(branch))
-        .andExpect(jsonPath("data.identityNo").value(idNumber));
+        .andExpect(jsonPath("node.name").value(name))
+        .andExpect(jsonPath("node.branch").value(branch))
+        .andExpect(jsonPath("node.idNumber").value(idNumber))
+        .andExpect(jsonPath("node.description").value(description));
   }
 
   @Test
@@ -121,9 +154,9 @@ public class TeacherControllerTest {
                 .content(mapper.writeValueAsString(Map.of("name", updatedName))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("data.branch").value(branch))
-        .andExpect(jsonPath("data.name").value(updatedName))
-        .andExpect(jsonPath("data.identityNo").value(idNumber));
+        .andExpect(jsonPath("node.branch").value(branch))
+        .andExpect(jsonPath("node.name").value(updatedName))
+        .andExpect(jsonPath("node.idNumber").value(idNumber));
   }
 
   @Test
@@ -137,10 +170,49 @@ public class TeacherControllerTest {
     mvc.perform(delete("/teachers/" + teacher.getId()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("data.success").value(true));
+        .andExpect(jsonPath("node.success").value(true));
 
     var maybeTeacher = teacherRepository.findById(teacherId);
     assertTrue(maybeTeacher.isEmpty());
+  }
+
+  @Test
+  @Transactional
+  @Rollback
+  @DisplayName("should bulk delete teachers")
+  public void testBulkDeleteTeachers() throws Exception {
+    var teacher1 = createTeacher();
+    var teacher2 = createTeacher();
+    var teacher3 = createTeacher();
+    createTeacher();
+
+    mvc.perform(
+            delete("/teachers/bulk")
+                .contentType("application/json")
+                .content(
+                    mapper.writeValueAsString(
+                        Map.of(
+                            "ids",
+                            new String[] {
+                              teacher1.getId().toString(), teacher2.getId().toString()
+                            }))))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("errors").isEmpty())
+        .andExpect(jsonPath("node.success").value(true));
+
+    mvc.perform(
+            delete("/teachers/bulk")
+                .contentType("application/json")
+                .content(
+                    mapper.writeValueAsString(
+                        Map.of(
+                            "ids",
+                            new String[] {teacher3.getId().toString()},
+                            "type",
+                            SelectionType.EXCLUDE))))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("errors").isEmpty())
+        .andExpect(jsonPath("node.success").value(true));
   }
 
   @Test
@@ -175,12 +247,13 @@ public class TeacherControllerTest {
   }
 
   private TeacherEntity createTeacher() {
-    var firstName = faker.name().firstName();
-    var lastName = faker.name().lastName();
+    var name = faker.name().fullName();
     var branch = faker.name().fullName();
     var idNumber = faker.idNumber().valid();
+    var description = faker.name().title();
 
-    var teacher = new TeacherEntity(firstName, lastName, branch, idNumber, mockedUser, null);
+    var teacher =
+        new TeacherEntity(name, branch, idNumber, description, mockedUser, new ArrayList<>());
 
     return teacherRepository.saveAndFlush(teacher);
   }

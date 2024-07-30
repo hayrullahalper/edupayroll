@@ -19,6 +19,8 @@
     "@mantine/notifications": "^7.11.1",
     "@tabler/icons-react": "^2.47.0",
     "@tanstack/react-query": "^5.40.1",
+    "classnames": "^2.5.1",
+    "debounce": "^2.1.0",
     "dotenv-flow": "^4.1.0",
     "formik": "^2.4.6",
     "i18next": "^23.11.5",

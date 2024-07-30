@@ -2,6 +2,7 @@
   "form": {
     "edit": "Düzenle",
     "save": "Kaydet",
+    "delete": "Sil",
     "cancel": "Vazgeç",
     "update": "Güncelle",
     "submit": "Değişiklikleri Kaydet"

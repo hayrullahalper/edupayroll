@@ -7,9 +7,9 @@ public class TeacherMapper {
   public static Teacher toDTO(TeacherEntity teacher) {
     return new Teacher(
         teacher.getId(),
-        teacher.getFirstName(),
-        teacher.getLastName(),
+        teacher.getName(),
         teacher.getBranch(),
-        teacher.getIdNumber());
+        teacher.getIdNumber(),
+        teacher.getDescription());
   }
 }

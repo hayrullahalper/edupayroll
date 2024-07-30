@@ -5,9 +5,9 @@ import lombok.Value;
 
 @Value
 public class PageMeta {
-  @NotNull public int page;
 
-  @NotNull public int size;
+  @NotNull public int limit;
 
-  @NotNull public int total;
+  @NotNull public int offset;
+  @NotNull public long total;
 }

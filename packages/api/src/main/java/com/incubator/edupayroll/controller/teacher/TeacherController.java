@@ -8,7 +8,7 @@ import com.incubator.edupayroll.util.response.PageResponse;
 import com.incubator.edupayroll.util.response.Response;
 import com.incubator.edupayroll.util.selection.SelectionType;
 import com.incubator.edupayroll.util.validation.Validation;
-import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,27 +28,19 @@ public class TeacherController {
   }
 
   @GetMapping("")
-  public ResponseEntity<PageResponse<Teacher, ?>> getTeachers(
+  public ResponseEntity<PageResponse<Teacher, TeacherErrorCode>> getTeachers(
       @RequestParam("limit") int limit,
       @RequestParam("offset") int offset,
-      @RequestParam Map<String, String> filterParams) {
+      @RequestParam(value = "query", required = false) Optional<String> query) {
     var user = userService.getAuthenticatedUser();
 
-    String firstName = filterParams.get("firstName");
-    String lastName = filterParams.get("lastName");
-    String branch = filterParams.get("branch");
-    String idNumber = filterParams.get("idNumber");
-
-    var count = teacherService.count(user, firstName, lastName, branch, idNumber);
+    var count = teacherService.count(user, query);
     var teachers =
-        teacherService.getAll(user, limit, offset, firstName, lastName, branch, idNumber).stream()
+        teacherService.getAll(user, limit, offset, query).stream()
             .map(TeacherMapper::toDTO)
             .toList();
 
-    var page = offset / limit + 1;
-    var total = (int) Math.ceil((double) count / limit);
-
-    return ResponseEntity.ok().body(PageResponse.data(teachers).meta(page, limit, total).build());
+    return ResponseEntity.ok().body(PageResponse.data(teachers).meta(limit, offset, count).build());
   }
 
   @PutMapping("{id}")
@@ -62,10 +54,10 @@ public class TeacherController {
     var updatedTeacher =
         teacherService.update(
             teacher,
-            input.getFirstName(),
-            input.getLastName(),
+            input.getName(),
             input.getBranch(),
-            input.getIdentityNo());
+            input.getIdNumber(),
+            input.getDescription());
 
     return ResponseEntity.ok().body(Response.data(TeacherMapper.toDTO(updatedTeacher)).build());
   }
@@ -78,11 +70,7 @@ public class TeacherController {
     var user = userService.getAuthenticatedUser();
     var createdTeacher =
         teacherService.create(
-            input.getFirstName(),
-            input.getLastName(),
-            input.getBranch(),
-            input.getIdNumber(),
-            user);
+            input.getName(), input.getBranch(), input.getIdNumber(), input.getDescription(), user);
 
     return ResponseEntity.ok().body(Response.data(TeacherMapper.toDTO(createdTeacher)).build());
   }
@@ -99,14 +87,14 @@ public class TeacherController {
   }
 
   @DeleteMapping("/bulk")
-  public ResponseEntity<Response<TeacherDeletePayload, TeacherErrorCode>> bulkDeleteTeachers(
-      @RequestBody TeacherDeleteDTO input) {
+  public ResponseEntity<Response<TeacherDeletePayload, TeacherErrorCode>> deleteTeachers(
+      @RequestBody TeacherDeleteInput input) {
 
     var user = userService.getAuthenticatedUser();
+    var selectionType = input.getType() != null ? input.getType() : SelectionType.INCLUDE;
 
-    if (input.getType().equals(SelectionType.INCLUDE))
-      teacherService.removeAllIncluding(user, input.getIds());
-    else teacherService.removeAllExcluding(user, input.getIds());
+    teacherService.bulkRemove(
+        user, selectionType, input.getIds().stream().map(UUID::fromString).toList());
 
     return ResponseEntity.ok().body(Response.data(new TeacherDeletePayload(true)).build());
   }

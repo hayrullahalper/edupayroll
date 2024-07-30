@@ -24,13 +24,7 @@ export interface TeacherCreateInput {
      * @type {string}
      * @memberof TeacherCreateInput
      */
-    firstName: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeacherCreateInput
-     */
-    lastName: string;
+    name: string;
     /**
      * 
      * @type {string}
@@ -43,16 +37,22 @@ export interface TeacherCreateInput {
      * @memberof TeacherCreateInput
      */
     idNumber: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeacherCreateInput
+     */
+    description: string;
 }
 
 /**
  * Check if a given object implements the TeacherCreateInput interface.
  */
 export function instanceOfTeacherCreateInput(value: object): value is TeacherCreateInput {
-    if (!('firstName' in value) || value['firstName'] === undefined) return false;
-    if (!('lastName' in value) || value['lastName'] === undefined) return false;
+    if (!('name' in value) || value['name'] === undefined) return false;
     if (!('branch' in value) || value['branch'] === undefined) return false;
     if (!('idNumber' in value) || value['idNumber'] === undefined) return false;
+    if (!('description' in value) || value['description'] === undefined) return false;
     return true;
 }
 
@@ -66,10 +66,10 @@ export function TeacherCreateInputFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'firstName': json['firstName'],
-        'lastName': json['lastName'],
+        'name': json['name'],
         'branch': json['branch'],
         'idNumber': json['idNumber'],
+        'description': json['description'],
     };
 }
 
@@ -79,10 +79,10 @@ export function TeacherCreateInputToJSON(value?: TeacherCreateInput | null): any
     }
     return {
         
-        'firstName': value['firstName'],
-        'lastName': value['lastName'],
+        'name': value['name'],
         'branch': value['branch'],
         'idNumber': value['idNumber'],
+        'description': value['description'],
     };
 }
 

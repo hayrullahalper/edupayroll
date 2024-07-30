@@ -24,13 +24,7 @@ export interface TeacherUpdateInput {
      * @type {string}
      * @memberof TeacherUpdateInput
      */
-    firstName?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeacherUpdateInput
-     */
-    lastName?: string;
+    name?: string;
     /**
      * 
      * @type {string}
@@ -42,7 +36,13 @@ export interface TeacherUpdateInput {
      * @type {string}
      * @memberof TeacherUpdateInput
      */
-    identityNo?: string;
+    idNumber?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeacherUpdateInput
+     */
+    description?: string;
 }
 
 /**
@@ -62,10 +62,10 @@ export function TeacherUpdateInputFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'firstName': json['firstName'] == null ? undefined : json['firstName'],
-        'lastName': json['lastName'] == null ? undefined : json['lastName'],
+        'name': json['name'] == null ? undefined : json['name'],
         'branch': json['branch'] == null ? undefined : json['branch'],
-        'identityNo': json['identityNo'] == null ? undefined : json['identityNo'],
+        'idNumber': json['idNumber'] == null ? undefined : json['idNumber'],
+        'description': json['description'] == null ? undefined : json['description'],
     };
 }
 
@@ -75,10 +75,10 @@ export function TeacherUpdateInputToJSON(value?: TeacherUpdateInput | null): any
     }
     return {
         
-        'firstName': value['firstName'],
-        'lastName': value['lastName'],
+        'name': value['name'],
         'branch': value['branch'],
-        'identityNo': value['identityNo'],
+        'idNumber': value['idNumber'],
+        'description': value['description'],
     };
 }
 
