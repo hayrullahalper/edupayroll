@@ -67,11 +67,11 @@ public class RecordServiceTest {
     assertEquals(record.getTeacher().getId(), teacher.getId());
     assertEquals(record.getDocument().getId(), document.getId());
 
-    assertNull(record.getNextId());
+    assertNull(record.getNext());
     assertFalse(record.isHead());
     assertTrue(previous.isHead());
 
-    assertEquals(previous.getNextId(), record.getId());
+    assertEquals(previous.getNext().getId(), record.getId());
   }
 
   @Test
@@ -94,7 +94,7 @@ public class RecordServiceTest {
     assertNotNull(prev);
     assertNotNull(record);
 
-    assertEquals(record.getNextId(), prev.getId());
+    assertEquals(record.getNext().getId(), prev.getId());
 
     assertTrue(record.isHead());
     assertFalse(prev.isHead());
@@ -113,8 +113,8 @@ public class RecordServiceTest {
     assertNotNull(middle);
     assertNotNull(next);
 
-    assertEquals(middle.getNextId(), next.getId());
-    assertEquals(previous.getNextId(), middle.getId());
+    assertEquals(middle.getNext().getId(), next.getId());
+    assertEquals(previous.getNext().getId(), middle.getId());
 
     assertFalse(middle.isHead());
     assertFalse(next.isHead());

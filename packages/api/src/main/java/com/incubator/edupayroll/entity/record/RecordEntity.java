@@ -4,7 +4,6 @@ import com.incubator.edupayroll.entity.base.BaseEntity;
 import com.incubator.edupayroll.entity.document.DocumentEntity;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import jakarta.persistence.*;
-import java.util.UUID;
 import lombok.*;
 
 @Entity
@@ -25,8 +24,10 @@ public class RecordEntity extends BaseEntity {
   @Column(name = "head", nullable = false)
   private boolean head;
 
-  @Column(name = "next_id")
-  private UUID nextId;
+  @ToString.Exclude
+  @OneToOne
+  @JoinColumn(name = "next_id")
+  private RecordEntity next;
 
   @ToString.Exclude
   @ManyToOne

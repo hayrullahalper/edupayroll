@@ -29,16 +29,13 @@ public class RecordService {
       Optional<RecordEntity> previous) {
 
     var record = new RecordEntity(type, information, false, null, teacher, document);
+    recordRepository.save(record);
 
     if (previous.isPresent()) {
-      var previousRecord = previous.get();
+      record.setNext(previous.get().getNext());
+      previous.get().setNext(record);
 
-      recordRepository.save(record);
-      record.setNextId(previousRecord.getNextId());
-
-      previousRecord.setNextId(record.getId());
-      recordRepository.save(previousRecord);
-
+      recordRepository.save(previous.get());
       recordRepository.flush();
 
       return record;
@@ -48,7 +45,7 @@ public class RecordService {
 
     head.ifPresent(
         entity -> {
-          record.setNextId(entity.getId());
+          record.setNext(entity);
           entity.setHead(false);
 
           recordRepository.save(entity);
