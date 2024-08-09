@@ -7,7 +7,7 @@ import com.incubator.edupayroll.mapper.teacher.TeacherMapper;
 public class RecordMapper {
   public static Record toDTO(RecordEntity record) {
     return new Record(
-        record.getLine(),
+        record.getNextId(),
         record.getType(),
         record.getInformation(),
         TeacherMapper.toDTO(record.getTeacher()));

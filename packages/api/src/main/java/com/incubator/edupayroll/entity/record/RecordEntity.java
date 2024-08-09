@@ -4,6 +4,7 @@ import com.incubator.edupayroll.entity.base.BaseEntity;
 import com.incubator.edupayroll.entity.document.DocumentEntity;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import jakarta.persistence.*;
+import java.util.UUID;
 import lombok.*;
 
 @Entity
@@ -14,16 +15,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecordEntity extends BaseEntity {
-
-  @Column(name = "line", nullable = false)
-  private int line;
-
   @Enumerated(EnumType.STRING)
   @Column(name = "type", nullable = false)
   private RecordType type;
 
   @Column(name = "information", nullable = false)
   private String information;
+
+  @Column(name = "head", nullable = false)
+  private boolean head;
+
+  @Column(name = "next_id")
+  private UUID nextId;
 
   @ToString.Exclude
   @ManyToOne
