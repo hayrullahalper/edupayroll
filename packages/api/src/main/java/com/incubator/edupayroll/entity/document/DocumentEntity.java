@@ -24,9 +24,6 @@ public class DocumentEntity extends BaseEntity {
   @Column(name = "time", nullable = false)
   private YearMonth time;
 
-  @Column(name = "description", nullable = false)
-  private String description;
-
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private UserEntity user;
