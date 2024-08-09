@@ -41,10 +41,9 @@ public class TeacherService {
     return page.get().toList();
   }
 
-  public TeacherEntity getById(UserEntity user, UUID uuid) {
-    var maybeTeacher = teacherRepository.findById(uuid);
-
-    var teacher = maybeTeacher.orElseThrow(() -> TeacherNotFoundException.byUser(user));
+  public TeacherEntity getById(UserEntity user, UUID id) {
+    var maybeTeacher = teacherRepository.findById(id);
+    var teacher = maybeTeacher.orElseThrow(() -> TeacherNotFoundException.byId(id));
 
     if (!teacher.getUser().getId().equals(user.getId())) {
       throw AccessDeniedException.byUser(user);
