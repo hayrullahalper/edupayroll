@@ -4,6 +4,7 @@ import com.incubator.edupayroll.entity.base.BaseEntity;
 import com.incubator.edupayroll.entity.document.DocumentEntity;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.*;
 
 @Entity
@@ -18,8 +19,9 @@ public class RecordEntity extends BaseEntity {
   @Column(name = "type", nullable = false)
   private RecordType type;
 
-  @Column(name = "information", nullable = false)
-  private String information;
+  @Column(name = "hours", columnDefinition = "json", nullable = false)
+  @Convert(converter = RecordInformationConverter.class)
+  private List<Integer> hours;
 
   @Column(name = "head", nullable = false)
   private boolean head;
