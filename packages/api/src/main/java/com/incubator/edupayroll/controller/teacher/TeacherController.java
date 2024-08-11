@@ -89,6 +89,7 @@ public class TeacherController {
   @DeleteMapping("/bulk")
   public ResponseEntity<Response<TeacherDeletePayload, TeacherErrorCode>> deleteTeachers(
       @RequestBody TeacherDeleteInput input) {
+    Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
     var selectionType = input.getType() != null ? input.getType() : SelectionType.INCLUDE;
