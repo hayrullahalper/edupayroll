@@ -10,6 +10,8 @@ public class TeacherMapper {
         teacher.getName(),
         teacher.getBranch(),
         teacher.getIdNumber(),
-        teacher.getDescription());
+        teacher.getDescription(),
+        teacher.getCreatedAt(),
+        teacher.getUpdatedAt());
   }
 }
