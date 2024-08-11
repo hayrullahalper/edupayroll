@@ -1,13 +1,18 @@
 package com.incubator.edupayroll.controller.document;
 
-import com.incubator.edupayroll.dto.document.Document;
-import com.incubator.edupayroll.dto.document.DocumentCreateInput;
-import com.incubator.edupayroll.dto.document.DocumentUpdateInput;
+import com.incubator.edupayroll.dto.document.*;
+import com.incubator.edupayroll.dto.export.Export;
 import com.incubator.edupayroll.mapper.document.DocumentMapper;
+import com.incubator.edupayroll.mapper.export.ExportMapper;
 import com.incubator.edupayroll.service.document.DocumentService;
+import com.incubator.edupayroll.service.export.ExportProducer;
+import com.incubator.edupayroll.service.export.ExportService;
+import com.incubator.edupayroll.service.record.RecordService;
 import com.incubator.edupayroll.service.user.UserService;
+import com.incubator.edupayroll.util.response.PageResponse;
 import com.incubator.edupayroll.util.response.Response;
 import com.incubator.edupayroll.util.validation.Validation;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +21,50 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/documents")
 public class DocumentController {
-
-  final DocumentService documentService;
-  final UserService userService;
+  private final UserService userService;
+  private final ExportService exportService;
+  private final RecordService recordService;
+  private final ExportProducer exportProducer;
+  private final DocumentService documentService;
 
   @Autowired
-  public DocumentController(DocumentService documentService, UserService userService) {
-    this.documentService = documentService;
+  public DocumentController(
+      UserService userService,
+      ExportService exportService,
+      RecordService recordService,
+      ExportProducer exportProducer,
+      DocumentService documentService) {
     this.userService = userService;
+    this.exportService = exportService;
+    this.recordService = recordService;
+    this.exportProducer = exportProducer;
+    this.documentService = documentService;
+  }
+
+  @GetMapping("")
+  public ResponseEntity<PageResponse<Document, DocumentErrorCode>> getTeachers(
+      @RequestParam("limit") int limit,
+      @RequestParam("offset") int offset,
+      @RequestParam(value = "name", required = false) Optional<String> name) {
+    var user = userService.getAuthenticatedUser();
+
+    var count = documentService.count(user, name);
+    var documents =
+        documentService.getAll(user, limit, offset, name).stream()
+            .map(DocumentMapper::toDTO)
+            .toList();
+
+    return ResponseEntity.ok()
+        .body(PageResponse.data(documents).meta(limit, offset, count).build());
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Response<Document, DocumentErrorCode>> getDocument(
+      @PathVariable String id) {
+    var user = userService.getAuthenticatedUser();
+    var document = documentService.getById(user, UUID.fromString(id));
+
+    return ResponseEntity.ok().body(Response.data(DocumentMapper.toDTO(document)).build());
   }
 
   @PutMapping("/{id}")
@@ -45,8 +86,53 @@ public class DocumentController {
     Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
-    var document = documentService.create(input, user);
+    var document = documentService.create(user, input.getName(), input.getTime());
 
     return ResponseEntity.ok().body(Response.data(DocumentMapper.toDTO(document)).build());
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Response<DocumentDeletePayload, DocumentErrorCode>> deleteDocument(
+      @PathVariable String id) {
+    var user = userService.getAuthenticatedUser();
+    var document = documentService.getById(user, UUID.fromString(id));
+
+    documentService.remove(document);
+
+    return ResponseEntity.ok().body(Response.data(new DocumentDeletePayload(true)).build());
+  }
+
+  @PutMapping("/{id}/clear/exports")
+  public ResponseEntity<Response<DocumentUpdatePayload, DocumentErrorCode>> clearExports(
+      @PathVariable String id) {
+    var user = userService.getAuthenticatedUser();
+    var document = documentService.getById(user, UUID.fromString(id));
+
+    exportService.removeAllByDocument(document);
+
+    return ResponseEntity.ok().body(Response.data(new DocumentUpdatePayload(true)).build());
+  }
+
+  @PutMapping("/{id}/clear/records")
+  public ResponseEntity<Response<DocumentUpdatePayload, DocumentErrorCode>> clearRecords(
+      @PathVariable String id) {
+    var user = userService.getAuthenticatedUser();
+    var document = documentService.getById(user, UUID.fromString(id));
+
+    recordService.removeAllByDocument(document);
+
+    return ResponseEntity.ok().body(Response.data(new DocumentUpdatePayload(true)).build());
+  }
+
+  @PostMapping("/{id}/export")
+  public ResponseEntity<Response<Export, DocumentErrorCode>> exportDocument(
+      @PathVariable String id, @RequestBody DocumentExportInput input) {
+    var user = userService.getAuthenticatedUser();
+    var document = documentService.getById(user, UUID.fromString(id));
+
+    var export = exportService.create(document, input.getName());
+    exportProducer.sendExportCreationTask(export.getId());
+
+    return ResponseEntity.ok().body(Response.data(ExportMapper.toDTO(export)).build());
   }
 }
