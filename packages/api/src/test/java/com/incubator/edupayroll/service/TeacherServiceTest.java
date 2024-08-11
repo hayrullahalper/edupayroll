@@ -1,10 +1,12 @@
-package com.incubator.edupayroll.service.teacher;
+package com.incubator.edupayroll.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.github.javafaker.Faker;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import com.incubator.edupayroll.helper.TestHelper;
+import com.incubator.edupayroll.service.teacher.TeacherNotFoundException;
+import com.incubator.edupayroll.service.teacher.TeacherService;
 import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import com.incubator.edupayroll.util.selection.SelectionType;
 import jakarta.transaction.Transactional;

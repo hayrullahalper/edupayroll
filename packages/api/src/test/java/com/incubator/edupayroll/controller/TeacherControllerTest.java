@@ -1,5 +1,6 @@
-package com.incubator.edupayroll.controller.teacher;
+package com.incubator.edupayroll.controller;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -30,16 +31,11 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class TeacherControllerTest {
-  @Autowired private MockMvc mvc;
-
   @Autowired private Faker faker;
-
+  @Autowired private MockMvc mvc;
   @Autowired private TestHelper helper;
-
   @Autowired private ObjectMapper mapper;
-
   @MockBean private UserService userService;
-
   @Autowired private TeacherRepository teacherRepository;
 
   private UserEntity mockedUser;
@@ -182,7 +178,7 @@ public class TeacherControllerTest {
     var teacher1 = helper.createTeacher(mockedUser);
     var teacher2 = helper.createTeacher(mockedUser);
     var teacher3 = helper.createTeacher(mockedUser);
-    helper.createTeacher(mockedUser);
+    var teacher4 = helper.createTeacher(mockedUser);
 
     mvc.perform(
             delete("/teachers/bulk")
@@ -198,6 +194,12 @@ public class TeacherControllerTest {
         .andExpect(jsonPath("errors").isEmpty())
         .andExpect(jsonPath("node.success").value(true));
 
+    assertTrue(teacherRepository.existsById(teacher3.getId()));
+    assertTrue(teacherRepository.existsById(teacher4.getId()));
+
+    assertFalse(teacherRepository.existsById(teacher1.getId()));
+    assertFalse(teacherRepository.existsById(teacher2.getId()));
+
     mvc.perform(
             delete("/teachers/bulk")
                 .contentType("application/json")
@@ -211,6 +213,9 @@ public class TeacherControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
         .andExpect(jsonPath("node.success").value(true));
+
+    assertTrue(teacherRepository.existsById(teacher3.getId()));
+    assertFalse(teacherRepository.existsById(teacher4.getId()));
   }
 
   @Test

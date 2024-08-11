@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.controller.school;
+package com.incubator.edupayroll.controller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -27,14 +27,10 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class SchoolControllerTest {
-  @Autowired private MockMvc mvc;
-
   @Autowired private Faker faker;
-
+  @Autowired private MockMvc mvc;
   @Autowired private TestHelper helper;
-
   @Autowired private ObjectMapper mapper;
-
   @MockBean private UserService userService;
 
   private UserEntity mockedUser;

@@ -1,8 +1,10 @@
-package com.incubator.edupayroll.service.token;
+package com.incubator.edupayroll.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.github.javafaker.Faker;
+import com.incubator.edupayroll.service.token.InvalidTokenException;
+import com.incubator.edupayroll.service.token.TokenService;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

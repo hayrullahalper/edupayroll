@@ -1,10 +1,11 @@
-package com.incubator.edupayroll.service.school;
+package com.incubator.edupayroll.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.github.javafaker.Faker;
 import com.incubator.edupayroll.helper.TestHelper;
+import com.incubator.edupayroll.service.school.SchoolService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
