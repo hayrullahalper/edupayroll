@@ -29,10 +29,10 @@ public class DocumentEntity extends BaseEntity {
   private UserEntity user;
 
   @ToString.Exclude
-  @OneToMany(mappedBy = "document", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "document", fetch = FetchType.LAZY)
   private List<ExportEntity> exports;
 
   @ToString.Exclude
-  @OneToMany(mappedBy = "document", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "document", fetch = FetchType.LAZY)
   private List<RecordEntity> records;
 }
