@@ -7,11 +7,9 @@ import com.incubator.edupayroll.service.document.DocumentService;
 import com.incubator.edupayroll.service.record.RecordService;
 import com.incubator.edupayroll.service.teacher.TeacherService;
 import com.incubator.edupayroll.service.user.UserService;
-import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import com.incubator.edupayroll.util.response.Response;
 import com.incubator.edupayroll.util.validation.Validation;
-import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,107 +35,74 @@ public class RecordController {
     this.teacherService = teacherService;
   }
 
-  @GetMapping("/{documentId}")
-  public ResponseEntity<Response<List<Record>, RecordErrorCode>> getAll(
-      @PathVariable UUID documentId) {
-    var user = userService.getAuthenticatedUser();
-
-    var document = documentService.getById(documentId);
-    if (!Objects.equals(document.getUser().getId(), user.getId()))
-      throw new AccessDeniedException("Access denied for user: " + user);
-
-    List<Record> records = recordService.getRecordsByDocumentId(documentId);
-
-    return ResponseEntity.ok().body(Response.data(records).build());
-  }
-
-  @PostMapping("/{documentId}")
-  public ResponseEntity<Response<?, RecordErrorCode>> create(
-      @PathVariable UUID documentId, @RequestBody RecordCreateDTO input) {
+  @PostMapping("")
+  public ResponseEntity<Response<Record, RecordErrorCode>> create(
+      @RequestBody RecordCreateInput input) {
     Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
+    var teacher = teacherService.getById(user, input.getTeacherId());
+    var document = documentService.getById(user, input.getDocumentId());
 
-    var teacher = teacherService.getById(user, input.getTeacher());
-    if (!Objects.equals(teacher.getUser().getId(), user.getId()))
-      throw new AccessDeniedException("Access denied for user: " + user);
+    var previous =
+        Optional.ofNullable(input.getPreviousId()).map(id -> recordService.getById(user, id));
 
-    var document = documentService.getById(documentId);
-    if (!Objects.equals(document.getUser().getId(), user.getId()))
-      throw new AccessDeniedException("Access denied for user: " + user);
+    var record =
+        recordService.create(document, teacher, input.getType(), input.getHours(), previous);
 
-    var createdRecord =
-        recordService.create(input.getType(), input.getInformation(), teacher, document);
-
-    return ResponseEntity.ok().body(Response.data(RecordMapper.toDTO(createdRecord)).build());
+    return ResponseEntity.ok().body(Response.data(RecordMapper.toDTO(record)).build());
   }
 
-  @PutMapping("/{recordId}/type")
-  public ResponseEntity<Response<?, RecordErrorCode>> updateType(
-      @PathVariable UUID recordId, @RequestBody RecordUpdateTypeDTO input) {
+  @PutMapping("/{id}")
+  public ResponseEntity<Response<Record, RecordErrorCode>> update(
+      @PathVariable("id") UUID id, @RequestBody RecordUpdateInput input) {
     Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
-    var record = recordService.getById(recordId);
-    var teacher = record.getTeacher();
+    var record = recordService.getById(user, id);
+    var teacher = teacherService.getById(user, input.getTeacherId());
 
-    if (!Objects.equals(teacher.getUser().getId(), user.getId()))
-      throw new AccessDeniedException("Access denied for user: " + user);
+    var updated = recordService.updateInformation(record, teacher, input.getType());
 
-    var updatedRecord = recordService.updateType(record, input.getType());
-
-    return ResponseEntity.ok().body(Response.data(RecordMapper.toDTO(updatedRecord)).build());
+    return ResponseEntity.ok().body(Response.data(RecordMapper.toDTO(updated)).build());
   }
 
-  @PutMapping("/{recordId}/teacher")
-  public ResponseEntity<Response<?, RecordErrorCode>> updateTeacher(
-      @PathVariable UUID recordId, @RequestBody RecordUpdateTeacherDTO input) {
+  @PutMapping("/{id}/hours")
+  public ResponseEntity<Response<Record, RecordErrorCode>> updateHours(
+      @PathVariable("id") UUID id, @RequestBody RecordUpdateHoursInput input) {
     Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
-    var record = recordService.getById(recordId);
+    var record = recordService.getById(user, id);
 
-    var currentTeacher = record.getTeacher();
+    var updated = recordService.updateHours(record, input.getHours());
 
-    if (!Objects.equals(currentTeacher.getUser().getId(), user.getId()))
-      throw new AccessDeniedException("Access denied for user: " + user);
-
-    var newTeacher = teacherService.getById(user, input.getTeacher());
-
-    var updatedRecord = recordService.updateTeacher(record, newTeacher);
-
-    return ResponseEntity.ok().body(Response.data(RecordMapper.toDTO(updatedRecord)).build());
+    return ResponseEntity.ok().body(Response.data(RecordMapper.toDTO(updated)).build());
   }
 
-  @PutMapping("/{recordId}/information")
-  public ResponseEntity<Response<?, RecordErrorCode>> updateInformation(
-      @PathVariable UUID recordId, @RequestBody RecordUpdateInformationDTO input) {
+  @PutMapping("/{id}/previous")
+  public ResponseEntity<Response<Record, RecordErrorCode>> updateOrder(
+      @PathVariable("id") UUID id, @RequestBody RecordUpdateOrderInput input) {
     Validation.validate(input);
 
     var user = userService.getAuthenticatedUser();
-    var record = recordService.getById(recordId);
-    var teacher = record.getTeacher();
+    var record = recordService.getById(user, id);
+    var previous =
+        Optional.ofNullable(input.getPreviousId())
+            .map((previousId) -> recordService.getById(user, previousId));
 
-    if (!Objects.equals(teacher.getUser().getId(), user.getId()))
-      throw new AccessDeniedException("Access denied for user: " + user);
+    var updated = recordService.updatePrevious(record, previous);
 
-    var updatedRecord = recordService.updateInformation(record, input.getInformation());
-
-    return ResponseEntity.ok().body(Response.data(RecordMapper.toDTO(updatedRecord)).build());
+    return ResponseEntity.ok().body(Response.data(RecordMapper.toDTO(updated)).build());
   }
 
-  @DeleteMapping("/{recordId}")
-  public ResponseEntity<Response<?, RecordErrorCode>> deleteRecord(@PathVariable UUID recordId) {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Response<Record, RecordErrorCode>> delete(@PathVariable("id") UUID id) {
     var user = userService.getAuthenticatedUser();
-    var record = recordService.getById(recordId);
+    var record = recordService.getById(user, id);
 
-    var teacher = record.getTeacher();
+    recordService.remove(record);
 
-    if (!Objects.equals(teacher.getUser().getId(), user.getId()))
-      throw new AccessDeniedException("Access denied for user: " + user);
-
-    recordService.delete(record);
-
-    return ResponseEntity.ok().body(Response.data(true).build());
+    return ResponseEntity.ok().body(Response.data(RecordMapper.toDTO(record)).build());
   }
 }

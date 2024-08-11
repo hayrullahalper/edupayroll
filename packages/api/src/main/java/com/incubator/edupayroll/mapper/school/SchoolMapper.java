@@ -10,6 +10,8 @@ public class SchoolMapper {
         school.getName(),
         school.getEditorName(),
         school.getEditorTitle(),
-        school.getPrincipalName());
+        school.getPrincipalName(),
+        school.getCreatedAt(),
+        school.getUpdatedAt());
   }
 }

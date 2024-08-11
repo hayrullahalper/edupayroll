@@ -24,18 +24,15 @@ public class DocumentEntity extends BaseEntity {
   @Column(name = "time", nullable = false)
   private YearMonth time;
 
-  @Column(name = "description", nullable = false)
-  private String description;
-
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private UserEntity user;
 
   @ToString.Exclude
-  @OneToMany(mappedBy = "document", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "document", fetch = FetchType.LAZY)
   private List<ExportEntity> exports;
 
   @ToString.Exclude
-  @OneToMany(mappedBy = "document", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "document", fetch = FetchType.LAZY)
   private List<RecordEntity> records;
 }

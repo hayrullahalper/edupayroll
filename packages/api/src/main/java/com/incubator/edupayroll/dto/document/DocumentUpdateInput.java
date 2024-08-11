@@ -17,7 +17,4 @@ public class DocumentUpdateInput {
   @JsonSerialize(using = YearMonthSerializer.class)
   @JsonDeserialize(using = YearMonthDeserializer.class)
   public YearMonth time;
-
-  @Size(min = 3, max = 50, message = "Document's description must be between 3 and 50 characters")
-  public String description;
 }

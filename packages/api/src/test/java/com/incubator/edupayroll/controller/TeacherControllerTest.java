@@ -1,5 +1,6 @@
-package com.incubator.edupayroll.controller.teacher;
+package com.incubator.edupayroll.controller;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -8,14 +9,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.javafaker.Faker;
-import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.helper.TestHelper;
 import com.incubator.edupayroll.repository.TeacherRepository;
 import com.incubator.edupayroll.service.user.UserService;
 import com.incubator.edupayroll.util.selection.SelectionType;
 import jakarta.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,16 +31,11 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class TeacherControllerTest {
-  @Autowired private MockMvc mvc;
-
   @Autowired private Faker faker;
-
+  @Autowired private MockMvc mvc;
   @Autowired private TestHelper helper;
-
   @Autowired private ObjectMapper mapper;
-
   @MockBean private UserService userService;
-
   @Autowired private TeacherRepository teacherRepository;
 
   private UserEntity mockedUser;
@@ -58,7 +52,7 @@ public class TeacherControllerTest {
   @DisplayName("should get all teachers")
   public void testGetTeachers() throws Exception {
     for (int i = 0; i < 12; i++) {
-      createTeacher();
+      helper.createTeacher(mockedUser);
     }
 
     mvc.perform(get("/teachers?limit=10&offset=0"))
@@ -85,8 +79,8 @@ public class TeacherControllerTest {
   @Rollback
   @DisplayName("should get all teachers with search query")
   public void testGetTeachersWithNameFilter() throws Exception {
-    var teacher1 = createTeacher();
-    var teacher2 = createTeacher();
+    var teacher1 = helper.createTeacher(mockedUser);
+    var teacher2 = helper.createTeacher(mockedUser);
 
     mvc.perform(get("/teachers?limit=10&offset=0&query=" + teacher1.getName()))
         .andExpect(status().isOk())
@@ -141,7 +135,7 @@ public class TeacherControllerTest {
   @Rollback
   @DisplayName("should update a teacher")
   public void testUpdateTeacher() throws Exception {
-    var teacher = createTeacher();
+    var teacher = helper.createTeacher(mockedUser);
 
     var branch = teacher.getBranch();
     var idNumber = teacher.getIdNumber();
@@ -164,7 +158,7 @@ public class TeacherControllerTest {
   @Rollback
   @DisplayName("should delete a teacher")
   public void testDeleteTeacher() throws Exception {
-    var teacher = createTeacher();
+    var teacher = helper.createTeacher(mockedUser);
     var teacherId = teacher.getId();
 
     mvc.perform(delete("/teachers/" + teacher.getId()))
@@ -181,10 +175,10 @@ public class TeacherControllerTest {
   @Rollback
   @DisplayName("should bulk delete teachers")
   public void testBulkDeleteTeachers() throws Exception {
-    var teacher1 = createTeacher();
-    var teacher2 = createTeacher();
-    var teacher3 = createTeacher();
-    createTeacher();
+    var teacher1 = helper.createTeacher(mockedUser);
+    var teacher2 = helper.createTeacher(mockedUser);
+    var teacher3 = helper.createTeacher(mockedUser);
+    var teacher4 = helper.createTeacher(mockedUser);
 
     mvc.perform(
             delete("/teachers/bulk")
@@ -200,6 +194,12 @@ public class TeacherControllerTest {
         .andExpect(jsonPath("errors").isEmpty())
         .andExpect(jsonPath("node.success").value(true));
 
+    assertTrue(teacherRepository.existsById(teacher3.getId()));
+    assertTrue(teacherRepository.existsById(teacher4.getId()));
+
+    assertFalse(teacherRepository.existsById(teacher1.getId()));
+    assertFalse(teacherRepository.existsById(teacher2.getId()));
+
     mvc.perform(
             delete("/teachers/bulk")
                 .contentType("application/json")
@@ -213,6 +213,9 @@ public class TeacherControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
         .andExpect(jsonPath("node.success").value(true));
+
+    assertTrue(teacherRepository.existsById(teacher3.getId()));
+    assertFalse(teacherRepository.existsById(teacher4.getId()));
   }
 
   @Test
@@ -233,7 +236,7 @@ public class TeacherControllerTest {
   @Rollback
   @DisplayName("should return access denied error when user is not owner of teacher")
   public void testTeacherAccessDenied() throws Exception {
-    var teacher = createTeacher();
+    var teacher = helper.createTeacher(mockedUser);
     var anotherUser = helper.createUser();
 
     when(userService.getAuthenticatedUser()).thenReturn(anotherUser);
@@ -244,17 +247,5 @@ public class TeacherControllerTest {
                 .content(mapper.writeValueAsString(Map.of("name", "updated name"))))
         .andExpect(status().isForbidden())
         .andExpect(jsonPath("errors[0].code").value("ACCESS_DENIED"));
-  }
-
-  private TeacherEntity createTeacher() {
-    var name = faker.name().fullName();
-    var branch = faker.name().fullName();
-    var idNumber = faker.idNumber().valid();
-    var description = faker.name().title();
-
-    var teacher =
-        new TeacherEntity(name, branch, idNumber, description, mockedUser, new ArrayList<>());
-
-    return teacherRepository.saveAndFlush(teacher);
   }
 }

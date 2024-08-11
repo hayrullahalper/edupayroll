@@ -1,11 +1,12 @@
-package com.incubator.edupayroll.service.teacher;
+package com.incubator.edupayroll.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.github.javafaker.Faker;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
-import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.helper.TestHelper;
+import com.incubator.edupayroll.service.teacher.TeacherNotFoundException;
+import com.incubator.edupayroll.service.teacher.TeacherService;
 import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import com.incubator.edupayroll.util.selection.SelectionType;
 import jakarta.transaction.Transactional;
@@ -56,7 +57,7 @@ public class TeacherServiceTest {
   @DisplayName("should update teacher correctly")
   public void testTeacherServiceUpdate() {
     var user = helper.createUser();
-    var teacher = createTeacher(user);
+    var teacher = helper.createTeacher(user);
 
     var name = teacher.getName();
     var branch = teacher.getBranch();
@@ -79,7 +80,7 @@ public class TeacherServiceTest {
   @DisplayName("should remove teacher correctly")
   public void testTeacherServiceRemove() {
     var user = helper.createUser();
-    var teacher = createTeacher(user);
+    var teacher = helper.createTeacher(user);
 
     assertEquals(1, teacherService.count(user, Optional.empty()));
 
@@ -95,10 +96,10 @@ public class TeacherServiceTest {
   public void testTeacherServiceBulkRemove() {
     var user = helper.createUser();
 
-    var teacher1 = createTeacher(user);
-    var teacher2 = createTeacher(user);
-    var teacher3 = createTeacher(user);
-    var teacher4 = createTeacher(user);
+    var teacher1 = helper.createTeacher(user);
+    var teacher2 = helper.createTeacher(user);
+    var teacher3 = helper.createTeacher(user);
+    var teacher4 = helper.createTeacher(user);
 
     assertEquals(4, teacherService.count(user, Optional.empty()));
 
@@ -122,7 +123,7 @@ public class TeacherServiceTest {
   @DisplayName("should get teacher by id correctly")
   public void testTeacherServiceGetById() {
     var user = helper.createUser();
-    var teacher = createTeacher(user);
+    var teacher = helper.createTeacher(user);
 
     var foundTeacher = teacherService.getById(user, teacher.getId());
 
@@ -145,11 +146,11 @@ public class TeacherServiceTest {
 
     var teachers = new ArrayList<TeacherEntity>();
 
-    for (int i = 0; i < 12; i++) teachers.add(createTeacher(user));
+    for (int i = 0; i < 12; i++) teachers.add(helper.createTeacher(user));
 
     var reversed = teachers.reversed();
 
-    for (int i = 0; i < 5; i++) createTeacher(anotherUser);
+    for (int i = 0; i < 5; i++) helper.createTeacher(anotherUser);
 
     var teachersPageOne = teacherService.getAll(user, 10, 0, Optional.empty());
     var teachersPageTwo = teacherService.getAll(user, 10, 10, Optional.empty());
@@ -170,8 +171,8 @@ public class TeacherServiceTest {
   @DisplayName("should get all teachers correctly with search query")
   public void testTeacherServiceGetAllWithSearchQuery() {
     var user = helper.createUser();
-    var teacher1 = createTeacher(user);
-    createTeacher(user);
+    var teacher1 = helper.createTeacher(user);
+    helper.createTeacher(user);
 
     var teachers = teacherService.getAll(user, 10, 0, Optional.of(teacher1.getName()));
 
@@ -207,7 +208,7 @@ public class TeacherServiceTest {
 
     assertEquals(0, teacherService.count(user, Optional.empty()));
 
-    for (int i = 0; i < 5; i++) createTeacher(user);
+    for (int i = 0; i < 5; i++) helper.createTeacher(user);
 
     assertEquals(5, teacherService.count(user, Optional.empty()));
   }
@@ -219,8 +220,8 @@ public class TeacherServiceTest {
   public void testTeacherServiceCountWithSearchQuery() {
     var user = helper.createUser();
 
-    var teacher1 = createTeacher(user);
-    createTeacher(user);
+    var teacher1 = helper.createTeacher(user);
+    helper.createTeacher(user);
 
     assertEquals(2, teacherService.count(user, Optional.empty()));
 
@@ -250,17 +251,8 @@ public class TeacherServiceTest {
   public void testTeacherServiceGetByIdAccessDenied() {
     var user = helper.createUser();
     var anotherUser = helper.createUser();
-    var teacher = createTeacher(anotherUser);
+    var teacher = helper.createTeacher(anotherUser);
 
     assertThrows(AccessDeniedException.class, () -> teacherService.getById(user, teacher.getId()));
-  }
-
-  private TeacherEntity createTeacher(UserEntity user) {
-    var name = faker.name().fullName();
-    var branch = faker.job().field();
-    var idNumber = faker.number().digits(11);
-    var description = faker.name().title();
-
-    return teacherService.create(name, branch, idNumber, description, user);
   }
 }
