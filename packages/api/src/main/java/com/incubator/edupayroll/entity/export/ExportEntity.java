@@ -14,8 +14,15 @@ import lombok.*;
 @AllArgsConstructor
 public class ExportEntity extends BaseEntity {
 
-  @Column(name = "url", nullable = false)
+  @Column(name = "url")
   private String url;
+
+  @Column(name = "name", nullable = false)
+  private String name;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "status", nullable = false)
+  private ExportStatus status;
 
   @ManyToOne
   @JoinColumn(name = "document_id", nullable = false)
