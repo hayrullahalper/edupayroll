@@ -6,6 +6,8 @@ import com.incubator.edupayroll.service.token.TokenService;
 import com.incubator.edupayroll.common.response.Response;
 import java.util.HashMap;
 import java.util.Map;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,9 +32,7 @@ public class AuthController {
 
   @PostMapping("/login")
   public ResponseEntity<Response<TokenPayload, AuthErrorCode>> login(
-      @RequestBody LoginInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody LoginInput input) {
     var user = authService.login(input.getEmail(), input.getPassword());
     var token = generateVerifiedToken(user.getId().toString());
 
@@ -41,9 +41,7 @@ public class AuthController {
 
   @PostMapping("/register")
   public ResponseEntity<Response<RegisterPayload, AuthErrorCode>> register(
-      @RequestBody RegisterInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody RegisterInput input) {
     var token = generateUnverifiedToken(input.getEmail());
     authService.register(input.getEmail(), token);
 
@@ -52,9 +50,7 @@ public class AuthController {
 
   @PostMapping("/register/complete")
   public ResponseEntity<Response<TokenPayload, AuthErrorCode>> registerComplete(
-      @RequestBody RegisterCompleteInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody RegisterCompleteInput input) {
     var context = tokenService.decode(input.getToken());
     var email = context.get("email").asString();
 
@@ -75,9 +71,7 @@ public class AuthController {
 
   @PostMapping("/reset-password")
   public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> resetPassword(
-      @RequestBody ResetPasswordInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody ResetPasswordInput input) {
     var email = input.getEmail();
     var token = generateUnverifiedToken(email);
 
@@ -88,9 +82,7 @@ public class AuthController {
 
   @PostMapping("/reset-password/complete")
   public ResponseEntity<Response<ResetPasswordPayload, AuthErrorCode>> resetPasswordComplete(
-      @RequestBody ResetPasswordCompleteInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody ResetPasswordCompleteInput input) {
     var ctx = tokenService.decode(input.getToken());
     var email = ctx.get("email").asString();
 

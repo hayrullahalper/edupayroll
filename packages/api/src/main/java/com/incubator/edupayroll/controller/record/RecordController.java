@@ -10,6 +10,8 @@ import com.incubator.edupayroll.service.user.UserService;
 import com.incubator.edupayroll.common.response.Response;
 import java.util.Optional;
 import java.util.UUID;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +38,7 @@ public class RecordController {
 
   @PostMapping("")
   public ResponseEntity<Response<Record, RecordErrorCode>> create(
-      @RequestBody RecordCreateInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody RecordCreateInput input) {
     var user = userService.getAuthenticatedUser();
     var teacher = teacherService.getById(user, input.getTeacherId());
     var document = documentService.getById(user, input.getDocumentId());
@@ -54,9 +54,7 @@ public class RecordController {
 
   @PutMapping("/{id}")
   public ResponseEntity<Response<Record, RecordErrorCode>> update(
-      @PathVariable("id") UUID id, @RequestBody RecordUpdateInput input) {
-    Validation.validate(input);
-
+      @PathVariable("id") UUID id, @Valid @RequestBody RecordUpdateInput input) {
     var user = userService.getAuthenticatedUser();
     var record = recordService.getById(user, id);
     var teacher = teacherService.getById(user, input.getTeacherId());
@@ -68,9 +66,7 @@ public class RecordController {
 
   @PutMapping("/{id}/hours")
   public ResponseEntity<Response<Record, RecordErrorCode>> updateHours(
-      @PathVariable("id") UUID id, @RequestBody RecordUpdateHoursInput input) {
-    Validation.validate(input);
-
+      @PathVariable("id") UUID id, @Valid @RequestBody RecordUpdateHoursInput input) {
     var user = userService.getAuthenticatedUser();
     var record = recordService.getById(user, id);
 
@@ -81,9 +77,7 @@ public class RecordController {
 
   @PutMapping("/{id}/previous")
   public ResponseEntity<Response<Record, RecordErrorCode>> updateOrder(
-      @PathVariable("id") UUID id, @RequestBody RecordUpdateOrderInput input) {
-    Validation.validate(input);
-
+      @PathVariable("id") UUID id, @Valid @RequestBody RecordUpdateOrderInput input) {
     var user = userService.getAuthenticatedUser();
     var record = recordService.getById(user, id);
     var previous =

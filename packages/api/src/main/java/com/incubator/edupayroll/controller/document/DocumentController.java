@@ -13,6 +13,8 @@ import com.incubator.edupayroll.common.response.PageResponse;
 import com.incubator.edupayroll.common.response.Response;
 import java.util.Optional;
 import java.util.UUID;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,9 +70,7 @@ public class DocumentController {
 
   @PutMapping("/{id}")
   public ResponseEntity<Response<Document, DocumentErrorCode>> updateDocument(
-      @PathVariable String id, @RequestBody DocumentUpdateInput input) {
-    Validation.validate(input);
-
+      @PathVariable String id, @Valid @RequestBody DocumentUpdateInput input) {
     var user = userService.getAuthenticatedUser();
     var document = documentService.getById(user, UUID.fromString(id));
 
@@ -79,11 +79,9 @@ public class DocumentController {
     return ResponseEntity.ok().body(Response.data(DocumentMapper.toDTO(updatedDocument)).build());
   }
 
-  @PostMapping
+  @PostMapping("")
   public ResponseEntity<Response<Document, DocumentErrorCode>> createDocument(
-      @RequestBody DocumentCreateInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody DocumentCreateInput input) {
     var user = userService.getAuthenticatedUser();
     var document = documentService.create(user, input.getName(), input.getTime());
 
@@ -130,7 +128,7 @@ public class DocumentController {
     var document = documentService.getById(user, UUID.fromString(id));
 
     var export = exportService.create(document, input.getName());
-    exportProducer.sendExportCreationTask(export.getId());
+    exportProducer.sendExportCreationTask(export.getId().toString());
 
     return ResponseEntity.ok().body(Response.data(ExportMapper.toDTO(export)).build());
   }

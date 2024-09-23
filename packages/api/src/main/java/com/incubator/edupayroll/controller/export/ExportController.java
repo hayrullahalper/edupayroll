@@ -12,6 +12,8 @@ import com.incubator.edupayroll.common.response.Response;
 import com.incubator.edupayroll.common.selection.SelectionType;
 import java.util.Optional;
 import java.util.UUID;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,9 +46,7 @@ public class ExportController {
 
   @PutMapping("/{id}/name")
   public ResponseEntity<Response<Export, ExportErrorCode>> updateExportName(
-      @PathVariable("id") UUID id, @RequestBody ExportNameUpdateInput input) {
-    Validation.validate(input);
-
+      @PathVariable("id") UUID id, @Valid @RequestBody ExportNameUpdateInput input) {
     var user = userService.getAuthenticatedUser();
     var export = exportService.getById(user, id);
 
@@ -68,8 +68,7 @@ public class ExportController {
 
   @DeleteMapping("/bulk")
   public ResponseEntity<Response<ExportDeletePayload, ExportErrorCode>> deleteExports(
-      @RequestBody ExportDeleteInput input) {
-
+      @Valid @RequestBody ExportDeleteInput input) {
     var user = userService.getAuthenticatedUser();
     var selectionType = input.getType() != null ? input.getType() : SelectionType.INCLUDE;
 

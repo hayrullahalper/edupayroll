@@ -9,6 +9,8 @@ import com.incubator.edupayroll.common.response.Response;
 import com.incubator.edupayroll.common.selection.SelectionType;
 import java.util.Optional;
 import java.util.UUID;
+
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,9 +46,7 @@ public class TeacherController {
 
   @PutMapping("{id}")
   public ResponseEntity<Response<Teacher, TeacherErrorCode>> updateTeacher(
-      @RequestBody TeacherUpdateInput input, @PathVariable String id) {
-    Validation.validate(input);
-
+      @PathVariable String id, @Valid @RequestBody TeacherUpdateInput input) {
     var user = userService.getAuthenticatedUser();
     var teacher = teacherService.getById(user, UUID.fromString(id));
 
@@ -63,9 +63,7 @@ public class TeacherController {
 
   @PostMapping("")
   public ResponseEntity<Response<Teacher, TeacherErrorCode>> createTeacher(
-      @RequestBody TeacherCreateInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody TeacherCreateInput input) {
     var user = userService.getAuthenticatedUser();
     var createdTeacher =
         teacherService.create(
@@ -87,9 +85,7 @@ public class TeacherController {
 
   @DeleteMapping("/bulk")
   public ResponseEntity<Response<TeacherDeletePayload, TeacherErrorCode>> deleteTeachers(
-      @RequestBody TeacherDeleteInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody TeacherDeleteInput input) {
     var user = userService.getAuthenticatedUser();
     var selectionType = input.getType() != null ? input.getType() : SelectionType.INCLUDE;
 

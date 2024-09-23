@@ -6,6 +6,7 @@ import com.incubator.edupayroll.mapper.school.SchoolMapper;
 import com.incubator.edupayroll.service.school.SchoolService;
 import com.incubator.edupayroll.service.user.UserService;
 import com.incubator.edupayroll.common.response.Response;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,7 @@ public class SchoolController {
 
   @PutMapping("")
   public ResponseEntity<Response<School, SchoolErrorCode>> updateSchool(
-      @RequestBody SchoolUpdateInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody SchoolUpdateInput input) {
     var user = userService.getAuthenticatedUser();
     var school = schoolService.getByUser(user);
 

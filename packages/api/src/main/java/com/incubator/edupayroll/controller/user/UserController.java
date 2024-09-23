@@ -4,6 +4,7 @@ import com.incubator.edupayroll.dto.user.*;
 import com.incubator.edupayroll.mapper.user.UserMapper;
 import com.incubator.edupayroll.service.user.UserService;
 import com.incubator.edupayroll.common.response.Response;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +29,7 @@ public class UserController {
 
   @PutMapping("/password")
   public ResponseEntity<Response<UserUpdatePasswordPayload, UserErrorCode>> updatePassword(
-      @RequestBody UserUpdatePasswordInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody UserUpdatePasswordInput input) {
     var user = userService.getAuthenticatedUser();
     userService.changePassword(user, input.getCurrentPassword(), input.getNewPassword());
 
@@ -39,9 +38,7 @@ public class UserController {
 
   @PutMapping("/")
   public ResponseEntity<Response<User, UserErrorCode>> updateName(
-      @RequestBody UserUpdateNameInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody UserUpdateNameInput input) {
     var user = userService.getAuthenticatedUser();
     var updatedUser = userService.changeName(user, input.getFirstName(), input.getLastName());
 
@@ -50,9 +47,7 @@ public class UserController {
 
   @PutMapping("/email")
   public ResponseEntity<Response<User, UserErrorCode>> updateEmail(
-      @RequestBody UserUpdateEmailInput input) {
-    Validation.validate(input);
-
+      @Valid @RequestBody UserUpdateEmailInput input) {
     var user = userService.getAuthenticatedUser();
     var updatedUser = userService.changeEmail(user, input.getEmail(), input.getPassword());
 
