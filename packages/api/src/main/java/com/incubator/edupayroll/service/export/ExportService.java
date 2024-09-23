@@ -7,6 +7,7 @@ import com.incubator.edupayroll.entity.export.ExportEntity;
 import com.incubator.edupayroll.entity.export.ExportStatus;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.repository.ExportRepository;
+import com.incubator.edupayroll.service.storage.StorageService;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +19,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ExportService {
+  private final StorageService storageService;
   private final ExportRepository exportRepository;
 
   @Autowired
-  public ExportService(ExportRepository exportRepository) {
+  public ExportService(ExportRepository exportRepository, StorageService storageService) {
+    this.storageService = storageService;
     this.exportRepository = exportRepository;
   }
 
@@ -87,6 +90,10 @@ public class ExportService {
 
   public void remove(ExportEntity export) {
     exportRepository.delete(export);
+
+    if (export.getPath() != null) {
+      storageService.deleteFile(export.getPath());
+    }
   }
 
   public void removeAllByDocument(DocumentEntity document) {
