@@ -1,11 +1,11 @@
 package com.incubator.edupayroll.controller.school;
 
+import com.incubator.edupayroll.common.response.Response;
 import com.incubator.edupayroll.dto.school.School;
 import com.incubator.edupayroll.dto.school.SchoolUpdateInput;
 import com.incubator.edupayroll.mapper.school.SchoolMapper;
 import com.incubator.edupayroll.service.school.SchoolService;
 import com.incubator.edupayroll.service.user.UserService;
-import com.incubator.edupayroll.common.response.Response;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

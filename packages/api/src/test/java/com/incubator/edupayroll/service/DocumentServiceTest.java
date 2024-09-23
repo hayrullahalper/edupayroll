@@ -3,13 +3,13 @@ package com.incubator.edupayroll.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.github.javafaker.Faker;
+import com.incubator.edupayroll.common.exception.AccessDeniedException;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.helper.TestHelper;
 import com.incubator.edupayroll.repository.RecordRepository;
 import com.incubator.edupayroll.service.document.DocumentNotFoundException;
 import com.incubator.edupayroll.service.document.DocumentService;
-import com.incubator.edupayroll.common.exception.AccessDeniedException;
 import jakarta.transaction.Transactional;
 import java.time.YearMonth;
 import java.util.Optional;

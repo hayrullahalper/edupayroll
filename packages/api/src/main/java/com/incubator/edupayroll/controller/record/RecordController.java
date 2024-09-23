@@ -1,5 +1,6 @@
 package com.incubator.edupayroll.controller.record;
 
+import com.incubator.edupayroll.common.response.Response;
 import com.incubator.edupayroll.dto.record.*;
 import com.incubator.edupayroll.dto.record.Record;
 import com.incubator.edupayroll.mapper.record.RecordMapper;
@@ -7,11 +8,9 @@ import com.incubator.edupayroll.service.document.DocumentService;
 import com.incubator.edupayroll.service.record.RecordService;
 import com.incubator.edupayroll.service.teacher.TeacherService;
 import com.incubator.edupayroll.service.user.UserService;
-import com.incubator.edupayroll.common.response.Response;
+import jakarta.validation.Valid;
 import java.util.Optional;
 import java.util.UUID;
-
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

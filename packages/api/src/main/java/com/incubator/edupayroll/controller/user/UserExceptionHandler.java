@@ -1,9 +1,9 @@
 package com.incubator.edupayroll.controller.user;
 
+import com.incubator.edupayroll.common.response.Response;
 import com.incubator.edupayroll.service.user.UserExistsByEmailException;
 import com.incubator.edupayroll.service.user.UserNotFoundException;
 import com.incubator.edupayroll.service.user.UserPasswordMismatchException;
-import com.incubator.edupayroll.common.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

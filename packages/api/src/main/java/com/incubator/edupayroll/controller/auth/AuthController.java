@@ -1,13 +1,12 @@
 package com.incubator.edupayroll.controller.auth;
 
+import com.incubator.edupayroll.common.response.Response;
 import com.incubator.edupayroll.dto.auth.*;
 import com.incubator.edupayroll.service.auth.AuthService;
 import com.incubator.edupayroll.service.token.TokenService;
-import com.incubator.edupayroll.common.response.Response;
+import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

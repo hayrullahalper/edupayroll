@@ -25,9 +25,9 @@ public class StorageConfig {
     var credentials = new BasicAWSCredentials(accessKey, secretKey);
 
     return AmazonS3ClientBuilder.standard()
-            .withRegion(getRegion(region))
-            .withCredentials(new AWSStaticCredentialsProvider(credentials))
-            .build();
+        .withRegion(getRegion(region))
+        .withCredentials(new AWSStaticCredentialsProvider(credentials))
+        .build();
   }
 
   private Regions getRegion(String region) {
