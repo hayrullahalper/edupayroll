@@ -3,12 +3,10 @@ package com.incubator.edupayroll.controller.export;
 import com.incubator.edupayroll.common.response.PageResponse;
 import com.incubator.edupayroll.common.response.Response;
 import com.incubator.edupayroll.common.selection.SelectionType;
-import com.incubator.edupayroll.dto.export.Export;
-import com.incubator.edupayroll.dto.export.ExportDeleteInput;
-import com.incubator.edupayroll.dto.export.ExportDeletePayload;
-import com.incubator.edupayroll.dto.export.ExportNameUpdateInput;
+import com.incubator.edupayroll.dto.export.*;
 import com.incubator.edupayroll.mapper.export.ExportMapper;
 import com.incubator.edupayroll.service.export.ExportService;
+import com.incubator.edupayroll.service.storage.StorageService;
 import com.incubator.edupayroll.service.user.UserService;
 import jakarta.validation.Valid;
 import java.util.Optional;
@@ -22,11 +20,14 @@ import org.springframework.web.bind.annotation.*;
 public class ExportController {
   private final UserService userService;
   private final ExportService exportService;
+  private final StorageService storageService;
 
   @Autowired
-  public ExportController(UserService userService, ExportService exportService) {
+  public ExportController(
+      UserService userService, ExportService exportService, StorageService storageService) {
     this.userService = userService;
     this.exportService = exportService;
+    this.storageService = storageService;
   }
 
   @GetMapping("")
@@ -41,6 +42,17 @@ public class ExportController {
         exportService.getAll(user, limit, offset, name).stream().map(ExportMapper::toDTO).toList();
 
     return ResponseEntity.ok().body(PageResponse.data(exports).meta(limit, offset, count).build());
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<Response<ExportDownloadPayload, ExportErrorCode>> downloadExport(
+      @PathVariable("id") UUID id) {
+    var user = userService.getAuthenticatedUser();
+    var export = exportService.getById(user, id);
+
+    var url = storageService.createSignedUrl(export.getPath());
+
+    return ResponseEntity.ok().body(Response.data(new ExportDownloadPayload(url)).build());
   }
 
   @PutMapping("/{id}/name")
