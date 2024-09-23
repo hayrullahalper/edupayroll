@@ -235,6 +235,20 @@ public class ExportServiceTest {
   @Test
   @Transactional
   @Rollback
+  @DisplayName("should update export url")
+  public void testUpdateUrl() {
+    var export = helper.createExport(document);
+
+    var url = faker.internet().url();
+    var updated = exportService.updateUrl(export, url);
+
+    assertNotNull(updated);
+    assertEquals(url, updated.getUrl());
+  }
+
+  @Test
+  @Transactional
+  @Rollback
   @DisplayName("should remove export")
   public void testRemove() {
     var export = helper.createExport(document);

@@ -1,12 +1,12 @@
 package com.incubator.edupayroll.service.export;
 
+import com.incubator.edupayroll.common.exception.AccessDeniedException;
+import com.incubator.edupayroll.common.selection.SelectionType;
 import com.incubator.edupayroll.entity.document.DocumentEntity;
 import com.incubator.edupayroll.entity.export.ExportEntity;
 import com.incubator.edupayroll.entity.export.ExportStatus;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.repository.ExportRepository;
-import com.incubator.edupayroll.util.exception.AccessDeniedException;
-import com.incubator.edupayroll.util.selection.SelectionType;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +67,11 @@ public class ExportService {
     export.setStatus(ExportStatus.PENDING);
     export.setDocument(document);
 
+    return exportRepository.saveAndFlush(export);
+  }
+
+  public ExportEntity updateUrl(ExportEntity export, String url) {
+    export.setUrl(url);
     return exportRepository.saveAndFlush(export);
   }
 
