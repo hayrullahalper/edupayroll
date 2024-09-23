@@ -1,6 +1,5 @@
 package com.incubator.edupayroll.service.export;
 
-import java.util.UUID;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class ExportProducer {
     this.rabbitTemplate = rabbitTemplate;
   }
 
-  public void sendExportCreationTask(UUID exportId) {
+  public void sendExportCreationTask(String exportId) {
     rabbitTemplate.convertAndSend(queue.getName(), exportId);
   }
 }
