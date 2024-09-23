@@ -107,7 +107,7 @@ public class TestHelper {
 
     export.setDocument(document);
 
-    export.setUrl(faker.internet().url());
+    export.setPath(faker.internet().url());
     export.setName(faker.name().title());
     export.setStatus(faker.options().option(ExportStatus.values()));
 

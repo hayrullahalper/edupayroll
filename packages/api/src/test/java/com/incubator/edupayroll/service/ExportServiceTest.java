@@ -198,7 +198,7 @@ public class ExportServiceTest {
 
     assertNotNull(result);
 
-    assertNull(result.getUrl());
+    assertNull(result.getPath());
     assertEquals(name, result.getName());
     assertEquals(document, result.getDocument());
     assertEquals(ExportStatus.PENDING, result.getStatus());
@@ -235,15 +235,15 @@ public class ExportServiceTest {
   @Test
   @Transactional
   @Rollback
-  @DisplayName("should update export url")
-  public void testUpdateUrl() {
+  @DisplayName("should update export path")
+  public void testUpdatePath() {
     var export = helper.createExport(document);
 
-    var url = faker.internet().url();
-    var updated = exportService.updateUrl(export, url);
+    var path = faker.internet().url();
+    var updated = exportService.updatePath(export, path);
 
     assertNotNull(updated);
-    assertEquals(url, updated.getUrl());
+    assertEquals(path, updated.getPath());
   }
 
   @Test
