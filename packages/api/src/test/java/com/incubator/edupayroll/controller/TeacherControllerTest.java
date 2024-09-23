@@ -58,20 +58,20 @@ public class TeacherControllerTest {
     mvc.perform(get("/teachers?limit=10&offset=0"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("nodes").isArray())
+        .andExpect(jsonPath("data").isArray())
         .andExpect(jsonPath("meta.limit").value(10))
         .andExpect(jsonPath("meta.offset").value(0))
         .andExpect(jsonPath("meta.total").value(12))
-        .andExpect(jsonPath("nodes.length()").value(10));
+        .andExpect(jsonPath("data.length()").value(10));
 
     mvc.perform(get("/teachers?limit=10&offset=10"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("nodes").isArray())
+        .andExpect(jsonPath("data").isArray())
         .andExpect(jsonPath("meta.limit").value(10))
         .andExpect(jsonPath("meta.offset").value(10))
         .andExpect(jsonPath("meta.total").value(12))
-        .andExpect(jsonPath("nodes.length()").value(2));
+        .andExpect(jsonPath("data.length()").value(2));
   }
 
   @Test
@@ -84,18 +84,18 @@ public class TeacherControllerTest {
 
     mvc.perform(get("/teachers?limit=10&offset=0&query=" + teacher1.getName()))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("nodes.length()").value(1))
-        .andExpect(jsonPath("nodes[0].name").value(teacher1.getName()));
+        .andExpect(jsonPath("data.length()").value(1))
+        .andExpect(jsonPath("data[0].name").value(teacher1.getName()));
 
     mvc.perform(get("/teachers?limit=10&offset=0&query=" + teacher2.getName()))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("nodes.length()").value(1))
-        .andExpect(jsonPath("nodes[0].name").value(teacher2.getName()));
+        .andExpect(jsonPath("data.length()").value(1))
+        .andExpect(jsonPath("data[0].name").value(teacher2.getName()));
 
     mvc.perform(get("/teachers?limit=10&offset=0&query=notfound"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("nodes").isArray())
-        .andExpect(jsonPath("nodes.length()").value(0));
+        .andExpect(jsonPath("data").isArray())
+        .andExpect(jsonPath("data.length()").value(0));
   }
 
   @Test
@@ -124,10 +124,10 @@ public class TeacherControllerTest {
                             description))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.name").value(name))
-        .andExpect(jsonPath("node.branch").value(branch))
-        .andExpect(jsonPath("node.idNumber").value(idNumber))
-        .andExpect(jsonPath("node.description").value(description));
+        .andExpect(jsonPath("data.name").value(name))
+        .andExpect(jsonPath("data.branch").value(branch))
+        .andExpect(jsonPath("data.idNumber").value(idNumber))
+        .andExpect(jsonPath("data.description").value(description));
   }
 
   @Test
@@ -148,9 +148,9 @@ public class TeacherControllerTest {
                 .content(mapper.writeValueAsString(Map.of("name", updatedName))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.branch").value(branch))
-        .andExpect(jsonPath("node.name").value(updatedName))
-        .andExpect(jsonPath("node.idNumber").value(idNumber));
+        .andExpect(jsonPath("data.branch").value(branch))
+        .andExpect(jsonPath("data.name").value(updatedName))
+        .andExpect(jsonPath("data.idNumber").value(idNumber));
   }
 
   @Test
@@ -164,7 +164,7 @@ public class TeacherControllerTest {
     mvc.perform(delete("/teachers/" + teacher.getId()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.success").value(true));
+        .andExpect(jsonPath("data.success").value(true));
 
     var maybeTeacher = teacherRepository.findById(teacherId);
     assertTrue(maybeTeacher.isEmpty());
@@ -192,7 +192,7 @@ public class TeacherControllerTest {
                             }))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.success").value(true));
+        .andExpect(jsonPath("data.success").value(true));
 
     assertTrue(teacherRepository.existsById(teacher3.getId()));
     assertTrue(teacherRepository.existsById(teacher4.getId()));
@@ -212,7 +212,7 @@ public class TeacherControllerTest {
                             SelectionType.EXCLUDE))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.success").value(true));
+        .andExpect(jsonPath("data.success").value(true));
 
     assertTrue(teacherRepository.existsById(teacher3.getId()));
     assertFalse(teacherRepository.existsById(teacher4.getId()));

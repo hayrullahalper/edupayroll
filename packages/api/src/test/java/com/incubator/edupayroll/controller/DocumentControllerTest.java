@@ -72,8 +72,8 @@ public class DocumentControllerTest {
     mvc.perform(get("/documents?limit=2&offset=0"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.nodes").isArray())
-        .andExpect(jsonPath("$.nodes.length()").value(2))
+        .andExpect(jsonPath("$.data").isArray())
+        .andExpect(jsonPath("$.data.length()").value(2))
         .andExpect(jsonPath("$.meta.offset").value(0))
         .andExpect(jsonPath("$.meta.limit").value(2))
         .andExpect(jsonPath("$.meta.total").value(3));
@@ -81,17 +81,17 @@ public class DocumentControllerTest {
     mvc.perform(get("/documents?limit=2&offset=2"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.nodes").isArray())
-        .andExpect(jsonPath("$.nodes.length()").value(1))
+        .andExpect(jsonPath("$.data").isArray())
+        .andExpect(jsonPath("$.data.length()").value(1))
         .andExpect(jsonPath("$.meta.offset").value(2))
         .andExpect(jsonPath("$.meta.limit").value(2))
         .andExpect(jsonPath("$.meta.total").value(3))
-        .andExpect(jsonPath("$.nodes[0].id").value(document.getId().toString()))
-        .andExpect(jsonPath("$.nodes[0].name").value(document.getName()))
-        .andExpect(jsonPath("$.nodes[0].exports").isArray())
-        .andExpect(jsonPath("$.nodes[0].exports").isEmpty())
-        .andExpect(jsonPath("$.nodes[0].records").isArray())
-        .andExpect(jsonPath("$.nodes[0].records").isEmpty());
+        .andExpect(jsonPath("$.data[0].id").value(document.getId().toString()))
+        .andExpect(jsonPath("$.data[0].name").value(document.getName()))
+        .andExpect(jsonPath("$.data[0].exports").isArray())
+        .andExpect(jsonPath("$.data[0].exports").isEmpty())
+        .andExpect(jsonPath("$.data[0].records").isArray())
+        .andExpect(jsonPath("$.data[0].records").isEmpty());
   }
 
   @Test
@@ -104,13 +104,13 @@ public class DocumentControllerTest {
 
     mvc.perform(get("/documents?limit=10&offset=0&name=" + document1.getName()))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.nodes.length()").value(1))
-        .andExpect(jsonPath("$.nodes[0].name").value(document1.getName()));
+        .andExpect(jsonPath("$.data.length()").value(1))
+        .andExpect(jsonPath("$.data[0].name").value(document1.getName()));
 
     mvc.perform(get("/documents?limit=10&offset=0&name=" + document2.getName()))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.nodes.length()").value(1))
-        .andExpect(jsonPath("$.nodes[0].name").value(document2.getName()));
+        .andExpect(jsonPath("$.data.length()").value(1))
+        .andExpect(jsonPath("$.data[0].name").value(document2.getName()));
   }
 
   @Test
@@ -126,20 +126,20 @@ public class DocumentControllerTest {
     mvc.perform(get("/documents/" + document.getId()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.node.id").value(document.getId().toString()))
-        .andExpect(jsonPath("$.node.name").value(document.getName()))
-        .andExpect(jsonPath("$.node.exports").isArray())
-        .andExpect(jsonPath("$.node.exports.length()").value(1))
-        .andExpect(jsonPath("$.node.exports[0].id").value(export.getId().toString()))
-        .andExpect(jsonPath("$.node.exports[0].name").value(export.getName()))
-        .andExpect(jsonPath("$.node.exports[0].status").value(export.getStatus().name()))
-        .andExpect(jsonPath("$.node.records").isArray())
-        .andExpect(jsonPath("$.node.records.length()").value(1))
-        .andExpect(jsonPath("$.node.records[0].id").value(record.getId().toString()))
-        .andExpect(jsonPath("$.node.records[0].type").value(record.getType().name()))
+        .andExpect(jsonPath("$.data.id").value(document.getId().toString()))
+        .andExpect(jsonPath("$.data.name").value(document.getName()))
+        .andExpect(jsonPath("$.data.exports").isArray())
+        .andExpect(jsonPath("$.data.exports.length()").value(1))
+        .andExpect(jsonPath("$.data.exports[0].id").value(export.getId().toString()))
+        .andExpect(jsonPath("$.data.exports[0].name").value(export.getName()))
+        .andExpect(jsonPath("$.data.exports[0].status").value(export.getStatus().name()))
+        .andExpect(jsonPath("$.data.records").isArray())
+        .andExpect(jsonPath("$.data.records.length()").value(1))
+        .andExpect(jsonPath("$.data.records[0].id").value(record.getId().toString()))
+        .andExpect(jsonPath("$.data.records[0].type").value(record.getType().name()))
         .andExpect(
-            jsonPath("$.node.records[0].teacher.id").value(record.getTeacher().getId().toString()))
-        .andExpect(jsonPath("$.node.records[0].teacher.name").value(record.getTeacher().getName()));
+            jsonPath("$.data.records[0].teacher.id").value(record.getTeacher().getId().toString()))
+        .andExpect(jsonPath("$.data.records[0].teacher.name").value(record.getTeacher().getName()));
   }
 
   @Test
@@ -159,9 +159,9 @@ public class DocumentControllerTest {
                 .content(mapper.writeValueAsString(Map.of("name", name, "time", time.toString()))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.node.id").value(document.getId().toString()))
-        .andExpect(jsonPath("$.node.name").value(name))
-        .andExpect(jsonPath("$.node.time").value(time.toString()));
+        .andExpect(jsonPath("$.data.id").value(document.getId().toString()))
+        .andExpect(jsonPath("$.data.name").value(name))
+        .andExpect(jsonPath("$.data.time").value(time.toString()));
   }
 
   @Test
@@ -179,8 +179,8 @@ public class DocumentControllerTest {
                 .content(mapper.writeValueAsString(Map.of("name", name, "time", time.toString()))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.node.name").value(name))
-        .andExpect(jsonPath("$.node.time").value(time.toString()));
+        .andExpect(jsonPath("$.data.name").value(name))
+        .andExpect(jsonPath("$.data.time").value(time.toString()));
   }
 
   @Test
@@ -193,7 +193,7 @@ public class DocumentControllerTest {
     mvc.perform(delete("/documents/" + document.getId()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.node.success").value(true));
+        .andExpect(jsonPath("$.data.success").value(true));
 
     assertFalse(documentRepository.existsById(document.getId()));
   }
@@ -211,7 +211,7 @@ public class DocumentControllerTest {
     mvc.perform(put("/documents/" + document.getId() + "/clear/records"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.node.success").value(true));
+        .andExpect(jsonPath("$.data.success").value(true));
 
     assertFalse(recordRepository.existsById(record1.getId()));
     assertFalse(recordRepository.existsById(record2.getId()));
@@ -230,7 +230,7 @@ public class DocumentControllerTest {
     mvc.perform(put("/documents/" + document.getId() + "/clear/exports"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.node.success").value(true));
+        .andExpect(jsonPath("$.data.success").value(true));
 
     assertFalse(exportRepository.existsById(export1.getId()));
     assertFalse(exportRepository.existsById(export2.getId()));
@@ -252,12 +252,12 @@ public class DocumentControllerTest {
                 .content(mapper.writeValueAsString(Map.of("name", name))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.node.name").value(name))
+        .andExpect(jsonPath("$.data.name").value(name))
         .andDo(
             result -> {
               var response = mapper.readValue(result.getResponse().getContentAsString(), Map.class);
               generatedId.set(
-                  UUID.fromString((String) ((Map<?, ?>) response.get("node")).get("id")));
+                  UUID.fromString((String) ((Map<?, ?>) response.get("data")).get("id")));
             });
 
     verify(exportProducer, times(1)).sendExportCreationTask(generatedId.get().toString());

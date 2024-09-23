@@ -77,9 +77,9 @@ public class RecordControllerTest {
                             hours))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.type").value(type.toString()))
-        .andExpect(jsonPath("node.hours").isArray())
-        .andExpect(jsonPath("node.hours.length()").value(4));
+        .andExpect(jsonPath("data.type").value(type.toString()))
+        .andExpect(jsonPath("data.hours").isArray())
+        .andExpect(jsonPath("data.hours.length()").value(4));
   }
 
   @Test
@@ -107,9 +107,9 @@ public class RecordControllerTest {
                             previous.getId()))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.type").value(type.toString()))
-        .andExpect(jsonPath("node.hours").isArray())
-        .andExpect(jsonPath("node.hours.length()").value(4));
+        .andExpect(jsonPath("data.type").value(type.toString()))
+        .andExpect(jsonPath("data.hours").isArray())
+        .andExpect(jsonPath("data.hours.length()").value(4));
   }
 
   @Test
@@ -129,8 +129,8 @@ public class RecordControllerTest {
                     mapper.writeValueAsString(Map.of("teacherId", teacher.getId(), "type", type))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.type").value(type.toString()))
-        .andExpect(jsonPath("node.teacher.id").value(teacher.getId().toString()));
+        .andExpect(jsonPath("data.type").value(type.toString()))
+        .andExpect(jsonPath("data.teacher.id").value(teacher.getId().toString()));
   }
 
   @Test
@@ -148,12 +148,12 @@ public class RecordControllerTest {
                 .content(mapper.writeValueAsString(Map.of("hours", hours))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.hours").isArray())
-        .andExpect(jsonPath("node.hours.length()").value(4))
-        .andExpect(jsonPath("node.hours[0]").value(1))
-        .andExpect(jsonPath("node.hours[1]").value(2))
-        .andExpect(jsonPath("node.hours[2]").value(3))
-        .andExpect(jsonPath("node.hours[3]").value(4));
+        .andExpect(jsonPath("data.hours").isArray())
+        .andExpect(jsonPath("data.hours.length()").value(4))
+        .andExpect(jsonPath("data.hours[0]").value(1))
+        .andExpect(jsonPath("data.hours[1]").value(2))
+        .andExpect(jsonPath("data.hours[2]").value(3))
+        .andExpect(jsonPath("data.hours[3]").value(4));
   }
 
   @Test
@@ -171,8 +171,8 @@ public class RecordControllerTest {
                 .content(mapper.writeValueAsString(Map.of("previousId", record1.getId()))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.id").value(record3.getId().toString()))
-        .andExpect(jsonPath("node.nextId").value(record2.getId().toString()));
+        .andExpect(jsonPath("data.id").value(record3.getId().toString()))
+        .andExpect(jsonPath("data.nextId").value(record2.getId().toString()));
 
     var maybeRecord3 = recordRepository.findById(record3.getId());
     var maybeRecord2 = recordRepository.findById(record2.getId());

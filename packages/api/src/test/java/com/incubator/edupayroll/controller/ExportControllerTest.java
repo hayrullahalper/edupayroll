@@ -63,8 +63,8 @@ public class ExportControllerTest {
     mvc.perform(get("/exports?limit=2&offset=0"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.nodes").isArray())
-        .andExpect(jsonPath("$.nodes.length()").value(2))
+        .andExpect(jsonPath("$.data").isArray())
+        .andExpect(jsonPath("$.data.length()").value(2))
         .andExpect(jsonPath("$.meta.offset").value(0))
         .andExpect(jsonPath("$.meta.limit").value(2))
         .andExpect(jsonPath("$.meta.total").value(3));
@@ -72,13 +72,13 @@ public class ExportControllerTest {
     mvc.perform(get("/exports?limit=2&offset=2"))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.nodes").isArray())
-        .andExpect(jsonPath("$.nodes.length()").value(1))
+        .andExpect(jsonPath("$.data").isArray())
+        .andExpect(jsonPath("$.data.length()").value(1))
         .andExpect(jsonPath("$.meta.offset").value(2))
         .andExpect(jsonPath("$.meta.limit").value(2))
         .andExpect(jsonPath("$.meta.total").value(3))
-        .andExpect(jsonPath("$.nodes[0].id").value(last.getId().toString()))
-        .andExpect(jsonPath("$.nodes[0].name").value(last.getName()));
+        .andExpect(jsonPath("$.data[0].id").value(last.getId().toString()))
+        .andExpect(jsonPath("$.data[0].name").value(last.getName()));
   }
 
   @Test
@@ -96,8 +96,8 @@ public class ExportControllerTest {
                 .content(mapper.writeValueAsString(Map.of("name", name))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.node.id").value(export.getId().toString()))
-        .andExpect(jsonPath("$.node.name").value(name));
+        .andExpect(jsonPath("$.data.id").value(export.getId().toString()))
+        .andExpect(jsonPath("$.data.name").value(name));
   }
 
   @Test
@@ -110,7 +110,7 @@ public class ExportControllerTest {
     mvc.perform(delete("/exports/" + export.getId()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.node.success").value(true));
+        .andExpect(jsonPath("$.data.success").value(true));
 
     assertFalse(exportRepository.existsById(export.getId()));
   }
@@ -135,7 +135,7 @@ public class ExportControllerTest {
                             }))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.errors").isEmpty())
-        .andExpect(jsonPath("$.node.success").value(true));
+        .andExpect(jsonPath("$.data.success").value(true));
 
     assertFalse(exportRepository.existsById(export1.getId()));
     assertFalse(exportRepository.existsById(export2.getId()));
@@ -163,7 +163,7 @@ public class ExportControllerTest {
                             }))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.success").value(true));
+        .andExpect(jsonPath("data.success").value(true));
 
     assertTrue(exportRepository.existsById(export3.getId()));
     assertTrue(exportRepository.existsById(export4.getId()));
@@ -183,7 +183,7 @@ public class ExportControllerTest {
                             SelectionType.EXCLUDE))))
         .andExpect(status().isOk())
         .andExpect(jsonPath("errors").isEmpty())
-        .andExpect(jsonPath("node.success").value(true));
+        .andExpect(jsonPath("data.success").value(true));
 
     assertTrue(exportRepository.existsById(export3.getId()));
     assertFalse(exportRepository.existsById(export4.getId()));

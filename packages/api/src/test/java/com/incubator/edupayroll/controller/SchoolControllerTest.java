@@ -58,9 +58,9 @@ public class SchoolControllerTest {
                 .contentType("application/json")
                 .content(mapper.writeValueAsString(Map.of("editorTitle", updatedEditorTitle))))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.node.name").value(schoolName))
-        .andExpect(jsonPath("$.node.editorName").value(editorName))
-        .andExpect(jsonPath("$.node.editorTitle").value(updatedEditorTitle));
+        .andExpect(jsonPath("$.data.name").value(schoolName))
+        .andExpect(jsonPath("$.data.editorName").value(editorName))
+        .andExpect(jsonPath("$.data.editorTitle").value(updatedEditorTitle));
   }
 
   @Test
@@ -70,9 +70,9 @@ public class SchoolControllerTest {
 
     mvc.perform(get("/school").contentType("application/json"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.node.name").value(school.getName()))
-        .andExpect(jsonPath("$.node.editorName").value(school.getEditorName()))
-        .andExpect(jsonPath("$.node.editorTitle").value(school.getEditorTitle()))
-        .andExpect(jsonPath("$.node.principalName").value(school.getPrincipalName()));
+        .andExpect(jsonPath("$.data.name").value(school.getName()))
+        .andExpect(jsonPath("$.data.editorName").value(school.getEditorName()))
+        .andExpect(jsonPath("$.data.editorTitle").value(school.getEditorTitle()))
+        .andExpect(jsonPath("$.data.principalName").value(school.getPrincipalName()));
   }
 }
