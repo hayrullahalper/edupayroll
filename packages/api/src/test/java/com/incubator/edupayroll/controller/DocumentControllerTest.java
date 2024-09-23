@@ -260,7 +260,7 @@ public class DocumentControllerTest {
                   UUID.fromString((String) ((Map<?, ?>) response.get("node")).get("id")));
             });
 
-    verify(exportProducer, times(1)).sendExportCreationTask(generatedId.get());
+    verify(exportProducer, times(1)).sendExportCreationTask(generatedId.get().toString());
   }
 
   @Test

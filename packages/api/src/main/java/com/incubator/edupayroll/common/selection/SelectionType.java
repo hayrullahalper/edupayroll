@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.util.selection;
+package com.incubator.edupayroll.common.selection;
 
 public enum SelectionType {
   INCLUDE,

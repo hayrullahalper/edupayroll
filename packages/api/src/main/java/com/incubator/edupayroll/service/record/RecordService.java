@@ -1,12 +1,12 @@
 package com.incubator.edupayroll.service.record;
 
+import com.incubator.edupayroll.common.exception.AccessDeniedException;
 import com.incubator.edupayroll.entity.document.DocumentEntity;
 import com.incubator.edupayroll.entity.record.RecordEntity;
 import com.incubator.edupayroll.entity.record.RecordType;
 import com.incubator.edupayroll.entity.teacher.TeacherEntity;
 import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.repository.RecordRepository;
-import com.incubator.edupayroll.util.exception.AccessDeniedException;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;

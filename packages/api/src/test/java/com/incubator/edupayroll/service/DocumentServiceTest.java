@@ -9,7 +9,7 @@ import com.incubator.edupayroll.helper.TestHelper;
 import com.incubator.edupayroll.repository.RecordRepository;
 import com.incubator.edupayroll.service.document.DocumentNotFoundException;
 import com.incubator.edupayroll.service.document.DocumentService;
-import com.incubator.edupayroll.util.exception.AccessDeniedException;
+import com.incubator.edupayroll.common.exception.AccessDeniedException;
 import jakarta.transaction.Transactional;
 import java.time.YearMonth;
 import java.util.Optional;

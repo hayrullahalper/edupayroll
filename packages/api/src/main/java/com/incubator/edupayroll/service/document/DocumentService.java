@@ -5,7 +5,7 @@ import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.repository.DocumentRepository;
 import com.incubator.edupayroll.service.export.ExportService;
 import com.incubator.edupayroll.service.record.RecordService;
-import com.incubator.edupayroll.util.exception.AccessDeniedException;
+import com.incubator.edupayroll.common.exception.AccessDeniedException;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;

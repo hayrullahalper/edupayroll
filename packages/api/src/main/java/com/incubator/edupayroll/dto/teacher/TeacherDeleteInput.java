@@ -1,6 +1,6 @@
 package com.incubator.edupayroll.dto.teacher;
 
-import com.incubator.edupayroll.util.selection.SelectionType;
+import com.incubator.edupayroll.common.selection.SelectionType;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

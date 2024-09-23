@@ -13,7 +13,7 @@ import com.incubator.edupayroll.entity.user.UserEntity;
 import com.incubator.edupayroll.helper.TestHelper;
 import com.incubator.edupayroll.repository.TeacherRepository;
 import com.incubator.edupayroll.service.user.UserService;
-import com.incubator.edupayroll.util.selection.SelectionType;
+import com.incubator.edupayroll.common.selection.SelectionType;
 import jakarta.transaction.Transactional;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;

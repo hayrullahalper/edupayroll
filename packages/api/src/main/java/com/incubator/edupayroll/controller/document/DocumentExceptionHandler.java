@@ -1,7 +1,7 @@
 package com.incubator.edupayroll.controller.document;
 
 import com.incubator.edupayroll.service.document.DocumentNotFoundException;
-import com.incubator.edupayroll.util.response.Response;
+import com.incubator.edupayroll.common.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

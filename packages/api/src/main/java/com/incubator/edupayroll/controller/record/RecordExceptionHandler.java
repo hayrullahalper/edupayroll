@@ -4,7 +4,7 @@ import com.incubator.edupayroll.service.document.DocumentNotFoundException;
 import com.incubator.edupayroll.service.record.RecordHoursTooLongException;
 import com.incubator.edupayroll.service.record.RecordNotFoundException;
 import com.incubator.edupayroll.service.teacher.TeacherNotFoundException;
-import com.incubator.edupayroll.util.response.Response;
+import com.incubator.edupayroll.common.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

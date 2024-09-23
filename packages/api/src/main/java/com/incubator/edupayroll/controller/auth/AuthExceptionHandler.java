@@ -3,7 +3,7 @@ package com.incubator.edupayroll.controller.auth;
 import com.incubator.edupayroll.service.auth.InvalidCredentialsException;
 import com.incubator.edupayroll.service.user.UserAlreadyRegisteredException;
 import com.incubator.edupayroll.service.user.UserNotFoundException;
-import com.incubator.edupayroll.util.response.Response;
+import com.incubator.edupayroll.common.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.util.response;
+package com.incubator.edupayroll.common.response;
 
 import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -6,15 +6,14 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class PageResponse<D, E> {
-  private List<D> nodes = null;
-  private PageMeta meta = null;
+public class Response<D, E> {
+  private D node = null;
 
   @NotNull private final List<ResponseError<E>> errors = new ArrayList<>();
 
-  PageResponse() {}
+  protected Response() {}
 
-  public static <D> DataBuilder<D> data(List<D> data) {
+  public static <D> DataBuilder<D> data(D data) {
     return new DataBuilder<>(data);
   }
 
@@ -26,48 +25,25 @@ public class PageResponse<D, E> {
     return new ErrorBuilder<>(code, messages);
   }
 
-  private PageResponse<D, E> withData(List<D> nodes) {
-    this.nodes = nodes;
+  private Response<D, E> withData(D node) {
+    this.node = node;
     return this;
   }
 
-  private PageResponse<D, E> withMeta(PageMeta meta) {
-    this.meta = meta;
-    return this;
-  }
-
-  private PageResponse<D, E> withError(List<ResponseError<E>> errors) {
+  private Response<D, E> withError(List<ResponseError<E>> errors) {
     this.errors.addAll(errors);
     return this;
   }
 
   public static class DataBuilder<D> {
-    private final List<D> data;
+    private final D data;
 
-    DataBuilder(List<D> data) {
+    DataBuilder(D data) {
       this.data = data;
     }
 
-    public MetaBuilder<D> meta(int limit, int offset, long total) {
-      return new MetaBuilder<>(data, limit, offset, total);
-    }
-
-    public <E> PageResponse<D, E> build() {
-      return new PageResponse<D, E>().withData(data);
-    }
-  }
-
-  public static class MetaBuilder<D> {
-    private final PageMeta meta;
-    private final List<D> data;
-
-    MetaBuilder(List<D> data, int limit, int offset, long total) {
-      this.data = data;
-      this.meta = new PageMeta(limit, offset, total);
-    }
-
-    public <E> PageResponse<D, E> build() {
-      return new PageResponse<D, E>().withData(data).withMeta(meta);
+    public <E> Response<D, E> build() {
+      return new Response<D, E>().withData(data);
     }
   }
 
@@ -93,8 +69,8 @@ public class PageResponse<D, E> {
       return this;
     }
 
-    public <D> PageResponse<D, E> build() {
-      return new PageResponse<D, E>().withError(errors);
+    public <D, M> Response<D, E> build() {
+      return new Response<D, E>().withError(errors);
     }
   }
 }

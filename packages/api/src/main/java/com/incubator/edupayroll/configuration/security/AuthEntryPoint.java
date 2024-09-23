@@ -2,7 +2,7 @@ package com.incubator.edupayroll.configuration.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.incubator.edupayroll.controller.auth.AuthErrorCode;
-import com.incubator.edupayroll.util.response.Response;
+import com.incubator.edupayroll.common.response.Response;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;

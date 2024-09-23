@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.util.exception;
+package com.incubator.edupayroll.common.exception;
 
 import com.incubator.edupayroll.entity.user.UserEntity;
 

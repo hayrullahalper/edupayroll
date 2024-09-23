@@ -1,4 +1,4 @@
-package com.incubator.edupayroll.util.response;
+package com.incubator.edupayroll.common.response;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;
