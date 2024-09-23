@@ -14,8 +14,8 @@ import lombok.*;
 @AllArgsConstructor
 public class ExportEntity extends BaseEntity {
 
-  @Column(name = "url")
-  private String url;
+  @Column(name = "path")
+  private String path;
 
   @Column(name = "name", nullable = false)
   private String name;

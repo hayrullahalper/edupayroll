@@ -70,8 +70,8 @@ public class ExportService {
     return exportRepository.saveAndFlush(export);
   }
 
-  public ExportEntity updateUrl(ExportEntity export, String url) {
-    export.setUrl(url);
+  public ExportEntity updatePath(ExportEntity export, String path) {
+    export.setPath(path);
     return exportRepository.saveAndFlush(export);
   }
 

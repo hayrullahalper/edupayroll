@@ -10,7 +10,6 @@ import lombok.Value;
 public class Export {
   @NotNull UUID id;
 
-  String url;
   @NotNull String name;
   @NotNull ExportStatus status;
 

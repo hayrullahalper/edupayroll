@@ -7,7 +7,6 @@ public class ExportMapper {
   public static Export toDTO(ExportEntity export) {
     return new Export(
         export.getId(),
-        export.getUrl(),
         export.getName(),
         export.getStatus(),
         export.getCreatedAt(),
