@@ -1,20 +1,20 @@
+import { execSync } from 'node:child_process';
+import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import 'dotenv-flow/config';
-import { join } from 'path';
-import { execSync } from 'child_process';
-import { readFileSync, writeFileSync, readdirSync, mkdirSync, statSync } from 'fs';
 
 const apiDestination = 'src/api';
 
 // remove api
 
 execSync(`rimraf ${apiDestination}`, {
-	stdio: 'inherit'
+	stdio: 'inherit',
 });
 
 // generate api
 
 execSync(`npx @openapitools/openapi-generator-cli generate -s -i ${process.env.REST_API_SPEC_URL} -g typescript-fetch -o ${apiDestination}`, {
-	stdio: 'inherit'
+	stdio: 'inherit',
 });
 
 // fix runtime.ts
@@ -38,17 +38,7 @@ writeFileSync(runtimePath, runtime);
 // read apis
 
 const apis = readdirSync(`${apiDestination}/apis`)
-	.filter((file) => file !== 'index.ts');
-
-// generate controllers
-
-const controllers = apis.map((api) => {
-	return api.replace('.ts', '')
-		.replace(/Api$/, '')
-		.replace(/Controller$/, '')
-		.replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-		.toLowerCase();
-});
+	.filter(file => file !== 'index.ts');
 
 // generate client folder and files
 
@@ -66,16 +56,6 @@ apis.forEach((api, index) => {
 });
 
 client += `} from '../apis';\n\n`;
-
-client += `type Controller = '${controllers.join(`' | '`)}';\n\n`;
-
-client += `type ControllerAPI<T extends Controller> =\n`;
-
-controllers.forEach((controller, index) => {
-	client += `\tT extends '${controller}' ? ${apis[index].replace('.ts', '')} :\n`;
-});
-
-client += `\tnever;\n\n`;
 
 client += `const config = new Configuration({\n`;
 client += `\tmiddleware: [{\n`;
@@ -100,18 +80,16 @@ client += `\t}],\n`;
 client += `\tbasePath: import.meta.env.VITE_REST_API_BASE_URL\n`;
 client += `});\n\n`;
 
-client += `function client<T extends Controller>(controller: T): ControllerAPI<T> {\n`;
-client += `\tswitch (controller) {\n`;
+client += `const client = {\n`;
 
-controllers.forEach((controller, index) => {
-	client += `\tcase '${controller}':\n`;
-	client += `\t\treturn new ${apis[index].replace('.ts', '')}(config) as any;\n`;
+apis.forEach((api, index) => {
+	let name = api.replace('.ts', '').replace(/Api$/, '');
+	name = name.replace('Controller', '').toLowerCase();
+
+	client += `\t${name}: new ${api.replace('.ts', '')}(config)${index < apis.length - 1 ? ',' : ''}\n`;
 });
 
-client += `\tdefault:\n`;
-client += `\t\tthrow new Error(\`Unknown controller: \${controller}\`);\n`;
-client += `\t}\n`;
-client += `}\n\n`;
+client += `};\n\n`;
 
 client += `export default client;\n`;
 
