@@ -1,11 +1,10 @@
-import user from './tr/user.json';
 import auth from './tr/auth.json';
-import layout from './tr/layout.json';
 import common from './tr/common.json';
-import teachers from './tr/teachers.json';
 import components from './tr/components.json';
+import layout from './tr/layout.json';
+import teachers from './tr/teachers.json';
+import user from './tr/user.json';
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default {
 	tr: {
 		translation: {

@@ -1,4 +1,5 @@
-import { object, ObjectSchema, string } from 'yup';
+import type { ObjectSchema } from 'yup';
+import { object, string } from 'yup';
 
 import { i18n } from '../../../locales';
 

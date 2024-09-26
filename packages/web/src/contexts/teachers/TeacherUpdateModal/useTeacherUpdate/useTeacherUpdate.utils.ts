@@ -1,8 +1,8 @@
-import { QueryClient } from '@tanstack/react-query';
+import type { QueryClient } from '@tanstack/react-query';
 
-import {
-	ResponseTeacherTeacherErrorCode,
+import type {
 	PageResponseTeacherTeacherErrorCode,
+	ResponseTeacherTeacherErrorCode,
 } from '../../../../api';
 
 export function updateTeachersQuery(
@@ -15,8 +15,8 @@ export function updateTeachersQuery(
 		return;
 	}
 
-	const result =
-		queryClient.getQueriesData<PageResponseTeacherTeacherErrorCode>({
+	const result
+		= queryClient.getQueriesData<PageResponseTeacherTeacherErrorCode>({
 			queryKey: ['teachers'],
 		});
 
@@ -32,7 +32,7 @@ export function updateTeachersQuery(
 
 	queryClient.setQueryData<PageResponseTeacherTeacherErrorCode>(queryKey, {
 		...teachers,
-		nodes: teachers.nodes?.map((teacher) =>
+		nodes: teachers.nodes?.map(teacher =>
 			teacher.id === node.id ? node : teacher,
 		),
 	});

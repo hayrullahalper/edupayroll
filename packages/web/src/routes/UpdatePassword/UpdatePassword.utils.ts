@@ -1,4 +1,5 @@
-import { object, ObjectSchema, string } from 'yup';
+import type { ObjectSchema } from 'yup';
+import { object, string } from 'yup';
 
 import { i18n } from '../../locales';
 
@@ -8,8 +9,8 @@ export interface UpdatePasswordFormInput {
 	confirmPassword: string;
 }
 
-export const updatePasswordFormSchema: ObjectSchema<UpdatePasswordFormInput> =
-	object({
+export const updatePasswordFormSchema: ObjectSchema<UpdatePasswordFormInput>
+	= object({
 		currentPassword: string().required(
 			i18n.t('user.updatePassword.form.currentPassword.required'),
 		),
@@ -25,7 +26,7 @@ export const updatePasswordFormSchema: ObjectSchema<UpdatePasswordFormInput> =
 			.min(6, i18n.t('user.updatePassword.form.newPassword.minLength'))
 			.max(32, i18n.t('user.updatePassword.form.newPassword.maxLength'))
 			.matches(
-				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
 				i18n.t('user.updatePassword.form.newPassword.invalid'),
 			),
 	});

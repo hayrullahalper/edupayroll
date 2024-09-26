@@ -1,11 +1,12 @@
+import type { PropsWithChildren } from 'react';
 import Cookies from 'js-cookie';
-import { PropsWithChildren, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import TokenContext from './TokenContext';
 
 const ACCESS_TOKEN_KEY = 'access_token';
 
-export default function TokenProvider({ children }: PropsWithChildren<{}>) {
+export default function TokenProvider({ children }: PropsWithChildren<any>) {
 	const [accessToken, setAccessToken] = useState<string | null>(
 		Cookies.get(ACCESS_TOKEN_KEY) ?? null,
 	);

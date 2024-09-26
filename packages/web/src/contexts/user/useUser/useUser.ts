@@ -1,7 +1,7 @@
-import { useContext } from 'react';
+import type { User } from '../../../api';
 
+import { useContext } from 'react';
 import UserContext from '../UserContext';
-import { User } from '../../../api';
 
 type UserFetchType = 'exact' | 'optional';
 

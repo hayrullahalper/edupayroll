@@ -1,4 +1,5 @@
-import { object, ObjectSchema, string } from 'yup';
+import type { ObjectSchema } from 'yup';
+import { object, string } from 'yup';
 
 import { i18n } from '../../../locales';
 
@@ -11,8 +12,8 @@ export interface RegisterCompleteFormInput {
 	principalName: string;
 }
 
-export const registerCompleteFormSchema: ObjectSchema<RegisterCompleteFormInput> =
-	object({
+export const registerCompleteFormSchema: ObjectSchema<RegisterCompleteFormInput>
+	= object({
 		firstName: string()
 			.required(i18n.t('auth.registerComplete.form.firstName.required'))
 			.min(3, i18n.t('auth.registerComplete.form.firstName.minLength'))
@@ -30,7 +31,7 @@ export const registerCompleteFormSchema: ObjectSchema<RegisterCompleteFormInput>
 			.min(6, i18n.t('auth.registerComplete.form.password.minLength'))
 			.max(32, i18n.t('auth.registerComplete.form.password.maxLength'))
 			.matches(
-				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/,
+				/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
 				i18n.t('auth.registerComplete.form.password.invalid'),
 			),
 		schoolName: string()

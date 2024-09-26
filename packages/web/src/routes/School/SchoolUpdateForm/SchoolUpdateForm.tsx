@@ -1,22 +1,26 @@
+import type { FormikHelpers } from 'formik';
+import type { MouseEvent } from 'react';
+import type { School } from '../../../api';
+import type {
+	SchoolUpdateFormInput,
+} from './SchoolUpdateForm.utils';
+import { Button, Flex, Stack, Text } from '@mantine/core';
 import {
+	IconBuildingCommunity,
 	IconIdBadge2,
 	IconUserBolt,
 	IconUserEdit,
-	IconBuildingCommunity,
 } from '@tabler/icons-react';
-import { MouseEvent, useRef } from 'react';
+import { Form, FormikProvider, useFormik } from 'formik';
+
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Flex, Stack, Text } from '@mantine/core';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
-
-import { School } from '../../../api';
 import TextField from '../../../fields/TextField';
-import useInputMode from '../../../hooks/useInputMode';
 
+import useInputMode from '../../../hooks/useInputMode';
 import {
-	SchoolUpdateFormInput,
-	schoolUpdateFormSchema,
 	schoolUpdateFormInitialValues,
+	schoolUpdateFormSchema,
 } from './SchoolUpdateForm.utils';
 
 interface SchoolUpdateFormProps {
@@ -80,11 +84,11 @@ export default function SchoolUpdateForm({
 						name="principalName"
 						rightSection={<IconUserBolt size={18} stroke={1.5} />}
 						description={t('user.updateSchool.form.principalName.description')}
-						label={
+						label={(
 							<Text fw="200">
 								{t('user.updateSchool.form.principalName.label')}
 							</Text>
-						}
+						)}
 						{...inputProps}
 					/>
 
@@ -92,11 +96,11 @@ export default function SchoolUpdateForm({
 						name="editorName"
 						rightSection={<IconUserEdit size={18} stroke={1.5} />}
 						description={t('user.updateSchool.form.editorName.description')}
-						label={
+						label={(
 							<Text fw="200">
 								{t('user.updateSchool.form.editorName.label')}
 							</Text>
-						}
+						)}
 						{...inputProps}
 					/>
 
@@ -104,48 +108,50 @@ export default function SchoolUpdateForm({
 						name="editorTitle"
 						rightSection={<IconIdBadge2 size={18} stroke={1.5} />}
 						description={t('user.updateSchool.form.editorTitle.description')}
-						label={
+						label={(
 							<Text fw="200">
 								{t('user.updateSchool.form.editorTitle.label')}
 							</Text>
-						}
+						)}
 						{...inputProps}
 					/>
 
 					<Flex mt={8} gap="md">
-						{mode === 'view' ? (
-							<Button
-								size="sm"
-								type="button"
-								variant="light"
-								onClick={handleEdit}
-							>
-								{t('common.form.edit')}
-							</Button>
-						) : (
-							<>
+						{mode === 'view'
+							? (
 								<Button
 									size="sm"
-									color="teal"
-									type="submit"
+									type="button"
 									variant="light"
-									loading={formik.isSubmitting}
-									disabled={!formik.isValid || !formik.dirty}
+									onClick={handleEdit}
 								>
-									{t('common.form.submit')}
+									{t('common.form.edit')}
 								</Button>
-								<Button
-									size="sm"
-									color="red"
-									type="reset"
-									variant="subtle"
-									onClick={handleCancel}
-									disabled={formik.isSubmitting}
-								>
-									{t('common.form.cancel')}
-								</Button>
-							</>
-						)}
+							)
+							: (
+								<>
+									<Button
+										size="sm"
+										color="teal"
+										type="submit"
+										variant="light"
+										loading={formik.isSubmitting}
+										disabled={!formik.isValid || !formik.dirty}
+									>
+										{t('common.form.submit')}
+									</Button>
+									<Button
+										size="sm"
+										color="red"
+										type="reset"
+										variant="subtle"
+										onClick={handleCancel}
+										disabled={formik.isSubmitting}
+									>
+										{t('common.form.cancel')}
+									</Button>
+								</>
+							)}
 					</Flex>
 				</Stack>
 			</Form>

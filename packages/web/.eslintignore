@@ -1,5 +1,0 @@
-dist/
-scripts/
-vite.config.ts
-.eslintrc.cjs
-src/api/

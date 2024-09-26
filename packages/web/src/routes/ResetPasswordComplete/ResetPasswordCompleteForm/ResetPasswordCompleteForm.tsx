@@ -1,14 +1,17 @@
+import type { FormikHelpers } from 'formik';
+import type {
+	ResetPasswordCompleteFormInput,
+} from './ResetPasswordCompleteForm.utils';
 import { Button, Stack } from '@mantine/core';
 import { IconLock } from '@tabler/icons-react';
+import { Form, FormikProvider, useFormik } from 'formik';
+
 import { useTranslation } from 'react-i18next';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
 
 import PasswordField from '../../../fields/PasswordField';
-
 import {
-	ResetPasswordCompleteFormInput,
-	resetPasswordCompleteFormSchema,
 	resetPasswordCompleteFormInitialValues,
+	resetPasswordCompleteFormSchema,
 } from './ResetPasswordCompleteForm.utils';
 
 interface ResetPasswordCompleteFormProps {

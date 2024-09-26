@@ -1,21 +1,23 @@
-import {
-	IconBooks,
-	IconUsers,
-	IconSettings,
-	IconTableExport,
+import type {
 	TablerIconsProps,
 } from '@tabler/icons-react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import {
+	IconBooks,
+	IconSettings,
+	IconTableExport,
+	IconUsers,
+} from '@tabler/icons-react';
 
 import { i18n } from '../../../locales';
 import paths from '../../../routes/paths';
 
-type NavLink = {
+interface NavLink {
 	to: string;
 	icon: (props: TablerIconsProps) => ReactNode;
 	label: string;
 	relations?: string[];
-};
+}
 
 export const links: NavLink[] = [
 	{

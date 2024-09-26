@@ -1,15 +1,17 @@
+import type { FlexProps } from '@mantine/core';
+import type { PropsWithChildren } from 'react';
+import { Divider, Flex, Menu, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { forwardRef, PropsWithChildren, useMemo } from 'react';
-import { Flex, Stack, Divider, FlexProps, Menu } from '@mantine/core';
+import { forwardRef, useMemo } from 'react';
 
 import { useDataTable } from '../DataTableContext';
 
-import SelectMenuTarget from './SelectMenuTarget';
 import SelectMenuDropdown from './SelectMenuDropdown';
+import SelectMenuTarget from './SelectMenuTarget';
 
 interface DataTableToolbarProps
-	extends PropsWithChildren<{}>,
-		Omit<FlexProps, 'children'> {}
+	extends PropsWithChildren<any>,
+	Omit<FlexProps, 'children'> {}
 
 const DataTableToolbar = forwardRef<HTMLDivElement, DataTableToolbarProps>(
 	({ children, ...otherProps }, ref) => {
@@ -19,12 +21,12 @@ const DataTableToolbar = forwardRef<HTMLDivElement, DataTableToolbarProps>(
 		const checked = useMemo(
 			() =>
 				selectionType === 'include'
-					? records.every((record) =>
-							selections.includes(keyExtractor(record)),
-						) && !!selections.length
-					: !records.some((record) =>
-							selections.includes(keyExtractor(record)),
-						),
+					? records.every(record =>
+						selections.includes(keyExtractor(record)),
+					) && !!selections.length
+					: !records.some(record =>
+						selections.includes(keyExtractor(record)),
+					),
 			[selectionType, records, selections, keyExtractor],
 		);
 

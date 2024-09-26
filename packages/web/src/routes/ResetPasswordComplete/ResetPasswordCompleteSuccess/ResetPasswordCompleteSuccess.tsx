@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Box, Button, Divider, Paper, Stack, Text } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
-import { Text, Paper, Stack, Button, Divider, Box } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 import paths from '../../paths';
 

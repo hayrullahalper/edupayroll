@@ -1,11 +1,13 @@
-import { forwardRef } from 'react';
-import { usePagination } from '@mantine/hooks';
+import type {
+	DataTablePagination as DataTablePaginationProps,
+} from '../DataTableContext';
 import { Button, Flex, Skeleton, Text } from '@mantine/core';
+import { usePagination } from '@mantine/hooks';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 
+import { forwardRef } from 'react';
 import {
 	useDataTable,
-	DataTablePagination as DataTablePaginationProps,
 } from '../DataTableContext';
 
 const DataTablePagination = forwardRef<
@@ -34,39 +36,39 @@ const DataTablePagination = forwardRef<
 
 			{loading
 				? Array.from({ length: skeleton.pageCount }, (_, index) => (
-						<Skeleton key={`pagination-${index}`} w={32} h={32} />
-					))
+					<Skeleton key={`pagination-${index}`} w={32} h={32} />
+				))
 				: range.map((number, index) => {
-						if (number === 'dots') {
-							return (
-								<Text
-									w={32}
-									fw={300}
-									c="indigo"
-									ta="center"
-									mt="-.5rem"
-									key={`pagination-${index}-dots`}
-								>
-									...
-								</Text>
-							);
-						}
-
+					if (number === 'dots') {
 						return (
-							<Button
+							<Text
 								w={32}
-								h={32}
-								px={0}
-								fw={500}
-								size="xs"
-								onClick={() => setPage(number)}
-								key={`pagination-${index}-${number}`}
-								variant={number === active ? 'filled' : 'light'}
+								fw={300}
+								c="indigo"
+								ta="center"
+								mt="-.5rem"
+								key={`pagination-${index}-dots`} // eslint-disable-line react/no-array-index-key
 							>
-								{number}
-							</Button>
+								...
+							</Text>
 						);
-					})}
+					}
+
+					return (
+						<Button
+							w={32}
+							h={32}
+							px={0}
+							fw={500}
+							size="xs"
+							onClick={() => setPage(number)}
+							key={`pagination-${index}-${number}`} // eslint-disable-line react/no-array-index-key
+							variant={number === active ? 'filled' : 'light'}
+						>
+							{number}
+						</Button>
+					);
+				})}
 
 			<Button
 				w={32}

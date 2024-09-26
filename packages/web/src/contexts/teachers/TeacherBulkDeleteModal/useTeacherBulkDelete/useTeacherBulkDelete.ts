@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { TeacherDeleteInput } from '../../../../api';
+import type { DataTableSelectionType } from '../../../../components/DataTable';
 import { notifications } from '@mantine/notifications';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { client, TeacherDeleteInput } from '../../../../api';
-import { DataTableSelectionType } from '../../../../components/DataTable';
+import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { client } from '../../../../api';
 import stringToSelectionType from '../../../../helpers/stringToSelectionType';
 
 export default function useTeacherBulkDelete() {
@@ -61,12 +62,14 @@ export default function useTeacherBulkDelete() {
 				message: t('teachers.bulkDeleteTeacher.success'),
 				color: 'green',
 			});
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',
 			});
-		} finally {
+		}
+		finally {
 			setLoading(false);
 		}
 	};

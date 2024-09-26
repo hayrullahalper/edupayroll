@@ -1,4 +1,5 @@
-import { object, ObjectSchema, string } from 'yup';
+import type { ObjectSchema } from 'yup';
+import { object, string } from 'yup';
 
 import { i18n } from '../../../locales';
 
@@ -9,8 +10,8 @@ export interface SchoolUpdateFormInput {
 	principalName: string;
 }
 
-export const schoolUpdateFormSchema: ObjectSchema<SchoolUpdateFormInput> =
-	object({
+export const schoolUpdateFormSchema: ObjectSchema<SchoolUpdateFormInput>
+	= object({
 		name: string()
 			.required(i18n.t('user.updateSchool.form.name.required'))
 			.min(3, i18n.t('user.updateSchool.form.name.minLength'))

@@ -1,5 +1,6 @@
-import { TextInputProps } from '@mantine/core';
-import { SetStateAction, useState, Dispatch, useMemo } from 'react';
+import type { TextInputProps } from '@mantine/core';
+import type { Dispatch, SetStateAction } from 'react';
+import { useMemo, useState } from 'react';
 
 export type InputMode = 'view' | 'edit';
 

@@ -1,9 +1,10 @@
-import { PropsWithChildren, useMemo, useRef } from 'react';
+import type { PropsWithChildren } from 'react';
 import { useDisclosure } from '@mantine/hooks';
+import { useMemo, useRef } from 'react';
 
 import DocumentsContext from './DocumentsContext';
 
-type DocumentsProviderProps = PropsWithChildren<{}>;
+type DocumentsProviderProps = PropsWithChildren<any>;
 
 export default function DocumentsProvider({
 	children,

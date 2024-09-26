@@ -1,7 +1,7 @@
+import type { Teacher } from '../../../api';
 import { Button, Divider, Flex, Modal, Stack, Text } from '@mantine/core';
-import { Trans, useTranslation } from 'react-i18next';
 
-import { Teacher } from '../../../api';
+import { Trans, useTranslation } from 'react-i18next';
 
 interface TeacherDeleteModalProps {
 	teacher: Teacher;

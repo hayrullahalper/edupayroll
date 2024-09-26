@@ -1,10 +1,11 @@
-import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { Teacher, TeacherUpdateInput } from '../../../../api';
+import type { TeacherUpdateFormInput } from '../TeacherUpdateModal.utils';
 import { notifications } from '@mantine/notifications';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { TeacherUpdateFormInput } from '../TeacherUpdateModal.utils';
-import { client, Teacher, TeacherUpdateInput } from '../../../../api';
+import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { client } from '../../../../api';
 
 import { updateTeachersQuery } from './useTeacherUpdate.utils';
 
@@ -24,7 +25,7 @@ export default function useTeacherUpdate() {
 				id,
 				teacherUpdateInput,
 			}),
-		onSuccess: (data) => updateTeachersQuery(queryClient, data),
+		onSuccess: data => updateTeachersQuery(queryClient, data),
 	});
 
 	const close = useCallback(() => setOpened(false), []);
@@ -59,7 +60,8 @@ export default function useTeacherUpdate() {
 				message: t('teachers.updateTeacher.success'),
 				color: 'green',
 			});
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',

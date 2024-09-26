@@ -1,20 +1,21 @@
-import { useQuery } from '@tanstack/react-query';
-import { PropsWithChildren, useMemo } from 'react';
-
-import {
+import type { PropsWithChildren } from 'react';
+import type {
 	GetTeachersRequest,
 	PageResponseTeacherTeacherErrorCode,
 } from '../../api';
-import { DataTableSelectionType } from '../../components/DataTable';
+import type { DataTableSelectionType } from '../../components/DataTable';
+
+import { useQuery } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 import TeacherBulkDeleteModal, {
 	useTeacherBulkDelete,
 } from './TeacherBulkDeleteModal';
+import TeacherCreateModal, { useTeacherCreate } from './TeacherCreateModal';
+import TeacherDeleteModal, { useTeacherDelete } from './TeacherDeleteModal';
 import TeachersContext from './TeachersContext';
 import { getTeachers, responseToContext } from './TeachersProvider.utils';
-import TeacherCreateModal, { useTeacherCreate } from './TeacherCreateModal';
 import TeacherUpdateModal, { useTeacherUpdate } from './TeacherUpdateModal';
-import TeacherDeleteModal, { useTeacherDelete } from './TeacherDeleteModal';
 
 interface TeachersProviderProps extends PropsWithChildren<GetTeachersRequest> {
 	onDelete?: (ids: string[], type: DataTableSelectionType) => void;

@@ -1,24 +1,24 @@
-import { Route, Routes as BaseRoutes } from 'react-router-dom';
+import { Routes as BaseRoutes, Route } from 'react-router-dom';
 
 import AppLayout from '../layouts/AppLayout';
 import AuthLayout from '../layouts/AuthLayout';
 import SettingsLayout from '../layouts/SettingsLayout';
 
+import Documents from './Documents';
 import Home from './Home';
-import paths from './paths';
 import Login from './Login';
-import School from './School';
 import Logout from './Logout';
+import paths from './paths';
 import Profile from './Profile';
 import Register from './Register';
-import Teachers from './Teachers';
-import Documents from './Documents';
+import RegisterComplete from './RegisterComplete';
+import RequireAnonymous from './RequireAnonymous';
 import RequireAuth from './RequireAuth';
 import ResetPassword from './ResetPassword';
-import UpdatePassword from './UpdatePassword';
-import RequireAnonymous from './RequireAnonymous';
-import RegisterComplete from './RegisterComplete';
 import ResetPasswordComplete from './ResetPasswordComplete';
+import School from './School';
+import Teachers from './Teachers';
+import UpdatePassword from './UpdatePassword';
 
 export default function Routes() {
 	return (

@@ -1,5 +1,5 @@
-import { IconChevronDown } from '@tabler/icons-react';
 import { Button, Checkbox, Flex, Menu, useMantineTheme } from '@mantine/core';
+import { IconChevronDown } from '@tabler/icons-react';
 import cx from 'classnames';
 
 import { useDataTable } from '../../DataTableContext';

@@ -1,19 +1,21 @@
-import { useUncontrolled } from '@mantine/hooks';
-import { PropsWithChildren, useMemo } from 'react';
-
-import DataTableContext, {
+import type { PropsWithChildren } from 'react';
+import type {
 	DataTableProps,
 	DataTableSelectionType,
 } from './DataTableContext';
+import { useUncontrolled } from '@mantine/hooks';
+
+import { useMemo } from 'react';
+import DataTableContext from './DataTableContext';
 
 interface DataTableProviderProps<T>
 	extends PropsWithChildren<
-			Omit<
-				DataTableProps<T>,
+		Omit<
+			DataTableProps<T>,
 				'skeleton' | 'toolbar' | 'emptyState' | 'pagination'
-			>
-		>,
-		Required<Pick<DataTableProps<T>, 'skeleton'>> {}
+		>
+	>,
+	Required<Pick<DataTableProps<T>, 'skeleton'>> {}
 
 export default function DataTableProvider<T>({
 	records,
@@ -37,8 +39,8 @@ export default function DataTableProvider<T>({
 		onChange: onSelectionsChange,
 	});
 
-	const [selectionType, setSelectionType] =
-		useUncontrolled<DataTableSelectionType>({
+	const [selectionType, setSelectionType]
+		= useUncontrolled<DataTableSelectionType>({
 			defaultValue: 'include',
 			value: controlledSelectionType,
 			onChange: onSelectionTypeChange,

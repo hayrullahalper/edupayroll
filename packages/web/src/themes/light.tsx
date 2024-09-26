@@ -1,10 +1,10 @@
 import {
-	Paper,
-	TextInput,
-	ScrollArea,
 	createTheme,
 	LoadingOverlay,
+	Paper,
 	PasswordInput,
+	ScrollArea,
+	TextInput,
 } from '@mantine/core';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 
@@ -39,11 +39,13 @@ const light = createTheme({
 		PasswordInput: PasswordInput.extend({
 			defaultProps: {
 				visibilityToggleIcon: ({ reveal }) =>
-					reveal ? (
-						<IconEyeOff size={16} stroke={1.5} />
-					) : (
-						<IconEye size={16} stroke={1.5} />
-					),
+					reveal
+						? (
+							<IconEyeOff size={16} stroke={1.5} />
+						)
+						: (
+							<IconEye size={16} stroke={1.5} />
+						),
 			},
 		}),
 	},

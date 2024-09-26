@@ -1,9 +1,10 @@
-import cx from 'classnames';
-import { useMemo } from 'react';
+import type { DataTableColumn } from '../../DataTableContext';
 import { Flex, Table } from '@mantine/core';
+import cx from 'classnames';
 
+import { useMemo } from 'react';
+import { useDataTable } from '../../DataTableContext';
 import DataTableRowCheckbox from '../DataTableRowCheckbox';
-import { DataTableColumn, useDataTable } from '../../DataTableContext';
 
 import styles from './DataTableRowCell.module.scss';
 
@@ -34,20 +35,22 @@ export default function DataTableRowCell<T>({
 
 	return (
 		<Table.Td w={width} miw={width} maw={width}>
-			{!label ? (
-				content
-			) : (
-				<Flex
-					gap={4}
-					align="center"
-					component="label"
-					htmlFor={`checkbox-${key}`}
-					className={cx(styles.label, { disabled })}
-				>
-					<DataTableRowCheckbox recordKey={key} inputId={`checkbox-${key}`} />
-					{content}
-				</Flex>
-			)}
+			{!label
+				? (
+					content
+				)
+				: (
+					<Flex
+						gap={4}
+						align="center"
+						component="label"
+						htmlFor={`checkbox-${key}`}
+						className={cx(styles.label, { disabled })}
+					>
+						<DataTableRowCheckbox recordKey={key} inputId={`checkbox-${key}`} />
+						{content}
+					</Flex>
+				)}
 		</Table.Td>
 	);
 }

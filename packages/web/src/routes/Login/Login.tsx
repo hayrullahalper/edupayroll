@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { IconLockCancel } from '@tabler/icons-react';
-import { Trans, useTranslation } from 'react-i18next';
+import type { LoginInput } from '../../api';
+import type { LoginFormInput } from './LoginForm';
+import { Alert, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { Flex, Text, Paper, Stack, Divider, Alert } from '@mantine/core';
+import { IconLockCancel } from '@tabler/icons-react';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 
-import paths from '../paths';
-import { client, LoginInput } from '../../api';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { client } from '../../api';
 import useToken from '../../contexts/token/useToken';
 
-import LoginForm, { LoginFormInput } from './LoginForm';
+import paths from '../paths';
+import LoginForm from './LoginForm';
 
 export default function Login() {
 	const { t } = useTranslation();
@@ -40,7 +42,8 @@ export default function Login() {
 			}
 
 			setToken(node.token, input.remember);
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',

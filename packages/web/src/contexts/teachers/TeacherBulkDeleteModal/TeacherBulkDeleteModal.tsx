@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { Button, Divider, Flex, Modal, Stack, Text } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
 
 interface TeacherBulkDeleteModalProps {
 	loading: boolean;

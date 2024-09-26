@@ -1,6 +1,6 @@
-import { createContext } from 'react';
+import type { User } from '../../api';
 
-import { User } from '../../api';
+import { createContext } from 'react';
 
 export interface UserContextType {
 	user: User | null;

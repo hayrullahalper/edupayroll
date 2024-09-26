@@ -1,14 +1,17 @@
-import { IconAt } from '@tabler/icons-react';
-import { useTranslation } from 'react-i18next';
+import type { FormikHelpers } from 'formik';
+import type {
+	RegisterFormInput,
+} from './RegisterForm.utils';
 import { Button, Flex, Stack } from '@mantine/core';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+import { IconAt } from '@tabler/icons-react';
+import { Form, FormikProvider, useFormik } from 'formik';
+
+import { useTranslation } from 'react-i18next';
 
 import TextField from '../../../fields/TextField';
-
 import {
-	RegisterFormInput,
-	registerFormSchema,
 	registerFormInitialValues,
+	registerFormSchema,
 } from './RegisterForm.utils';
 
 interface RegisterFormProps {

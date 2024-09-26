@@ -1,2 +1,2 @@
-export { default as useTeacherCreate } from './useTeacherCreate';
 export { default } from './TeacherCreateModal';
+export { default as useTeacherCreate } from './useTeacherCreate';

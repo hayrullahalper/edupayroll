@@ -1,17 +1,20 @@
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import type { FormikHelpers } from 'formik';
+import type {
+	LoginFormInput,
+} from './LoginForm.utils';
+import { Button, Checkbox, Flex, Stack, Text } from '@mantine/core';
 import { IconAt, IconKey } from '@tabler/icons-react';
-import { Text, Flex, Stack, Button, Checkbox } from '@mantine/core';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+import { Form, FormikProvider, useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+
+import { Link } from 'react-router-dom';
+import PasswordField from '../../../fields/PasswordField';
+import TextField from '../../../fields/TextField';
 
 import paths from '../../paths';
-import TextField from '../../../fields/TextField';
-import PasswordField from '../../../fields/PasswordField';
-
 import {
-	LoginFormInput,
-	loginFormSchema,
 	loginFormInitialValues,
+	loginFormSchema,
 } from './LoginForm.utils';
 
 interface LoginFormProps {
@@ -65,9 +68,8 @@ export default function LoginForm({ onSubmit }: LoginFormProps) {
 								<Checkbox
 									size="xs"
 									color="indigo"
-									onChange={(e) =>
-										formik.setFieldValue('remember', e.target.checked)
-									}
+									onChange={e =>
+										formik.setFieldValue('remember', e.target.checked)}
 								/>
 								<Text fz="xs" fw="200">
 									{t('auth.login.form.remember')}

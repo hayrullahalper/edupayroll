@@ -1,8 +1,8 @@
-import { Flex, Skeleton, Text } from '@mantine/core';
+import type { Teacher } from '../../../api';
 
-import { Teacher } from '../../../api';
+import type { DataTableColumn } from '../../../components/DataTable';
+import { Flex, Skeleton, Text } from '@mantine/core';
 import { i18n } from '../../../locales';
-import { DataTableColumn } from '../../../components/DataTable';
 
 import TeachersTableActions from './TeachersTableActions';
 

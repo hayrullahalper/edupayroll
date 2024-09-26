@@ -1,4 +1,5 @@
-import { PasswordInputProps, PasswordInput } from '@mantine/core';
+import type { PasswordInputProps } from '@mantine/core';
+import { PasswordInput } from '@mantine/core';
 import { useFormikContext } from 'formik';
 
 interface PasswordFieldProps extends Omit<PasswordInputProps, 'name'> {

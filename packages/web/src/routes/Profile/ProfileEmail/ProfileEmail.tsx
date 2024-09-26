@@ -1,22 +1,25 @@
-import { FormikHelpers } from 'formik';
-import { useRef, useState } from 'react';
-import { useDisclosure } from '@mantine/hooks';
-import { useTranslation } from 'react-i18next';
+import type { FormikHelpers } from 'formik';
+import type { UserUpdateEmailInput } from '../../../api';
+import type {
+	ProfileEmailUpdateFormInput,
+} from './ProfileEmailUpdateForm';
+import type {
+	ProfileEmailUpdateModalFormInput,
+} from './ProfileEmailUpdateModal';
 import { Alert, Stack, Text } from '@mantine/core';
-import { IconMailCheck } from '@tabler/icons-react';
+import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
+import { IconMailCheck } from '@tabler/icons-react';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { client } from '../../../api';
 
 import { useUser } from '../../../contexts/user';
 import generateKey from '../../../helpers/generateKey';
-import { client, UserUpdateEmailInput } from '../../../api';
-
-import ProfileEmailUpdateForm, {
-	ProfileEmailUpdateFormInput,
-} from './ProfileEmailUpdateForm';
-import ProfileEmailUpdateModal, {
-	ProfileEmailUpdateModalFormInput,
-} from './ProfileEmailUpdateModal';
+import ProfileEmailUpdateForm from './ProfileEmailUpdateForm';
+import ProfileEmailUpdateModal from './ProfileEmailUpdateModal';
 
 export default function ProfileEmail() {
 	const user = useUser();
@@ -32,7 +35,7 @@ export default function ProfileEmail() {
 	const updateEmail = useMutation({
 		mutationFn: (userUpdateEmailInput: UserUpdateEmailInput) =>
 			client('user').updateEmail({ userUpdateEmailInput }),
-		onSuccess: (data) =>
+		onSuccess: data =>
 			!data.errors.length && queryClient.setQueryData(['user'], data),
 	});
 
@@ -87,7 +90,8 @@ export default function ProfileEmail() {
 
 			disclosure.close();
 			formHelpers.current?.resetForm();
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',

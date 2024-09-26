@@ -1,13 +1,15 @@
-import debounce from 'debounce';
-import { ChangeEvent, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { IconSearch } from '@tabler/icons-react';
-import { Button, Paper, Stack, Text, TextInput } from '@mantine/core';
-
-import DataTable, {
+import type { ChangeEvent } from 'react';
+import type { GetTeachersRequest } from '../../../api';
+import type {
 	DataTableSelectionType,
 } from '../../../components/DataTable';
-import { GetTeachersRequest } from '../../../api';
+import { Button, Paper, Stack, Text, TextInput } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
+import debounce from 'debounce';
+
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import DataTable from '../../../components/DataTable';
 import { useTeachers } from '../../../contexts/teachers';
 import prepareTableProps from '../../../helpers/prepareTableProps';
 
@@ -66,7 +68,7 @@ export default function TeachersTable({
 				toolbarProps={{ justify: 'space-between' }}
 				onSelectionTypeChange={onSelectionTypeChange}
 				pagination={{ page, total, onChange: onPageChange }}
-				emptyState={
+				emptyState={(
 					<Stack align="center" gap={0}>
 						<Text fw={300} fz="md" c="gray">
 							{t('teachers.table.emptyState.title')}
@@ -75,8 +77,8 @@ export default function TeachersTable({
 							{t('teachers.table.emptyState.description')}
 						</Text>
 					</Stack>
-				}
-				toolbar={
+				)}
+				toolbar={(
 					<>
 						<Button
 							size="xs"
@@ -96,7 +98,7 @@ export default function TeachersTable({
 							rightSection={<IconSearch size={14} stroke={1.5} />}
 						/>
 					</>
-				}
+				)}
 			/>
 		</Paper>
 	);

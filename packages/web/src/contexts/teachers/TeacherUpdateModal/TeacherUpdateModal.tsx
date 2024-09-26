@@ -1,21 +1,24 @@
-import {
-	IconSchool,
-	IconIdBadge2,
-	IconUserScan,
-	IconInfoSquareRounded,
-} from '@tabler/icons-react';
-import { MouseEvent } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
-import { Button, Divider, Flex, Modal, Stack, Text } from '@mantine/core';
-
-import { Teacher } from '../../../api';
-import TextField from '../../../fields/TextField';
-
-import {
+import type { FormikHelpers } from 'formik';
+import type { MouseEvent } from 'react';
+import type { Teacher } from '../../../api';
+import type {
 	TeacherUpdateFormInput,
-	teacherUpdateFormSchema,
+} from './TeacherUpdateModal.utils';
+import { Button, Divider, Flex, Modal, Stack, Text } from '@mantine/core';
+import {
+	IconIdBadge2,
+	IconInfoSquareRounded,
+	IconSchool,
+	IconUserScan,
+} from '@tabler/icons-react';
+
+import { Form, FormikProvider, useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+
+import TextField from '../../../fields/TextField';
+import {
 	teacherUpdateFormInitialValues,
+	teacherUpdateFormSchema,
 } from './TeacherUpdateModal.utils';
 
 interface TeacherUpdateModalProps {
@@ -67,11 +70,11 @@ export default function TeacherUpdateModal({
 							maxLength={50}
 							rightSection={<IconUserScan size={16} stroke={1.5} />}
 							placeholder={t('teachers.updateTeacher.form.name.placeholder')}
-							label={
+							label={(
 								<Text fw="200">
 									{t('teachers.updateTeacher.form.name.label')}
 								</Text>
-							}
+							)}
 						/>
 
 						<TextField
@@ -79,11 +82,11 @@ export default function TeacherUpdateModal({
 							name="branch"
 							maxLength={50}
 							rightSection={<IconSchool size={16} stroke={1.5} />}
-							label={
+							label={(
 								<Text fw="200">
 									{t('teachers.updateTeacher.form.branch.label')}
 								</Text>
-							}
+							)}
 							placeholder={t('teachers.updateTeacher.form.branch.placeholder')}
 						/>
 
@@ -92,11 +95,11 @@ export default function TeacherUpdateModal({
 							name="description"
 							maxLength={50}
 							rightSection={<IconInfoSquareRounded size={16} stroke={1.5} />}
-							label={
+							label={(
 								<Text fw="200">
 									{t('teachers.updateTeacher.form.description.label')}
 								</Text>
-							}
+							)}
 							placeholder={t(
 								'teachers.updateTeacher.form.description.placeholder',
 							)}
@@ -108,11 +111,11 @@ export default function TeacherUpdateModal({
 							name="idNumber"
 							inputMode="numeric"
 							rightSection={<IconIdBadge2 size={16} stroke={1.5} />}
-							label={
+							label={(
 								<Text fw="200">
 									{t('teachers.updateTeacher.form.idNumber.label')}
 								</Text>
-							}
+							)}
 							placeholder={t(
 								'teachers.updateTeacher.form.idNumber.placeholder',
 							)}

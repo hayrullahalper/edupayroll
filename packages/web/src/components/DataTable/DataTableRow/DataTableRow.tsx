@@ -22,7 +22,7 @@ export default function DataTableRow<T>({
 					index={ci}
 					record={record}
 					column={column}
-					key={`row-${index}-cell-${ci}`}
+					key={`row-${index}-cell-${ci}`} // eslint-disable-line react/no-array-index-key
 				/>
 			))}
 		</Table.Tr>

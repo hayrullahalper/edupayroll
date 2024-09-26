@@ -1,5 +1,6 @@
-import { FlexProps } from '@mantine/core';
-import { createContext, ReactNode } from 'react';
+import type { FlexProps } from '@mantine/core';
+import type { ReactNode } from 'react';
+import { createContext } from 'react';
 
 export type DataTableSelectionType = 'include' | 'exclude';
 
@@ -48,21 +49,21 @@ export interface DataTableProps<T> {
 
 export interface DataTableContextType<T>
 	extends Omit<
-			DataTableProps<T>,
-			| 'height'
-			| 'toolbar'
-			| 'skeleton'
-			| 'emptyState'
-			| 'pagination'
-			| 'selections'
-			| 'toolbarProps'
-			| 'selectionType'
-			| 'onSelectionsChange'
-			| 'onSelectionTypeChange'
-		>,
-		Required<
-			Pick<DataTableProps<T>, 'skeleton' | 'selections' | 'selectionType'>
-		> {
+		DataTableProps<T>,
+		| 'height'
+		| 'toolbar'
+		| 'skeleton'
+		| 'emptyState'
+		| 'pagination'
+		| 'selections'
+		| 'toolbarProps'
+		| 'selectionType'
+		| 'onSelectionsChange'
+		| 'onSelectionTypeChange'
+	>,
+	Required<
+		Pick<DataTableProps<T>, 'skeleton' | 'selections' | 'selectionType'>
+	> {
 	setSelections: (selections: string[]) => void;
 	setSelectionType: (type: DataTableSelectionType) => void;
 }

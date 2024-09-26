@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Trans, useTranslation } from 'react-i18next';
 import { Button, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
+import { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface ResetPasswordSuccessProps {
 	onRequestReset: () => void;
@@ -58,13 +58,13 @@ export default function ResetPasswordSuccess({
 							target="_blank"
 							component={Link}
 							to="https://outlook.live.com"
-							leftSection={
+							leftSection={(
 								<img
 									height={14}
 									alt="Outlook"
 									src="/assets/brands/outlook.svg"
 								/>
-							}
+							)}
 						>
 							{t('auth.resetPassword.resetPasswordSuccess.openOutlook')}
 						</Button>

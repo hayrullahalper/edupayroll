@@ -1,14 +1,17 @@
-import { IconAt } from '@tabler/icons-react';
+import type { FormikHelpers } from 'formik';
+import type {
+	ResetPasswordFormInput,
+} from './ResetPasswordForm.utils';
 import { Button, Stack } from '@mantine/core';
+import { IconAt } from '@tabler/icons-react';
+import { Form, FormikProvider, useFormik } from 'formik';
+
 import { useTranslation } from 'react-i18next';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
 
 import TextField from '../../../fields/TextField';
-
 import {
-	ResetPasswordFormInput,
-	resetPasswordFormSchema,
 	resetPasswordFormInitialValues,
+	resetPasswordFormSchema,
 } from './ResetPasswordForm.utils';
 
 interface ResetPasswordFormProps {

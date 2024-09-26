@@ -1,7 +1,9 @@
-import {
-	client,
+import type {
 	GetTeachersRequest,
 	PageResponseTeacherTeacherErrorCode,
+} from '../../api';
+import {
+	client,
 } from '../../api';
 
 export async function getTeachers(

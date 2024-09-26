@@ -1,2 +1,2 @@
-export { default as useTeacherUpdate } from './useTeacherUpdate';
 export { default } from './TeacherUpdateModal';
+export { default as useTeacherUpdate } from './useTeacherUpdate';

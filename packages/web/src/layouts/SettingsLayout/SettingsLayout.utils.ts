@@ -1,11 +1,11 @@
-import paths from '../../routes/paths';
 import { i18n } from '../../locales';
+import paths from '../../routes/paths';
 
-type SettingLink = {
+interface SettingLink {
 	to: string;
 	label: string;
 	description: string;
-};
+}
 
 export const links: SettingLink[] = [
 	{

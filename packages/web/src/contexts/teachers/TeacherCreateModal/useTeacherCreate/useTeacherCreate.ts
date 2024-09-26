@@ -1,10 +1,11 @@
-import { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { TeacherCreateInput } from '../../../../api';
+import type { TeacherCreateFormInput } from '../TeacherCreateModal.utils';
 import { notifications } from '@mantine/notifications';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { client, TeacherCreateInput } from '../../../../api';
-import { TeacherCreateFormInput } from '../TeacherCreateModal.utils';
+import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { client } from '../../../../api';
 
 export default function useTeacherCreate() {
 	const { t } = useTranslation();
@@ -39,7 +40,8 @@ export default function useTeacherCreate() {
 				message: t('teachers.createTeacher.success'),
 				color: 'green',
 			});
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',

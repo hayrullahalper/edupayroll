@@ -1,21 +1,24 @@
+import type { FormikHelpers } from 'formik';
+import type {
+	RegisterCompleteFormInput,
+} from './RegisterCompleteForm.utils';
+import { Button, Divider, Flex, Stack } from '@mantine/core';
 import {
-	IconLock,
+	IconBuildingCommunity,
 	IconIdBadge2,
+	IconLock,
 	IconUserBolt,
 	IconUserScan,
-	IconBuildingCommunity,
 } from '@tabler/icons-react';
-import { useTranslation } from 'react-i18next';
-import { Flex, Stack, Button, Divider } from '@mantine/core';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+import { Form, FormikProvider, useFormik } from 'formik';
 
-import TextField from '../../../fields/TextField';
+import { useTranslation } from 'react-i18next';
 import PasswordField from '../../../fields/PasswordField';
 
+import TextField from '../../../fields/TextField';
 import {
-	RegisterCompleteFormInput,
-	registerCompleteFormSchema,
 	registerCompleteFormInitialValues,
+	registerCompleteFormSchema,
 } from './RegisterCompleteForm.utils';
 
 interface RegisterCompleteFormProps {

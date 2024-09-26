@@ -1,18 +1,22 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { FormikHelpers } from 'formik';
+import type { UserUpdatePasswordInput } from '../../api';
+import type {
+	UpdatePasswordFormInput,
+} from './UpdatePassword.utils';
+import { Alert, Button, Divider, Flex, Stack, Text } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { IconLockCheck } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';
-import { notifications } from '@mantine/notifications';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
-import { Alert, Button, Divider, Flex, Stack, Text } from '@mantine/core';
+import { Form, FormikProvider, useFormik } from 'formik';
+
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { client } from '../../api';
 
 import PasswordField from '../../fields/PasswordField';
-import { client, UserUpdatePasswordInput } from '../../api';
-
 import {
-	UpdatePasswordFormInput,
-	updatePasswordFormSchema,
 	updatePasswordFormInitialValues,
+	updatePasswordFormSchema,
 } from './UpdatePassword.utils';
 
 export default function UpdatePassword() {
@@ -48,7 +52,8 @@ export default function UpdatePassword() {
 
 			helpers.resetForm();
 			setSuccess(true);
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',
@@ -75,11 +80,11 @@ export default function UpdatePassword() {
 						description={t(
 							'user.updatePassword.form.currentPassword.description',
 						)}
-						label={
+						label={(
 							<Text fw="200">
 								{t('user.updatePassword.form.currentPassword.label')}
 							</Text>
-						}
+						)}
 					/>
 
 					<PasswordField
@@ -87,11 +92,11 @@ export default function UpdatePassword() {
 						name="newPassword"
 						autoComplete="new-password"
 						description={t('user.updatePassword.form.newPassword.description')}
-						label={
+						label={(
 							<Text fw="200">
 								{t('user.updatePassword.form.newPassword.label')}
 							</Text>
-						}
+						)}
 					/>
 
 					<PasswordField
@@ -101,11 +106,11 @@ export default function UpdatePassword() {
 						description={t(
 							'user.updatePassword.form.confirmPassword.description',
 						)}
-						label={
+						label={(
 							<Text fw="200">
 								{t('user.updatePassword.form.confirmPassword.label')}
 							</Text>
-						}
+						)}
 					/>
 
 					<Flex mt={8}>

@@ -1,22 +1,22 @@
-import { useState } from 'react';
-import { Stack } from '@mantine/core';
-
-import {
+import type {
 	GetTeachersRequest,
 	PageResponseTeacherTeacherErrorCode,
 } from '../../api';
-import { TeachersProvider } from '../../contexts/teachers';
-import { DataTableSelectionType } from '../../components/DataTable';
+import type { DataTableSelectionType } from '../../components/DataTable';
 
-import TeachersTable from './TeachersTable';
+import { Stack } from '@mantine/core';
+import { useState } from 'react';
+import { TeachersProvider } from '../../contexts/teachers';
+
 import TeachersHeader from './TeachersHeader';
+import TeachersTable from './TeachersTable';
 
 const DEFAULT_LIMIT = 10;
 
 export default function Teachers() {
 	const [selections, setSelections] = useState<string[]>([]);
-	const [selectionType, setSelectionType] =
-		useState<DataTableSelectionType>('include');
+	const [selectionType, setSelectionType]
+		= useState<DataTableSelectionType>('include');
 
 	const [request, setRequest] = useState<GetTeachersRequest>({
 		limit: DEFAULT_LIMIT,
@@ -24,14 +24,14 @@ export default function Teachers() {
 	});
 
 	const handlePageChange = (page: number) => {
-		setRequest((prev) => ({
+		setRequest(prev => ({
 			...prev,
 			offset: (page - 1) * DEFAULT_LIMIT,
 		}));
 	};
 
 	const handleSearchChange = (search: string) => {
-		setRequest((prev) => ({
+		setRequest(prev => ({
 			...prev,
 			query: search.trim() || undefined,
 		}));
@@ -46,7 +46,7 @@ export default function Teachers() {
 
 		if (!!nodes && !!meta && nodes?.length === 0 && meta?.total > 0) {
 			const offset = (Math.floor(meta.total / meta.limit) - 1) * meta.limit;
-			setRequest((prev) => ({ ...prev, offset: offset < 0 ? 0 : offset }));
+			setRequest(prev => ({ ...prev, offset: offset < 0 ? 0 : offset }));
 		}
 	};
 

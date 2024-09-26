@@ -1,7 +1,7 @@
-import { createContext } from 'react';
+import type { PageMeta, Teacher } from '../../api';
 
-import { PageMeta, Teacher } from '../../api';
-import { DataTableSelectionType } from '../../components/DataTable';
+import type { DataTableSelectionType } from '../../components/DataTable';
+import { createContext } from 'react';
 
 export interface TeachersContextType {
 	meta: PageMeta;

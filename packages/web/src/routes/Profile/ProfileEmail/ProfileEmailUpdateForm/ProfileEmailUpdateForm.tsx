@@ -1,17 +1,20 @@
-import { MouseEvent } from 'react';
-import { IconAt } from '@tabler/icons-react';
-import { useTranslation } from 'react-i18next';
-import { Button, Flex, Stack, Text } from '@mantine/core';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
-
-import { User } from '../../../../api';
-import TextField from '../../../../fields/TextField';
-import useInputMode from '../../../../hooks/useInputMode';
-
-import {
+import type { FormikHelpers } from 'formik';
+import type { MouseEvent } from 'react';
+import type { User } from '../../../../api';
+import type {
 	ProfileEmailUpdateFormInput,
-	profileEmailUpdateFormSchema,
+} from './ProfileEmailUpdateForm.utils';
+import { Button, Flex, Stack, Text } from '@mantine/core';
+import { IconAt } from '@tabler/icons-react';
+
+import { Form, FormikProvider, useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import TextField from '../../../../fields/TextField';
+
+import useInputMode from '../../../../hooks/useInputMode';
+import {
 	profileEmailUpdateFormInitialValues,
+	profileEmailUpdateFormSchema,
 } from './ProfileEmailUpdateForm.utils';
 
 interface ProfileEmailUpdateFormProps {
@@ -66,39 +69,41 @@ export default function ProfileEmailUpdateForm({
 					/>
 
 					<Flex mt={8} gap="md">
-						{mode === 'view' ? (
-							<Button
-								size="sm"
-								type="button"
-								variant="light"
-								onClick={handleEdit}
-							>
-								{t('common.form.edit')}
-							</Button>
-						) : (
-							<>
+						{mode === 'view'
+							? (
 								<Button
 									size="sm"
-									color="teal"
-									type="submit"
+									type="button"
 									variant="light"
-									loading={formik.isSubmitting}
-									disabled={!formik.isValid || !formik.dirty}
+									onClick={handleEdit}
 								>
-									{t('common.form.submit')}
+									{t('common.form.edit')}
 								</Button>
-								<Button
-									size="sm"
-									color="red"
-									type="reset"
-									variant="subtle"
-									onClick={handleCancel}
-									disabled={formik.isSubmitting}
-								>
-									{t('common.form.cancel')}
-								</Button>
-							</>
-						)}
+							)
+							: (
+								<>
+									<Button
+										size="sm"
+										color="teal"
+										type="submit"
+										variant="light"
+										loading={formik.isSubmitting}
+										disabled={!formik.isValid || !formik.dirty}
+									>
+										{t('common.form.submit')}
+									</Button>
+									<Button
+										size="sm"
+										color="red"
+										type="reset"
+										variant="subtle"
+										onClick={handleCancel}
+										disabled={formik.isSubmitting}
+									>
+										{t('common.form.cancel')}
+									</Button>
+								</>
+							)}
 					</Flex>
 				</Stack>
 			</Form>

@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { Table, useMantineTheme } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
 
 import { useDataTable } from '../DataTableContext';
 

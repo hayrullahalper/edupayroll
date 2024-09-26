@@ -1,7 +1,7 @@
+import { Button, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
-import { Text, Flex, Paper, Stack, Button, Divider } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 interface RegisterSuccessProps {
 	onRequestReset: () => void;
@@ -64,13 +64,13 @@ export default function RegisterSuccess({
 							target="_blank"
 							component={Link}
 							to="https://outlook.live.com"
-							leftSection={
+							leftSection={(
 								<img
 									height={14}
 									alt="Outlook"
 									src="/assets/brands/outlook.svg"
 								/>
-							}
+							)}
 						>
 							{t('auth.register.registerSuccess.openOutlook')}
 						</Button>

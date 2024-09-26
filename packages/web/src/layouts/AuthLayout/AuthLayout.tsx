@@ -1,6 +1,6 @@
 import { Flex } from '@mantine/core';
-import { Outlet } from 'react-router-dom';
 import { use100vh } from 'react-div-100vh';
+import { Outlet } from 'react-router-dom';
 
 import Logo from '../../components/Logo';
 

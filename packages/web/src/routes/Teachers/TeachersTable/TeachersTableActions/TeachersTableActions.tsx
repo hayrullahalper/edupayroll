@@ -1,8 +1,8 @@
-import { useTranslation } from 'react-i18next';
+import type { Teacher } from '../../../../api';
 import { ActionIcon, Button, Flex } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 
-import { Teacher } from '../../../../api';
+import { useTranslation } from 'react-i18next';
 import { useTeachers } from '../../../../contexts/teachers';
 
 interface TeachersTableActionsProps {

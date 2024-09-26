@@ -1,6 +1,6 @@
+import { Button, Checkbox } from '@mantine/core';
 import cx from 'classnames';
 import { useMemo } from 'react';
-import { Button, Checkbox } from '@mantine/core';
 
 import { useDataTable } from '../../DataTableContext';
 
@@ -35,7 +35,7 @@ export default function DataTableRowCheckbox({
 	const handleChange = () => {
 		if (selectionType === 'include') {
 			if (checked) {
-				setSelections(selections.filter((key) => key !== recordKey));
+				setSelections(selections.filter(key => key !== recordKey));
 				return;
 			}
 
@@ -54,7 +54,7 @@ export default function DataTableRowCheckbox({
 			return;
 		}
 
-		setSelections(selections.filter((key) => key !== recordKey));
+		setSelections(selections.filter(key => key !== recordKey));
 	};
 
 	return (

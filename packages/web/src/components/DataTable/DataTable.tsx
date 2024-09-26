@@ -1,12 +1,13 @@
+import type { DataTableProps } from './DataTableContext';
 import { Paper, ScrollArea, Stack, Table } from '@mantine/core';
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 
-import DataTableRow from './DataTableRow';
-import DataTableHead from './DataTableHead';
-import DataTableToolbar from './DataTableToolbar';
-import DataTablePagination from './DataTablePagination';
-import { DataTableProps, DataTableProvider } from './DataTableContext';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { DataTableProvider } from './DataTableContext';
 import DataTableEmpty from './DataTableEmpty';
+import DataTableHead from './DataTableHead';
+import DataTablePagination from './DataTablePagination';
+import DataTableRow from './DataTableRow';
+import DataTableToolbar from './DataTableToolbar';
 
 export default function DataTable<T>(props: DataTableProps<T>) {
 	const {
@@ -68,19 +69,20 @@ export default function DataTable<T>(props: DataTableProps<T>) {
 							<DataTableHead />
 
 							<Table.Tbody>
-								{skeletonRender &&
-									Array.from({ length: skeleton.recordCount }).map((_, i) => (
-										<DataTableRow key={i} index={i} />
-									))}
+								{skeletonRender
+								&& Array.from({ length: skeleton.recordCount }).map((_, i) => (
+									// eslint-disable-next-line react/no-array-index-key
+									<DataTableRow key={i} index={i} />
+								))}
 
-								{!skeletonRender &&
-									records.map((record, i) => (
-										<DataTableRow
-											index={i}
-											record={record}
-											key={keyExtractor(record)}
-										/>
-									))}
+								{!skeletonRender
+								&& records.map((record, i) => (
+									<DataTableRow
+										index={i}
+										record={record}
+										key={keyExtractor(record)}
+									/>
+								))}
 							</Table.Tbody>
 						</Table>
 

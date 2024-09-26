@@ -1,4 +1,5 @@
-import { object, ObjectSchema, string } from 'yup';
+import type { ObjectSchema } from 'yup';
+import { object, string } from 'yup';
 
 import { i18n } from '../../../../locales';
 
@@ -7,8 +8,8 @@ export interface ProfileNameUpdateFormInput {
 	firstName: string;
 }
 
-export const profileNameUpdateFormSchema: ObjectSchema<ProfileNameUpdateFormInput> =
-	object({
+export const profileNameUpdateFormSchema: ObjectSchema<ProfileNameUpdateFormInput>
+	= object({
 		lastName: string()
 			.required(i18n.t('user.updateName.form.lastName.required'))
 			.min(3, i18n.t('user.updateName.form.lastName.minLength'))

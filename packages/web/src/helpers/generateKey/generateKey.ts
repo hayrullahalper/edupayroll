@@ -5,6 +5,6 @@ export default function generateKey(obj?: object | null) {
 
 	return Object.keys(obj)
 		.sort((a, b) => a.localeCompare(b))
-		.map((key) => `${key}:${obj[key as keyof typeof obj]}`)
+		.map(key => `${key}:${obj[key as keyof typeof obj]}`)
 		.join('::');
 }

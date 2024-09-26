@@ -1,10 +1,10 @@
+import { Menu } from '@mantine/core';
 import {
-	IconFileX,
 	IconChecklist,
+	IconFileX,
 	IconListCheck,
 	IconListDetails,
 } from '@tabler/icons-react';
-import { Menu } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 
 import { useDataTable } from '../../DataTableContext';
@@ -21,26 +21,26 @@ export default function SelectMenuDropdown() {
 		setSelectionType,
 	} = useDataTable();
 
-	const selectAllDisabled =
-		(selectionType === 'exclude'
+	const selectAllDisabled
+		= (selectionType === 'exclude'
 			? !selections.length
 			: recordCount === selections.length) || !recordCount;
 
-	const selectPageDisabled =
-		(selectionType === 'include'
-			? records.every((record) => selections.includes(keyExtractor(record)))
+	const selectPageDisabled
+		= (selectionType === 'include'
+			? records.every(record => selections.includes(keyExtractor(record)))
 			: records.every(
-					(record) => !selections.includes(keyExtractor(record)),
-				)) || !records.length;
+				record => !selections.includes(keyExtractor(record)),
+			)) || !records.length;
 
-	const clearPageDisabled =
-		selectionType === 'include'
-			? !records.some((record) => selections.includes(keyExtractor(record))) ||
-				!selections.length
-			: records.every((record) => selections.includes(keyExtractor(record)));
+	const clearPageDisabled
+		= selectionType === 'include'
+			? !records.some(record => selections.includes(keyExtractor(record)))
+			|| !selections.length
+			: records.every(record => selections.includes(keyExtractor(record)));
 
-	const clearAllSelectionsDisabled =
-		selectionType === 'include' ? !selections.length : false;
+	const clearAllSelectionsDisabled
+		= selectionType === 'include' ? !selections.length : false;
 
 	const handleSelectPage = () => {
 		if (selectionType === 'include') {
@@ -48,7 +48,7 @@ export default function SelectMenuDropdown() {
 				Array.from(
 					new Set([
 						...selections,
-						...records.map((record) => keyExtractor(record)),
+						...records.map(record => keyExtractor(record)),
 					]),
 				),
 			);
@@ -57,7 +57,7 @@ export default function SelectMenuDropdown() {
 
 		setSelections(
 			selections.filter(
-				(key) => !records.some((record) => keyExtractor(record) === key),
+				key => !records.some(record => keyExtractor(record) === key),
 			),
 		);
 	};
@@ -76,7 +76,7 @@ export default function SelectMenuDropdown() {
 		if (selectionType === 'include') {
 			setSelections(
 				selections.filter(
-					(key) => !records.some((record) => keyExtractor(record) === key),
+					key => !records.some(record => keyExtractor(record) === key),
 				),
 			);
 			return;
@@ -85,7 +85,7 @@ export default function SelectMenuDropdown() {
 		const changed = Array.from(
 			new Set([
 				...selections,
-				...records.map((record) => keyExtractor(record)),
+				...records.map(record => keyExtractor(record)),
 			]),
 		);
 

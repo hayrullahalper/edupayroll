@@ -1,14 +1,17 @@
-import { MouseEvent } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+import type { FormikHelpers } from 'formik';
+import type { MouseEvent } from 'react';
+import type {
+	ProfileEmailUpdateModalFormInput,
+} from './ProfileEmailUpdateModal.utils';
 import { Button, Divider, Flex, Modal, Stack, Text } from '@mantine/core';
+import { Form, FormikProvider, useFormik } from 'formik';
+
+import { useTranslation } from 'react-i18next';
 
 import PasswordField from '../../../../fields/PasswordField';
-
 import {
-	ProfileEmailUpdateModalFormInput,
-	profileEmailUpdateModalFormSchema,
 	profileEmailUpdateModalFormInitialValues,
+	profileEmailUpdateModalFormSchema,
 } from './ProfileEmailUpdateModal.utils';
 
 interface ProfileEmailUpdateModalProps {
@@ -56,11 +59,11 @@ export default function ProfileEmailUpdateModal({
 							name="password"
 							autoComplete="current-password"
 							description={t('user.updateEmail.modal.password.description')}
-							label={
+							label={(
 								<Text fw="200">
 									{t('user.updateEmail.modal.password.label')}
 								</Text>
-							}
+							)}
 						/>
 
 						<Divider />

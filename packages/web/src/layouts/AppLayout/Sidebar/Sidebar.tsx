@@ -1,21 +1,21 @@
 import {
+	ActionIcon,
+	Avatar,
+	Button,
+	Divider,
 	Flex,
-	Text,
 	Paper,
 	Stack,
-	Button,
-	Avatar,
-	Divider,
+	Text,
 	Tooltip,
-	ActionIcon,
 } from '@mantine/core';
-import { useTranslation } from 'react-i18next';
 import { IconLogout } from '@tabler/icons-react';
-import { NavLink, matchRoutes, useLocation, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Link, matchRoutes, NavLink, useLocation } from 'react-router-dom';
 
-import paths from '../../../routes/paths';
 import Logo from '../../../components/Logo';
 import { useUser } from '../../../contexts/user';
+import paths from '../../../routes/paths';
 
 import { links } from './Sidebar.utils';
 
@@ -38,7 +38,7 @@ export default function Sidebar() {
 					const match = !!matchRoutes(
 						[
 							{ path: to },
-							...(relations?.map((relation) => ({ path: relation })) ?? []),
+							...(relations?.map(relation => ({ path: relation })) ?? []),
 						],
 						location,
 					)?.length;
@@ -76,7 +76,9 @@ export default function Sidebar() {
 						{user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()}
 					</Avatar>
 					<Text fz="sm" fw="300" c="black" truncate>
-						{user.firstName} {user.lastName}
+						{user.firstName}
+						{' '}
+						{user.lastName}
 					</Text>
 				</Flex>
 

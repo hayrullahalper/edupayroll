@@ -1,15 +1,17 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { Trans, useTranslation } from 'react-i18next';
-import { notifications } from '@mantine/notifications';
+import type { ResetPasswordInput } from '../../api';
+import type { ResetPasswordFormInput } from './ResetPasswordForm';
 import { Box, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { client } from '../../api';
 
 import paths from '../paths';
-import { client, ResetPasswordInput } from '../../api';
-
+import ResetPasswordForm from './ResetPasswordForm';
 import ResetPasswordSuccess from './ResetPasswordSuccess';
-import ResetPasswordForm, { ResetPasswordFormInput } from './ResetPasswordForm';
 
 export default function ResetPassword() {
 	const { t } = useTranslation();
@@ -36,7 +38,8 @@ export default function ResetPassword() {
 
 			setEmail(input.email);
 			setEmailSent(true);
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',
@@ -70,7 +73,8 @@ export default function ResetPassword() {
 				title: t('auth.resetPassword.emailResend.title'),
 				color: 'green',
 			});
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',

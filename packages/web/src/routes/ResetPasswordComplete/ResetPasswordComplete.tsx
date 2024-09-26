@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import { Trans, useTranslation } from 'react-i18next';
-import { notifications } from '@mantine/notifications';
-import { Link, Navigate, useSearchParams } from 'react-router-dom';
-import { Box, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
-
-import paths from '../paths';
-import { client, ResetPasswordCompleteInput } from '../../api';
-
-import ResetPasswordCompleteForm, {
+import type { ResetPasswordCompleteInput } from '../../api';
+import type {
 	ResetPasswordCompleteFormInput,
 } from './ResetPasswordCompleteForm';
+import { Box, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+
+import { Trans, useTranslation } from 'react-i18next';
+import { Link, Navigate, useSearchParams } from 'react-router-dom';
+import { client } from '../../api';
+
+import paths from '../paths';
+import ResetPasswordCompleteForm from './ResetPasswordCompleteForm';
 import ResetPasswordCompleteSuccess from './ResetPasswordCompleteSuccess';
 
 export default function ResetPasswordComplete() {
@@ -46,7 +48,8 @@ export default function ResetPasswordComplete() {
 			}
 
 			setSuccess(true);
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',

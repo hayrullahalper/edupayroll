@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { Teacher } from '../../../../api';
 import { notifications } from '@mantine/notifications';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMemo, useState } from 'react';
 
-import { client, Teacher } from '../../../../api';
+import { useTranslation } from 'react-i18next';
+import { client } from '../../../../api';
 
 export default function useTeacherDelete() {
 	const { t } = useTranslation();
@@ -54,12 +55,14 @@ export default function useTeacherDelete() {
 				message: t('teachers.deleteTeacher.success'),
 				color: 'green',
 			});
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',
 			});
-		} finally {
+		}
+		finally {
 			setLoading(false);
 		}
 	};

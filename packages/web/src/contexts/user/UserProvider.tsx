@@ -1,13 +1,14 @@
+import type { PropsWithChildren } from 'react';
 import { LoadingOverlay } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
-import { PropsWithChildren, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { client } from '../../api';
 import { useToken } from '../token';
 
 import UserContext from './UserContext';
 
-export default function UserProvider({ children }: PropsWithChildren<{}>) {
+export default function UserProvider({ children }: PropsWithChildren<any>) {
 	const { token } = useToken();
 
 	const { isLoading, data: { node: user } = {} } = useQuery({

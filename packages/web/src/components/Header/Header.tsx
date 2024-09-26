@@ -1,5 +1,6 @@
-import { PropsWithChildren } from 'react';
-import { Flex, Paper, PaperProps, Text } from '@mantine/core';
+import type { PaperProps } from '@mantine/core';
+import type { PropsWithChildren } from 'react';
+import { Flex, Paper, Text } from '@mantine/core';
 
 type HeaderProps = PaperProps & {
 	title: string;

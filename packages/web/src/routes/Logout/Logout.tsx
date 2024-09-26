@@ -1,9 +1,9 @@
+import { LoadingOverlay } from '@mantine/core';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LoadingOverlay } from '@mantine/core';
 
-import paths from '../paths';
 import { useToken } from '../../contexts/token';
+import paths from '../paths';
 
 export default function Logout() {
 	const navigate = useNavigate();

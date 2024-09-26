@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import { FormikHelpers } from 'formik';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { Trans, useTranslation } from 'react-i18next';
-import { notifications } from '@mantine/notifications';
+import type { FormikHelpers } from 'formik';
+import type { RegisterInput } from '../../api';
+import type { RegisterFormInput } from './RegisterForm';
 import { Divider, Flex, Paper, Stack, Text } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+
+import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { client } from '../../api';
 
 import paths from '../paths';
-import { client, RegisterInput } from '../../api';
-
+import RegisterForm from './RegisterForm';
 import RegisterSuccess from './RegisterSuccess';
-import RegisterForm, { RegisterFormInput } from './RegisterForm';
 
 export default function Register() {
 	const { t } = useTranslation();
@@ -44,7 +46,8 @@ export default function Register() {
 
 			setEmail(input.email);
 			setEmailSent(true);
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',
@@ -78,7 +81,8 @@ export default function Register() {
 				title: t('auth.register.emailResend.title'),
 				color: 'green',
 			});
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',

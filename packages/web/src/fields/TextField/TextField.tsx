@@ -1,6 +1,7 @@
-import { forwardRef } from 'react';
+import type { TextInputProps } from '@mantine/core';
+import { TextInput } from '@mantine/core';
 import { useFormikContext } from 'formik';
-import { TextInput, TextInputProps } from '@mantine/core';
+import { forwardRef } from 'react';
 
 interface TextFieldProps extends Omit<TextInputProps, 'name'> {
 	name: string;

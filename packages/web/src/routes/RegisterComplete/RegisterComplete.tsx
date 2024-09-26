@@ -1,16 +1,18 @@
-import { useMutation } from '@tanstack/react-query';
-import { Trans, useTranslation } from 'react-i18next';
-import { notifications } from '@mantine/notifications';
-import { Link, Navigate, useSearchParams } from 'react-router-dom';
-import { Box, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
-
-import paths from '../paths';
-import { useToken } from '../../contexts/token';
-import { client, RegisterCompleteInput } from '../../api';
-
-import RegisterCompleteForm, {
+import type { RegisterCompleteInput } from '../../api';
+import type {
 	RegisterCompleteFormInput,
 } from './RegisterCompleteForm';
+import { Box, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { useMutation } from '@tanstack/react-query';
+
+import { Trans, useTranslation } from 'react-i18next';
+import { Link, Navigate, useSearchParams } from 'react-router-dom';
+import { client } from '../../api';
+import { useToken } from '../../contexts/token';
+
+import paths from '../paths';
+import RegisterCompleteForm from './RegisterCompleteForm';
 
 export default function RegisterComplete() {
 	const { t } = useTranslation();
@@ -44,7 +46,8 @@ export default function RegisterComplete() {
 			}
 
 			setToken(node.token, true);
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',

@@ -1,6 +1,6 @@
+import { Button, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
 import { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Divider, Flex, Paper, Stack, Text } from '@mantine/core';
 import { matchRoutes, NavLink, Outlet, useLocation } from 'react-router-dom';
 
 import Header from '../../components/Header';

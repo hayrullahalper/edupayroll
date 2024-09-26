@@ -1,9 +1,9 @@
-import { PropsWithChildren } from 'react';
-import { useTranslation } from 'react-i18next';
-import { IconInboxOff } from '@tabler/icons-react';
+import type { PropsWithChildren } from 'react';
 import { Stack, Text, useMantineTheme } from '@mantine/core';
+import { IconInboxOff } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 
-export default function DataTableEmpty({ children }: PropsWithChildren<{}>) {
+export default function DataTableEmpty({ children }: PropsWithChildren<any>) {
 	const { t } = useTranslation();
 	const theme = useMantineTheme();
 

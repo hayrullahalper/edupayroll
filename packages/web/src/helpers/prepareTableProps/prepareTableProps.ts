@@ -1,4 +1,4 @@
-import { PageMeta } from '../../api';
+import type { PageMeta } from '../../api';
 
 export default function prepareTableProps(
 	limit: number,

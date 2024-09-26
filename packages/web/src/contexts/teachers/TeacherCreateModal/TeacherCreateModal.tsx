@@ -1,20 +1,23 @@
-import {
-	IconSchool,
-	IconIdBadge2,
-	IconUserScan,
-	IconSquareRounded,
-} from '@tabler/icons-react';
-import { MouseEvent } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Form, FormikHelpers, FormikProvider, useFormik } from 'formik';
+import type { FormikHelpers } from 'formik';
+import type { MouseEvent } from 'react';
+import type {
+	TeacherCreateFormInput,
+} from './TeacherCreateModal.utils';
 import { Button, Divider, Flex, Modal, Stack, Text } from '@mantine/core';
+import {
+	IconIdBadge2,
+	IconSchool,
+	IconSquareRounded,
+	IconUserScan,
+} from '@tabler/icons-react';
+import { Form, FormikProvider, useFormik } from 'formik';
+
+import { useTranslation } from 'react-i18next';
 
 import TextField from '../../../fields/TextField';
-
 import {
-	TeacherCreateFormInput,
-	teacherCreateFormSchema,
 	teacherCreateFormInitialValues,
+	teacherCreateFormSchema,
 } from './TeacherCreateModal.utils';
 
 interface TeacherCreateModalProps {
@@ -61,11 +64,11 @@ export default function TeacherCreateModal({
 							maxLength={50}
 							rightSection={<IconUserScan size={16} stroke={1.5} />}
 							placeholder={t('teachers.createTeacher.form.name.placeholder')}
-							label={
+							label={(
 								<Text fw="200">
 									{t('teachers.createTeacher.form.name.label')}
 								</Text>
-							}
+							)}
 						/>
 
 						<TextField
@@ -73,11 +76,11 @@ export default function TeacherCreateModal({
 							name="branch"
 							maxLength={50}
 							rightSection={<IconSchool size={16} stroke={1.5} />}
-							label={
+							label={(
 								<Text fw="200">
 									{t('teachers.createTeacher.form.branch.label')}
 								</Text>
-							}
+							)}
 							placeholder={t('teachers.createTeacher.form.branch.placeholder')}
 						/>
 
@@ -86,11 +89,11 @@ export default function TeacherCreateModal({
 							name="description"
 							maxLength={50}
 							rightSection={<IconSquareRounded size={16} stroke={1.5} />}
-							label={
+							label={(
 								<Text fw="200">
 									{t('teachers.createTeacher.form.description.label')}
 								</Text>
-							}
+							)}
 							placeholder={t(
 								'teachers.createTeacher.form.description.placeholder',
 							)}
@@ -102,11 +105,11 @@ export default function TeacherCreateModal({
 							name="idNumber"
 							inputMode="numeric"
 							rightSection={<IconIdBadge2 size={16} stroke={1.5} />}
-							label={
+							label={(
 								<Text fw="200">
 									{t('teachers.createTeacher.form.idNumber.label')}
 								</Text>
-							}
+							)}
 							placeholder={t(
 								'teachers.createTeacher.form.idNumber.placeholder',
 							)}

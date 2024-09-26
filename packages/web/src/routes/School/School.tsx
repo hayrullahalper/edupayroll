@@ -1,14 +1,16 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { SchoolUpdateInput } from '../../api';
+import type { SchoolUpdateFormInput } from './SchoolUpdateForm';
 import { Alert, Stack, Text } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconSettingsCheck } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import generateKey from '../../helpers/generateKey';
-import { client, SchoolUpdateInput } from '../../api';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { client } from '../../api';
 
-import SchoolUpdateForm, { SchoolUpdateFormInput } from './SchoolUpdateForm';
+import generateKey from '../../helpers/generateKey';
+import SchoolUpdateForm from './SchoolUpdateForm';
 
 export default function School() {
 	const { t } = useTranslation();
@@ -23,7 +25,7 @@ export default function School() {
 	const updateSchool = useMutation({
 		mutationFn: (schoolUpdateInput: SchoolUpdateInput) =>
 			client('school').updateSchool({ schoolUpdateInput }),
-		onSuccess: (data) =>
+		onSuccess: data =>
 			!data.errors.length && queryClient.setQueryData(['school'], data),
 	});
 
@@ -44,7 +46,8 @@ export default function School() {
 			}
 
 			setSuccess(true);
-		} catch (e) {
+		}
+		catch (e) {
 			notifications.show({
 				message: t('common.error.unknown'),
 				color: 'red',
