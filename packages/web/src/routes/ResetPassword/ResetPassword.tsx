@@ -21,14 +21,14 @@ export default function ResetPassword() {
 
 	const resetPassword = useMutation({
 		mutationFn: (resetPasswordInput: ResetPasswordInput) =>
-			client('auth').resetPassword({ resetPasswordInput }),
+			client.auth.resetPassword({ resetPasswordInput }),
 	});
 
 	const handleSubmit = async (input: ResetPasswordFormInput) => {
 		try {
-			const { node, errors } = await resetPassword.mutateAsync(input);
+			const { data, errors } = await resetPassword.mutateAsync(input);
 
-			if (!node?.success || !!errors.length) {
+			if (!data?.success || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',
@@ -58,9 +58,9 @@ export default function ResetPassword() {
 				return;
 			}
 
-			const { node, errors } = await resetPassword.mutateAsync({ email });
+			const { data, errors } = await resetPassword.mutateAsync({ email });
 
-			if (!node?.success || !!errors.length) {
+			if (!data?.success || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',

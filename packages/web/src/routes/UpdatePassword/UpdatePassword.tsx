@@ -25,7 +25,7 @@ export default function UpdatePassword() {
 
 	const updatePassword = useMutation({
 		mutationFn: (userUpdatePasswordInput: UserUpdatePasswordInput) =>
-			client('user').updatePassword({ userUpdatePasswordInput }),
+			client.user.updatePassword({ userUpdatePasswordInput }),
 	});
 
 	const handleSubmit = async (
@@ -33,9 +33,9 @@ export default function UpdatePassword() {
 		helpers: FormikHelpers<UpdatePasswordFormInput>,
 	) => {
 		try {
-			const { node, errors } = await updatePassword.mutateAsync(input);
+			const { data, errors } = await updatePassword.mutateAsync(input);
 
-			if (!node?.success || !!errors.length) {
+			if (!data?.success || !!errors.length) {
 				if (errors.some(({ code }) => code === 'PASSWORD_MISMATCH')) {
 					helpers.setErrors({
 						currentPassword: t('user.updatePassword.form.passwordMismatch'),

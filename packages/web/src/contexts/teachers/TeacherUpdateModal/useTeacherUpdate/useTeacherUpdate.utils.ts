@@ -7,11 +7,11 @@ import type {
 
 export function updateTeachersQuery(
 	queryClient: QueryClient,
-	data: ResponseTeacherTeacherErrorCode,
+	response: ResponseTeacherTeacherErrorCode,
 ) {
-	const { node, errors } = data;
+	const { data, errors } = response;
 
-	if (!node || !!errors.length) {
+	if (!data || !!errors.length) {
 		return;
 	}
 
@@ -32,8 +32,8 @@ export function updateTeachersQuery(
 
 	queryClient.setQueryData<PageResponseTeacherTeacherErrorCode>(queryKey, {
 		...teachers,
-		nodes: teachers.nodes?.map(teacher =>
-			teacher.id === node.id ? node : teacher,
+		data: teachers.data?.map(teacher =>
+			teacher.id === data.id ? data : teacher,
 		),
 	});
 }

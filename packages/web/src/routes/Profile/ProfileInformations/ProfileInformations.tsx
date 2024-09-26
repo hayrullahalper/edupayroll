@@ -24,16 +24,16 @@ export default function ProfileInformations() {
 
 	const updateName = useMutation({
 		mutationFn: (userUpdateNameInput: UserUpdateNameInput) =>
-			client('user').updateName({ userUpdateNameInput }),
-		onSuccess: data =>
-			!data.errors.length && queryClient.setQueryData(['user'], data),
+			client.user.updateName({ userUpdateNameInput }),
+		onSuccess: response =>
+			!response.errors.length && queryClient.setQueryData(['user'], response),
 	});
 
 	const handleSubmit = async (input: ProfileNameUpdateFormInput) => {
 		try {
-			const { node, errors } = await updateName.mutateAsync(input);
+			const { data, errors } = await updateName.mutateAsync(input);
 
-			if (!node || !!errors.length) {
+			if (!data || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',

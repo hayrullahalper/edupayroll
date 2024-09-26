@@ -25,7 +25,7 @@ export default function ResetPasswordComplete() {
 
 	const resetPasswordComplete = useMutation({
 		mutationFn: (resetPasswordCompleteInput: ResetPasswordCompleteInput) =>
-			client('auth').resetPasswordComplete({ resetPasswordCompleteInput }),
+			client.auth.resetPasswordComplete({ resetPasswordCompleteInput }),
 	});
 
 	const handleSubmit = async (input: ResetPasswordCompleteFormInput) => {
@@ -34,12 +34,12 @@ export default function ResetPasswordComplete() {
 				return;
 			}
 
-			const { node, errors } = await resetPasswordComplete.mutateAsync({
+			const { data, errors } = await resetPasswordComplete.mutateAsync({
 				token,
 				...input,
 			});
 
-			if (!node?.success || !!errors.length) {
+			if (!data?.success || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',

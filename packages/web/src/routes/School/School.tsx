@@ -17,16 +17,16 @@ export default function School() {
 	const queryClient = useQueryClient();
 	const [success, setSuccess] = useState(false);
 
-	const { data: { node: school } = {} } = useQuery({
+	const { data: { data: school } = {} } = useQuery({
 		queryKey: ['school'],
-		queryFn: () => client('school').getSchool(),
+		queryFn: () => client.school.getSchool(),
 	});
 
 	const updateSchool = useMutation({
 		mutationFn: (schoolUpdateInput: SchoolUpdateInput) =>
-			client('school').updateSchool({ schoolUpdateInput }),
-		onSuccess: data =>
-			!data.errors.length && queryClient.setQueryData(['school'], data),
+			client.school.updateSchool({ schoolUpdateInput }),
+		onSuccess: response =>
+			!response.errors.length && queryClient.setQueryData(['school'], response),
 	});
 
 	const handleSubmit = async (input: SchoolUpdateFormInput) => {
@@ -35,9 +35,9 @@ export default function School() {
 				return;
 			}
 
-			const { node, errors } = await updateSchool.mutateAsync(input);
+			const { data, errors } = await updateSchool.mutateAsync(input);
 
-			if (!node || !!errors.length) {
+			if (!data || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',

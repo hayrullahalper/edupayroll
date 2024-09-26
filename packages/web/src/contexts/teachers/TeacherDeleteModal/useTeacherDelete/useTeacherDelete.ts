@@ -16,7 +16,7 @@ export default function useTeacherDelete() {
 
 	const deleteTeacher = useMutation({
 		mutationFn: (request: { id: string }) =>
-			client('teacher').deleteTeacher(request),
+			client.teacher.deleteTeacher(request),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['teachers'] }),
 	});
 
@@ -38,11 +38,11 @@ export default function useTeacherDelete() {
 
 			setLoading(true);
 
-			const { node, errors } = await deleteTeacher.mutateAsync({
+			const { data, errors } = await deleteTeacher.mutateAsync({
 				id: target.id,
 			});
 
-			if (!node?.success || !!errors.length) {
+			if (!data?.success || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',

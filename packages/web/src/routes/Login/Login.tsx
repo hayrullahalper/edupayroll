@@ -21,14 +21,14 @@ export default function Login() {
 
 	const login = useMutation({
 		mutationFn: (loginInput: LoginInput) =>
-			client('auth').login({ loginInput }),
+			client.auth.login({ loginInput }),
 	});
 
 	const handleSubmit = async (input: LoginFormInput) => {
 		try {
-			const { node, errors } = await login.mutateAsync(input);
+			const { data, errors } = await login.mutateAsync(input);
 
-			if (!node?.token || !!errors.length) {
+			if (!data?.token || !!errors.length) {
 				if (errors.some(({ code }) => code === 'INVALID_CREDENTIALS')) {
 					setError(t('auth.login.error.invalidCredentials'));
 					return;
@@ -41,7 +41,7 @@ export default function Login() {
 				return;
 			}
 
-			setToken(node.token, input.remember);
+			setToken(data.token, input.remember);
 		}
 		catch (e) {
 			notifications.show({

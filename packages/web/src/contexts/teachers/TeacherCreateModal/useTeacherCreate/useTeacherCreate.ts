@@ -15,7 +15,7 @@ export default function useTeacherCreate() {
 
 	const createTeacher = useMutation({
 		mutationFn: (teacherCreateInput: TeacherCreateInput) =>
-			client('teacher').createTeacher({ teacherCreateInput }),
+			client.teacher.createTeacher({ teacherCreateInput }),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['teachers'] }),
 	});
 
@@ -24,9 +24,9 @@ export default function useTeacherCreate() {
 
 	const handleSubmit = async (input: TeacherCreateFormInput) => {
 		try {
-			const { node, errors } = await createTeacher.mutateAsync(input);
+			const { data, errors } = await createTeacher.mutateAsync(input);
 
-			if (!node || !!errors.length) {
+			if (!data || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',

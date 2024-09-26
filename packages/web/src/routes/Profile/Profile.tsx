@@ -9,7 +9,7 @@ import ProfileInformations from './ProfileInformations';
 export default function Profile() {
 	useQuery({
 		queryKey: ['school'],
-		queryFn: () => client('school').getSchool(),
+		queryFn: () => client.school.getSchool(),
 	});
 
 	return (

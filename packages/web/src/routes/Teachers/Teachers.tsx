@@ -39,12 +39,12 @@ export default function Teachers() {
 
 	const handleComplete = ({
 		meta,
-		nodes,
+		data,
 	}: PageResponseTeacherTeacherErrorCode) => {
 		setSelections([]);
 		setSelectionType('include');
 
-		if (!!nodes && !!meta && nodes?.length === 0 && meta?.total > 0) {
+		if (!!data && !!meta && data?.length === 0 && meta?.total > 0) {
 			const offset = (Math.floor(meta.total / meta.limit) - 1) * meta.limit;
 			setRequest(prev => ({ ...prev, offset: offset < 0 ? 0 : offset }));
 		}

@@ -37,7 +37,7 @@ export default function TeacherUpdateModal({
 }: TeacherUpdateModalProps) {
 	const { t } = useTranslation();
 
-	const formik = useFormik({
+	const formik = useFormik<TeacherUpdateFormInput>({
 		onSubmit,
 		validateOnBlur: true,
 		validateOnChange: false,

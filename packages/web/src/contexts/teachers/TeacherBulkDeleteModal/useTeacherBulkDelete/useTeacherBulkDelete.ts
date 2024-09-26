@@ -20,7 +20,7 @@ export default function useTeacherBulkDelete() {
 
 	const deleteTeachers = useMutation({
 		mutationFn: (teacherDeleteInput: TeacherDeleteInput) =>
-			client('teacher').deleteTeachers({ teacherDeleteInput }),
+			client.teacher.deleteTeachers({ teacherDeleteInput }),
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['teachers'] }),
 	});
 
@@ -44,12 +44,12 @@ export default function useTeacherBulkDelete() {
 
 			setLoading(true);
 
-			const { node, errors } = await deleteTeachers.mutateAsync({
+			const { data, errors } = await deleteTeachers.mutateAsync({
 				ids: targetIds,
 				type: stringToSelectionType(targetType),
 			});
 
-			if (!node?.success || !!errors.length) {
+			if (!data?.success || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',

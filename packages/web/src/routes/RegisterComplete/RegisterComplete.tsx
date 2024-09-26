@@ -23,7 +23,7 @@ export default function RegisterComplete() {
 
 	const registerComplete = useMutation({
 		mutationFn: (registerCompleteInput: RegisterCompleteInput) =>
-			client('auth').registerComplete({ registerCompleteInput }),
+			client.auth.registerComplete({ registerCompleteInput }),
 	});
 
 	const handleSubmit = async (input: RegisterCompleteFormInput) => {
@@ -32,12 +32,12 @@ export default function RegisterComplete() {
 				return;
 			}
 
-			const { node, errors } = await registerComplete.mutateAsync({
+			const { data, errors } = await registerComplete.mutateAsync({
 				token,
 				...input,
 			});
 
-			if (!node?.token || !!errors.length) {
+			if (!data?.token || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',
@@ -45,7 +45,7 @@ export default function RegisterComplete() {
 				return;
 			}
 
-			setToken(node.token, true);
+			setToken(data.token, true);
 		}
 		catch (e) {
 			notifications.show({

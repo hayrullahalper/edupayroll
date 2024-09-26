@@ -11,12 +11,12 @@ import UserContext from './UserContext';
 export default function UserProvider({ children }: PropsWithChildren<any>) {
 	const { token } = useToken();
 
-	const { isLoading, data: { node: user } = {} } = useQuery({
+	const { isLoading, data: { data: user } = {} } = useQuery({
 		enabled: !!token,
 		queryKey: ['user'],
 		refetchOnMount: 'always',
 		refetchOnWindowFocus: true,
-		queryFn: () => client('user').getUser(),
+		queryFn: () => client.user.getUser(),
 	});
 
 	const contextValue = useMemo(

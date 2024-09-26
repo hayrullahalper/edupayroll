@@ -34,9 +34,9 @@ export default function ProfileEmail() {
 
 	const updateEmail = useMutation({
 		mutationFn: (userUpdateEmailInput: UserUpdateEmailInput) =>
-			client('user').updateEmail({ userUpdateEmailInput }),
-		onSuccess: data =>
-			!data.errors.length && queryClient.setQueryData(['user'], data),
+			client.user.updateEmail({ userUpdateEmailInput }),
+		onSuccess: response =>
+			!response.errors.length && queryClient.setQueryData(['user'], response),
 	});
 
 	const handleFormSubmit = async (
@@ -58,12 +58,12 @@ export default function ProfileEmail() {
 		}
 
 		try {
-			const { node, errors } = await updateEmail.mutateAsync({
+			const { data, errors } = await updateEmail.mutateAsync({
 				...formInput.current,
 				...input,
 			});
 
-			if (!node || !!errors.length) {
+			if (!data || !!errors.length) {
 				if (errors[0].code === 'PASSWORD_MISMATCH') {
 					helpers.setErrors({
 						password: t('user.updateEmail.modal.password.mismatch'),

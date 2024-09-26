@@ -21,11 +21,11 @@ export default function useTeacherUpdate() {
 			id,
 			...teacherUpdateInput
 		}: TeacherUpdateInput & { id: string }) =>
-			client('teacher').updateTeacher({
+			client.teacher.updateTeacher({
 				id,
 				teacherUpdateInput,
 			}),
-		onSuccess: data => updateTeachersQuery(queryClient, data),
+		onSuccess: response => updateTeachersQuery(queryClient, response),
 	});
 
 	const close = useCallback(() => setOpened(false), []);
@@ -41,12 +41,12 @@ export default function useTeacherUpdate() {
 				return;
 			}
 
-			const { node, errors } = await updateTeacher.mutateAsync({
+			const { data, errors } = await updateTeacher.mutateAsync({
 				id: target.id,
 				...input,
 			});
 
-			if (!node || !!errors.length) {
+			if (!data || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',

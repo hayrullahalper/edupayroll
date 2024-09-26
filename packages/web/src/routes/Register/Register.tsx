@@ -21,7 +21,7 @@ export default function Register() {
 
 	const register = useMutation({
 		mutationFn: (registerInput: RegisterInput) =>
-			client('auth').register({ registerInput }),
+			client.auth.register({ registerInput }),
 	});
 
 	const handleSubmit = async (
@@ -29,9 +29,9 @@ export default function Register() {
 		helpers: FormikHelpers<RegisterFormInput>,
 	) => {
 		try {
-			const { node, errors } = await register.mutateAsync(input);
+			const { data, errors } = await register.mutateAsync(input);
 
-			if (!node || !!errors.length) {
+			if (!data || !!errors.length) {
 				if (errors.some(({ code }) => code === 'USER_ALREADY_REGISTERED')) {
 					helpers.setFieldError('email', t('auth.register.error.emailExists'));
 					return;
@@ -66,9 +66,9 @@ export default function Register() {
 				return;
 			}
 
-			const { node, errors } = await register.mutateAsync({ email });
+			const { data, errors } = await register.mutateAsync({ email });
 
-			if (!node?.success || !!errors.length) {
+			if (!data?.success || !!errors.length) {
 				notifications.show({
 					message: t('common.error.unknown'),
 					color: 'red',
