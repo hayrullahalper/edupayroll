@@ -38,7 +38,10 @@ export interface ResponseErrorRecordErrorCode {
  * @export
  */
 export const ResponseErrorRecordErrorCodeCodeEnum = {
-    Sample: 'SAMPLE'
+    RecordNotFound: 'RECORD_NOT_FOUND',
+    TeacherNotFound: 'TEACHER_NOT_FOUND',
+    DocumentNotFound: 'DOCUMENT_NOT_FOUND',
+    RecordHoursTooLong: 'RECORD_HOURS_TOO_LONG'
 } as const;
 export type ResponseErrorRecordErrorCodeCodeEnum = typeof ResponseErrorRecordErrorCodeCodeEnum[keyof typeof ResponseErrorRecordErrorCodeCodeEnum];
 

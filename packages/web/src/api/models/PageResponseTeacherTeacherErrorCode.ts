@@ -43,7 +43,7 @@ export interface PageResponseTeacherTeacherErrorCode {
      * @type {Array<Teacher>}
      * @memberof PageResponseTeacherTeacherErrorCode
      */
-    nodes?: Array<Teacher>;
+    data?: Array<Teacher>;
     /**
      * 
      * @type {PageMeta}
@@ -76,7 +76,7 @@ export function PageResponseTeacherTeacherErrorCodeFromJSONTyped(json: any, igno
     }
     return {
         
-        'nodes': json['nodes'] == null ? undefined : ((json['nodes'] as Array<any>).map(TeacherFromJSON)),
+        'data': json['data'] == null ? undefined : ((json['data'] as Array<any>).map(TeacherFromJSON)),
         'meta': json['meta'] == null ? undefined : PageMetaFromJSON(json['meta']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorTeacherErrorCodeFromJSON)),
     };
@@ -88,7 +88,7 @@ export function PageResponseTeacherTeacherErrorCodeToJSON(value?: PageResponseTe
     }
     return {
         
-        'nodes': value['nodes'] == null ? undefined : ((value['nodes'] as Array<any>).map(TeacherToJSON)),
+        'data': value['data'] == null ? undefined : ((value['data'] as Array<any>).map(TeacherToJSON)),
         'meta': PageMetaToJSON(value['meta']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorTeacherErrorCodeToJSON)),
     };

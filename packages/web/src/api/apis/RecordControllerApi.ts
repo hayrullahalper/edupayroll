@@ -15,54 +15,46 @@
 
 import * as runtime from '../runtime';
 import type {
-  RecordCreateDTO,
-  RecordUpdateInformationDTO,
-  RecordUpdateTeacherDTO,
-  RecordUpdateTypeDTO,
-  ResponseListRecordRecordErrorCode,
-  ResponseObjectRecordErrorCode,
+  RecordCreateInput,
+  RecordUpdateHoursInput,
+  RecordUpdateInput,
+  RecordUpdateOrderInput,
+  ResponseRecordRecordErrorCode,
 } from '../models/index';
 import {
-    RecordCreateDTOFromJSON,
-    RecordCreateDTOToJSON,
-    RecordUpdateInformationDTOFromJSON,
-    RecordUpdateInformationDTOToJSON,
-    RecordUpdateTeacherDTOFromJSON,
-    RecordUpdateTeacherDTOToJSON,
-    RecordUpdateTypeDTOFromJSON,
-    RecordUpdateTypeDTOToJSON,
-    ResponseListRecordRecordErrorCodeFromJSON,
-    ResponseListRecordRecordErrorCodeToJSON,
-    ResponseObjectRecordErrorCodeFromJSON,
-    ResponseObjectRecordErrorCodeToJSON,
+    RecordCreateInputFromJSON,
+    RecordCreateInputToJSON,
+    RecordUpdateHoursInputFromJSON,
+    RecordUpdateHoursInputToJSON,
+    RecordUpdateInputFromJSON,
+    RecordUpdateInputToJSON,
+    RecordUpdateOrderInputFromJSON,
+    RecordUpdateOrderInputToJSON,
+    ResponseRecordRecordErrorCodeFromJSON,
+    ResponseRecordRecordErrorCodeToJSON,
 } from '../models/index';
 
+export interface DeleteRequest {
+    id: string;
+}
+
 export interface CreateRequest {
-    documentId: string;
-    recordCreateDTO: RecordCreateDTO;
+    recordCreateInput: RecordCreateInput;
 }
 
-export interface DeleteRecordRequest {
-    recordId: string;
+export interface UpdateRequest {
+    id: string;
+    recordUpdateInput: RecordUpdateInput;
 }
 
-export interface GetAllRequest {
-    documentId: string;
+export interface UpdateHoursRequest {
+    id: string;
+    recordUpdateHoursInput: RecordUpdateHoursInput;
 }
 
-export interface UpdateInformationRequest {
-    recordId: string;
-    recordUpdateInformationDTO: RecordUpdateInformationDTO;
-}
-
-export interface UpdateTeacher1Request {
-    recordId: string;
-    recordUpdateTeacherDTO: RecordUpdateTeacherDTO;
-}
-
-export interface UpdateTypeRequest {
-    recordId: string;
-    recordUpdateTypeDTO: RecordUpdateTypeDTO;
+export interface UpdateOrderRequest {
+    id: string;
+    recordUpdateOrderInput: RecordUpdateOrderInput;
 }
 
 /**
@@ -72,18 +64,42 @@ export class RecordControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async createRaw(requestParameters: CreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseObjectRecordErrorCode>> {
-        if (requestParameters['documentId'] == null) {
+    async _deleteRaw(requestParameters: DeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseRecordRecordErrorCode>> {
+        if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
-                'documentId',
-                'Required parameter "documentId" was null or undefined when calling create().'
+                'id',
+                'Required parameter "id" was null or undefined when calling _delete().'
             );
         }
 
-        if (requestParameters['recordCreateDTO'] == null) {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/records/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseRecordRecordErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async _delete(requestParameters: DeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseRecordRecordErrorCode> {
+        const response = await this._deleteRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async createRaw(requestParameters: CreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseRecordRecordErrorCode>> {
+        if (requestParameters['recordCreateInput'] == null) {
             throw new runtime.RequiredError(
-                'recordCreateDTO',
-                'Required parameter "recordCreateDTO" was null or undefined when calling create().'
+                'recordCreateInput',
+                'Required parameter "recordCreateInput" was null or undefined when calling create().'
             );
         }
 
@@ -94,99 +110,37 @@ export class RecordControllerApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/records/{documentId}`.replace(`{${"documentId"}}`, encodeURIComponent(String(requestParameters['documentId']))),
+            path: `/records`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: RecordCreateDTOToJSON(requestParameters['recordCreateDTO']),
+            body: RecordCreateInputToJSON(requestParameters['recordCreateInput']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseObjectRecordErrorCodeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseRecordRecordErrorCodeFromJSON(jsonValue));
     }
 
     /**
      */
-    async create(requestParameters: CreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseObjectRecordErrorCode> {
+    async create(requestParameters: CreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseRecordRecordErrorCode> {
         const response = await this.createRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async deleteRecordRaw(requestParameters: DeleteRecordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseObjectRecordErrorCode>> {
-        if (requestParameters['recordId'] == null) {
+    async updateRaw(requestParameters: UpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseRecordRecordErrorCode>> {
+        if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
-                'recordId',
-                'Required parameter "recordId" was null or undefined when calling deleteRecord().'
+                'id',
+                'Required parameter "id" was null or undefined when calling update().'
             );
         }
 
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/records/{recordId}`.replace(`{${"recordId"}}`, encodeURIComponent(String(requestParameters['recordId']))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseObjectRecordErrorCodeFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async deleteRecord(requestParameters: DeleteRecordRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseObjectRecordErrorCode> {
-        const response = await this.deleteRecordRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     */
-    async getAllRaw(requestParameters: GetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseListRecordRecordErrorCode>> {
-        if (requestParameters['documentId'] == null) {
+        if (requestParameters['recordUpdateInput'] == null) {
             throw new runtime.RequiredError(
-                'documentId',
-                'Required parameter "documentId" was null or undefined when calling getAll().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/records/{documentId}`.replace(`{${"documentId"}}`, encodeURIComponent(String(requestParameters['documentId']))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseListRecordRecordErrorCodeFromJSON(jsonValue));
-    }
-
-    /**
-     */
-    async getAll(requestParameters: GetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseListRecordRecordErrorCode> {
-        const response = await this.getAllRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     */
-    async updateInformationRaw(requestParameters: UpdateInformationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseObjectRecordErrorCode>> {
-        if (requestParameters['recordId'] == null) {
-            throw new runtime.RequiredError(
-                'recordId',
-                'Required parameter "recordId" was null or undefined when calling updateInformation().'
-            );
-        }
-
-        if (requestParameters['recordUpdateInformationDTO'] == null) {
-            throw new runtime.RequiredError(
-                'recordUpdateInformationDTO',
-                'Required parameter "recordUpdateInformationDTO" was null or undefined when calling updateInformation().'
+                'recordUpdateInput',
+                'Required parameter "recordUpdateInput" was null or undefined when calling update().'
             );
         }
 
@@ -197,37 +151,37 @@ export class RecordControllerApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/records/{recordId}/information`.replace(`{${"recordId"}}`, encodeURIComponent(String(requestParameters['recordId']))),
+            path: `/records/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: RecordUpdateInformationDTOToJSON(requestParameters['recordUpdateInformationDTO']),
+            body: RecordUpdateInputToJSON(requestParameters['recordUpdateInput']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseObjectRecordErrorCodeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseRecordRecordErrorCodeFromJSON(jsonValue));
     }
 
     /**
      */
-    async updateInformation(requestParameters: UpdateInformationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseObjectRecordErrorCode> {
-        const response = await this.updateInformationRaw(requestParameters, initOverrides);
+    async update(requestParameters: UpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseRecordRecordErrorCode> {
+        const response = await this.updateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async updateTeacher1Raw(requestParameters: UpdateTeacher1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseObjectRecordErrorCode>> {
-        if (requestParameters['recordId'] == null) {
+    async updateHoursRaw(requestParameters: UpdateHoursRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseRecordRecordErrorCode>> {
+        if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
-                'recordId',
-                'Required parameter "recordId" was null or undefined when calling updateTeacher1().'
+                'id',
+                'Required parameter "id" was null or undefined when calling updateHours().'
             );
         }
 
-        if (requestParameters['recordUpdateTeacherDTO'] == null) {
+        if (requestParameters['recordUpdateHoursInput'] == null) {
             throw new runtime.RequiredError(
-                'recordUpdateTeacherDTO',
-                'Required parameter "recordUpdateTeacherDTO" was null or undefined when calling updateTeacher1().'
+                'recordUpdateHoursInput',
+                'Required parameter "recordUpdateHoursInput" was null or undefined when calling updateHours().'
             );
         }
 
@@ -238,37 +192,37 @@ export class RecordControllerApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/records/{recordId}/teacher`.replace(`{${"recordId"}}`, encodeURIComponent(String(requestParameters['recordId']))),
+            path: `/records/{id}/hours`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: RecordUpdateTeacherDTOToJSON(requestParameters['recordUpdateTeacherDTO']),
+            body: RecordUpdateHoursInputToJSON(requestParameters['recordUpdateHoursInput']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseObjectRecordErrorCodeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseRecordRecordErrorCodeFromJSON(jsonValue));
     }
 
     /**
      */
-    async updateTeacher1(requestParameters: UpdateTeacher1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseObjectRecordErrorCode> {
-        const response = await this.updateTeacher1Raw(requestParameters, initOverrides);
+    async updateHours(requestParameters: UpdateHoursRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseRecordRecordErrorCode> {
+        const response = await this.updateHoursRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async updateTypeRaw(requestParameters: UpdateTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseObjectRecordErrorCode>> {
-        if (requestParameters['recordId'] == null) {
+    async updateOrderRaw(requestParameters: UpdateOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseRecordRecordErrorCode>> {
+        if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
-                'recordId',
-                'Required parameter "recordId" was null or undefined when calling updateType().'
+                'id',
+                'Required parameter "id" was null or undefined when calling updateOrder().'
             );
         }
 
-        if (requestParameters['recordUpdateTypeDTO'] == null) {
+        if (requestParameters['recordUpdateOrderInput'] == null) {
             throw new runtime.RequiredError(
-                'recordUpdateTypeDTO',
-                'Required parameter "recordUpdateTypeDTO" was null or undefined when calling updateType().'
+                'recordUpdateOrderInput',
+                'Required parameter "recordUpdateOrderInput" was null or undefined when calling updateOrder().'
             );
         }
 
@@ -279,20 +233,20 @@ export class RecordControllerApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/records/{recordId}/type`.replace(`{${"recordId"}}`, encodeURIComponent(String(requestParameters['recordId']))),
+            path: `/records/{id}/previous`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: RecordUpdateTypeDTOToJSON(requestParameters['recordUpdateTypeDTO']),
+            body: RecordUpdateOrderInputToJSON(requestParameters['recordUpdateOrderInput']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseObjectRecordErrorCodeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseRecordRecordErrorCodeFromJSON(jsonValue));
     }
 
     /**
      */
-    async updateType(requestParameters: UpdateTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseObjectRecordErrorCode> {
-        const response = await this.updateTypeRaw(requestParameters, initOverrides);
+    async updateOrder(requestParameters: UpdateOrderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseRecordRecordErrorCode> {
+        const response = await this.updateOrderRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

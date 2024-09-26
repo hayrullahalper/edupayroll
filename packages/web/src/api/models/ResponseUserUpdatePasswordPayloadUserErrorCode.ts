@@ -37,7 +37,7 @@ export interface ResponseUserUpdatePasswordPayloadUserErrorCode {
      * @type {UserUpdatePasswordPayload}
      * @memberof ResponseUserUpdatePasswordPayloadUserErrorCode
      */
-    node?: UserUpdatePasswordPayload;
+    data?: UserUpdatePasswordPayload;
     /**
      * 
      * @type {Array<ResponseErrorUserErrorCode>}
@@ -64,7 +64,7 @@ export function ResponseUserUpdatePasswordPayloadUserErrorCodeFromJSONTyped(json
     }
     return {
         
-        'node': json['node'] == null ? undefined : UserUpdatePasswordPayloadFromJSON(json['node']),
+        'data': json['data'] == null ? undefined : UserUpdatePasswordPayloadFromJSON(json['data']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorUserErrorCodeFromJSON)),
     };
 }
@@ -75,7 +75,7 @@ export function ResponseUserUpdatePasswordPayloadUserErrorCodeToJSON(value?: Res
     }
     return {
         
-        'node': UserUpdatePasswordPayloadToJSON(value['node']),
+        'data': UserUpdatePasswordPayloadToJSON(value['data']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorUserErrorCodeToJSON)),
     };
 }

@@ -38,12 +38,6 @@ export interface DocumentCreateInput {
      * @memberof DocumentCreateInput
      */
     time: DocumentUpdateInputTime;
-    /**
-     * 
-     * @type {string}
-     * @memberof DocumentCreateInput
-     */
-    description: string;
 }
 
 /**
@@ -52,7 +46,6 @@ export interface DocumentCreateInput {
 export function instanceOfDocumentCreateInput(value: object): value is DocumentCreateInput {
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('time' in value) || value['time'] === undefined) return false;
-    if (!('description' in value) || value['description'] === undefined) return false;
     return true;
 }
 
@@ -68,7 +61,6 @@ export function DocumentCreateInputFromJSONTyped(json: any, ignoreDiscriminator:
         
         'name': json['name'],
         'time': DocumentUpdateInputTimeFromJSON(json['time']),
-        'description': json['description'],
     };
 }
 
@@ -80,7 +72,6 @@ export function DocumentCreateInputToJSON(value?: DocumentCreateInput | null): a
         
         'name': value['name'],
         'time': DocumentUpdateInputTimeToJSON(value['time']),
-        'description': value['description'],
     };
 }
 

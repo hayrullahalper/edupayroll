@@ -49,6 +49,18 @@ export interface Teacher {
      * @memberof Teacher
      */
     description: string;
+    /**
+     * 
+     * @type {Date}
+     * @memberof Teacher
+     */
+    createdAt: Date;
+    /**
+     * 
+     * @type {Date}
+     * @memberof Teacher
+     */
+    updatedAt: Date;
 }
 
 /**
@@ -60,6 +72,8 @@ export function instanceOfTeacher(value: object): value is Teacher {
     if (!('branch' in value) || value['branch'] === undefined) return false;
     if (!('idNumber' in value) || value['idNumber'] === undefined) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
+    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
+    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     return true;
 }
 
@@ -78,6 +92,8 @@ export function TeacherFromJSONTyped(json: any, ignoreDiscriminator: boolean): T
         'branch': json['branch'],
         'idNumber': json['idNumber'],
         'description': json['description'],
+        'createdAt': (new Date(json['createdAt'])),
+        'updatedAt': (new Date(json['updatedAt'])),
     };
 }
 
@@ -92,6 +108,8 @@ export function TeacherToJSON(value?: Teacher | null): any {
         'branch': value['branch'],
         'idNumber': value['idNumber'],
         'description': value['description'],
+        'createdAt': ((value['createdAt']).toISOString()),
+        'updatedAt': ((value['updatedAt']).toISOString()),
     };
 }
 

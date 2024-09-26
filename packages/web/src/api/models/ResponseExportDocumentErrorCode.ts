@@ -19,57 +19,63 @@ import {
     ResponseErrorDocumentErrorCodeFromJSONTyped,
     ResponseErrorDocumentErrorCodeToJSON,
 } from './ResponseErrorDocumentErrorCode';
+import type { Export } from './Export';
+import {
+    ExportFromJSON,
+    ExportFromJSONTyped,
+    ExportToJSON,
+} from './Export';
 
 /**
  * 
  * @export
- * @interface ResponseObjectDocumentErrorCode
+ * @interface ResponseExportDocumentErrorCode
  */
-export interface ResponseObjectDocumentErrorCode {
+export interface ResponseExportDocumentErrorCode {
     /**
      * 
-     * @type {object}
-     * @memberof ResponseObjectDocumentErrorCode
+     * @type {Export}
+     * @memberof ResponseExportDocumentErrorCode
      */
-    node?: object;
+    data?: Export;
     /**
      * 
      * @type {Array<ResponseErrorDocumentErrorCode>}
-     * @memberof ResponseObjectDocumentErrorCode
+     * @memberof ResponseExportDocumentErrorCode
      */
     errors: Array<ResponseErrorDocumentErrorCode>;
 }
 
 /**
- * Check if a given object implements the ResponseObjectDocumentErrorCode interface.
+ * Check if a given object implements the ResponseExportDocumentErrorCode interface.
  */
-export function instanceOfResponseObjectDocumentErrorCode(value: object): value is ResponseObjectDocumentErrorCode {
+export function instanceOfResponseExportDocumentErrorCode(value: object): value is ResponseExportDocumentErrorCode {
     if (!('errors' in value) || value['errors'] === undefined) return false;
     return true;
 }
 
-export function ResponseObjectDocumentErrorCodeFromJSON(json: any): ResponseObjectDocumentErrorCode {
-    return ResponseObjectDocumentErrorCodeFromJSONTyped(json, false);
+export function ResponseExportDocumentErrorCodeFromJSON(json: any): ResponseExportDocumentErrorCode {
+    return ResponseExportDocumentErrorCodeFromJSONTyped(json, false);
 }
 
-export function ResponseObjectDocumentErrorCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResponseObjectDocumentErrorCode {
+export function ResponseExportDocumentErrorCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResponseExportDocumentErrorCode {
     if (json == null) {
         return json;
     }
     return {
         
-        'node': json['node'] == null ? undefined : json['node'],
+        'data': json['data'] == null ? undefined : ExportFromJSON(json['data']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorDocumentErrorCodeFromJSON)),
     };
 }
 
-export function ResponseObjectDocumentErrorCodeToJSON(value?: ResponseObjectDocumentErrorCode | null): any {
+export function ResponseExportDocumentErrorCodeToJSON(value?: ResponseExportDocumentErrorCode | null): any {
     if (value == null) {
         return value;
     }
     return {
         
-        'node': value['node'],
+        'data': ExportToJSON(value['data']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorDocumentErrorCodeToJSON)),
     };
 }

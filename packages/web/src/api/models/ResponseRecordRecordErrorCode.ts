@@ -19,57 +19,63 @@ import {
     ResponseErrorRecordErrorCodeFromJSONTyped,
     ResponseErrorRecordErrorCodeToJSON,
 } from './ResponseErrorRecordErrorCode';
+import type { Record } from './Record';
+import {
+    RecordFromJSON,
+    RecordFromJSONTyped,
+    RecordToJSON,
+} from './Record';
 
 /**
  * 
  * @export
- * @interface ResponseObjectRecordErrorCode
+ * @interface ResponseRecordRecordErrorCode
  */
-export interface ResponseObjectRecordErrorCode {
+export interface ResponseRecordRecordErrorCode {
     /**
      * 
-     * @type {object}
-     * @memberof ResponseObjectRecordErrorCode
+     * @type {Record}
+     * @memberof ResponseRecordRecordErrorCode
      */
-    node?: object;
+    data?: Record;
     /**
      * 
      * @type {Array<ResponseErrorRecordErrorCode>}
-     * @memberof ResponseObjectRecordErrorCode
+     * @memberof ResponseRecordRecordErrorCode
      */
     errors: Array<ResponseErrorRecordErrorCode>;
 }
 
 /**
- * Check if a given object implements the ResponseObjectRecordErrorCode interface.
+ * Check if a given object implements the ResponseRecordRecordErrorCode interface.
  */
-export function instanceOfResponseObjectRecordErrorCode(value: object): value is ResponseObjectRecordErrorCode {
+export function instanceOfResponseRecordRecordErrorCode(value: object): value is ResponseRecordRecordErrorCode {
     if (!('errors' in value) || value['errors'] === undefined) return false;
     return true;
 }
 
-export function ResponseObjectRecordErrorCodeFromJSON(json: any): ResponseObjectRecordErrorCode {
-    return ResponseObjectRecordErrorCodeFromJSONTyped(json, false);
+export function ResponseRecordRecordErrorCodeFromJSON(json: any): ResponseRecordRecordErrorCode {
+    return ResponseRecordRecordErrorCodeFromJSONTyped(json, false);
 }
 
-export function ResponseObjectRecordErrorCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResponseObjectRecordErrorCode {
+export function ResponseRecordRecordErrorCodeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResponseRecordRecordErrorCode {
     if (json == null) {
         return json;
     }
     return {
         
-        'node': json['node'] == null ? undefined : json['node'],
+        'data': json['data'] == null ? undefined : RecordFromJSON(json['data']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorRecordErrorCodeFromJSON)),
     };
 }
 
-export function ResponseObjectRecordErrorCodeToJSON(value?: ResponseObjectRecordErrorCode | null): any {
+export function ResponseRecordRecordErrorCodeToJSON(value?: ResponseRecordRecordErrorCode | null): any {
     if (value == null) {
         return value;
     }
     return {
         
-        'node': value['node'],
+        'data': RecordToJSON(value['data']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorRecordErrorCodeToJSON)),
     };
 }

@@ -37,7 +37,7 @@ export interface ResponseUserUserErrorCode {
      * @type {User}
      * @memberof ResponseUserUserErrorCode
      */
-    node?: User;
+    data?: User;
     /**
      * 
      * @type {Array<ResponseErrorUserErrorCode>}
@@ -64,7 +64,7 @@ export function ResponseUserUserErrorCodeFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'node': json['node'] == null ? undefined : UserFromJSON(json['node']),
+        'data': json['data'] == null ? undefined : UserFromJSON(json['data']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorUserErrorCodeFromJSON)),
     };
 }
@@ -75,7 +75,7 @@ export function ResponseUserUserErrorCodeToJSON(value?: ResponseUserUserErrorCod
     }
     return {
         
-        'node': UserToJSON(value['node']),
+        'data': UserToJSON(value['data']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorUserErrorCodeToJSON)),
     };
 }

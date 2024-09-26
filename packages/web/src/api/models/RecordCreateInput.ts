@@ -13,68 +13,49 @@
  */
 
 import { mapValues } from '../runtime';
-import type { Teacher } from './Teacher';
-import {
-    TeacherFromJSON,
-    TeacherFromJSONTyped,
-    TeacherToJSON,
-} from './Teacher';
-
 /**
  * 
  * @export
- * @interface Record
+ * @interface RecordCreateInput
  */
-export interface Record {
+export interface RecordCreateInput {
     /**
      * 
      * @type {string}
-     * @memberof Record
+     * @memberof RecordCreateInput
      */
-    id: string;
+    previousId?: string;
     /**
      * 
      * @type {string}
-     * @memberof Record
+     * @memberof RecordCreateInput
      */
-    nextId?: string;
+    documentId: string;
     /**
      * 
      * @type {string}
-     * @memberof Record
+     * @memberof RecordCreateInput
      */
-    type: RecordTypeEnum;
+    teacherId: string;
     /**
      * 
-     * @type {Teacher}
-     * @memberof Record
+     * @type {string}
+     * @memberof RecordCreateInput
      */
-    teacher: Teacher;
+    type: RecordCreateInputTypeEnum;
     /**
      * 
      * @type {Array<number>}
-     * @memberof Record
+     * @memberof RecordCreateInput
      */
     hours: Array<number>;
-    /**
-     * 
-     * @type {Date}
-     * @memberof Record
-     */
-    createdAt: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof Record
-     */
-    updatedAt: Date;
 }
 
 
 /**
  * @export
  */
-export const RecordTypeEnum = {
+export const RecordCreateInputTypeEnum = {
     Course101: 'Course101',
     Course102: 'Course102',
     Course103: 'Course103',
@@ -102,55 +83,49 @@ export const RecordTypeEnum = {
     Course123: 'Course123',
     Course212: 'Course212'
 } as const;
-export type RecordTypeEnum = typeof RecordTypeEnum[keyof typeof RecordTypeEnum];
+export type RecordCreateInputTypeEnum = typeof RecordCreateInputTypeEnum[keyof typeof RecordCreateInputTypeEnum];
 
 
 /**
- * Check if a given object implements the Record interface.
+ * Check if a given object implements the RecordCreateInput interface.
  */
-export function instanceOfRecord(value: object): value is Record {
-    if (!('id' in value) || value['id'] === undefined) return false;
+export function instanceOfRecordCreateInput(value: object): value is RecordCreateInput {
+    if (!('documentId' in value) || value['documentId'] === undefined) return false;
+    if (!('teacherId' in value) || value['teacherId'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('teacher' in value) || value['teacher'] === undefined) return false;
     if (!('hours' in value) || value['hours'] === undefined) return false;
-    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
-    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     return true;
 }
 
-export function RecordFromJSON(json: any): Record {
-    return RecordFromJSONTyped(json, false);
+export function RecordCreateInputFromJSON(json: any): RecordCreateInput {
+    return RecordCreateInputFromJSONTyped(json, false);
 }
 
-export function RecordFromJSONTyped(json: any, ignoreDiscriminator: boolean): Record {
+export function RecordCreateInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): RecordCreateInput {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'],
-        'nextId': json['nextId'] == null ? undefined : json['nextId'],
+        'previousId': json['previousId'] == null ? undefined : json['previousId'],
+        'documentId': json['documentId'],
+        'teacherId': json['teacherId'],
         'type': json['type'],
-        'teacher': TeacherFromJSON(json['teacher']),
         'hours': json['hours'],
-        'createdAt': (new Date(json['createdAt'])),
-        'updatedAt': (new Date(json['updatedAt'])),
     };
 }
 
-export function RecordToJSON(value?: Record | null): any {
+export function RecordCreateInputToJSON(value?: RecordCreateInput | null): any {
     if (value == null) {
         return value;
     }
     return {
         
-        'id': value['id'],
-        'nextId': value['nextId'],
+        'previousId': value['previousId'],
+        'documentId': value['documentId'],
+        'teacherId': value['teacherId'],
         'type': value['type'],
-        'teacher': TeacherToJSON(value['teacher']),
         'hours': value['hours'],
-        'createdAt': ((value['createdAt']).toISOString()),
-        'updatedAt': ((value['updatedAt']).toISOString()),
     };
 }
 

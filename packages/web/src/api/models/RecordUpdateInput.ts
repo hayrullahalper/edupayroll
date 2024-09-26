@@ -16,34 +16,28 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface RecordCreateDTO
+ * @interface RecordUpdateInput
  */
-export interface RecordCreateDTO {
+export interface RecordUpdateInput {
     /**
      * 
      * @type {string}
-     * @memberof RecordCreateDTO
+     * @memberof RecordUpdateInput
      */
-    type?: RecordCreateDTOTypeEnum;
+    teacherId?: string;
     /**
      * 
      * @type {string}
-     * @memberof RecordCreateDTO
+     * @memberof RecordUpdateInput
      */
-    information?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RecordCreateDTO
-     */
-    teacher?: string;
+    type?: RecordUpdateInputTypeEnum;
 }
 
 
 /**
  * @export
  */
-export const RecordCreateDTOTypeEnum = {
+export const RecordUpdateInputTypeEnum = {
     Course101: 'Course101',
     Course102: 'Course102',
     Course103: 'Course103',
@@ -71,41 +65,39 @@ export const RecordCreateDTOTypeEnum = {
     Course123: 'Course123',
     Course212: 'Course212'
 } as const;
-export type RecordCreateDTOTypeEnum = typeof RecordCreateDTOTypeEnum[keyof typeof RecordCreateDTOTypeEnum];
+export type RecordUpdateInputTypeEnum = typeof RecordUpdateInputTypeEnum[keyof typeof RecordUpdateInputTypeEnum];
 
 
 /**
- * Check if a given object implements the RecordCreateDTO interface.
+ * Check if a given object implements the RecordUpdateInput interface.
  */
-export function instanceOfRecordCreateDTO(value: object): value is RecordCreateDTO {
+export function instanceOfRecordUpdateInput(value: object): value is RecordUpdateInput {
     return true;
 }
 
-export function RecordCreateDTOFromJSON(json: any): RecordCreateDTO {
-    return RecordCreateDTOFromJSONTyped(json, false);
+export function RecordUpdateInputFromJSON(json: any): RecordUpdateInput {
+    return RecordUpdateInputFromJSONTyped(json, false);
 }
 
-export function RecordCreateDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): RecordCreateDTO {
+export function RecordUpdateInputFromJSONTyped(json: any, ignoreDiscriminator: boolean): RecordUpdateInput {
     if (json == null) {
         return json;
     }
     return {
         
+        'teacherId': json['teacherId'] == null ? undefined : json['teacherId'],
         'type': json['type'] == null ? undefined : json['type'],
-        'information': json['information'] == null ? undefined : json['information'],
-        'teacher': json['teacher'] == null ? undefined : json['teacher'],
     };
 }
 
-export function RecordCreateDTOToJSON(value?: RecordCreateDTO | null): any {
+export function RecordUpdateInputToJSON(value?: RecordUpdateInput | null): any {
     if (value == null) {
         return value;
     }
     return {
         
+        'teacherId': value['teacherId'],
         'type': value['type'],
-        'information': value['information'],
-        'teacher': value['teacher'],
     };
 }
 

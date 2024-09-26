@@ -38,12 +38,6 @@ export interface DocumentUpdateInput {
      * @memberof DocumentUpdateInput
      */
     time?: DocumentUpdateInputTime;
-    /**
-     * 
-     * @type {string}
-     * @memberof DocumentUpdateInput
-     */
-    description?: string;
 }
 
 /**
@@ -65,7 +59,6 @@ export function DocumentUpdateInputFromJSONTyped(json: any, ignoreDiscriminator:
         
         'name': json['name'] == null ? undefined : json['name'],
         'time': json['time'] == null ? undefined : DocumentUpdateInputTimeFromJSON(json['time']),
-        'description': json['description'] == null ? undefined : json['description'],
     };
 }
 
@@ -77,7 +70,6 @@ export function DocumentUpdateInputToJSON(value?: DocumentUpdateInput | null): a
         
         'name': value['name'],
         'time': DocumentUpdateInputTimeToJSON(value['time']),
-        'description': value['description'],
     };
 }
 

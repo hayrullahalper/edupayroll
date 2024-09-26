@@ -24,7 +24,7 @@ export interface ResponseErrorDocumentErrorCode {
      * @type {string}
      * @memberof ResponseErrorDocumentErrorCode
      */
-    code: string;
+    code: ResponseErrorDocumentErrorCodeCodeEnum;
     /**
      * 
      * @type {string}
@@ -32,6 +32,16 @@ export interface ResponseErrorDocumentErrorCode {
      */
     message?: string;
 }
+
+
+/**
+ * @export
+ */
+export const ResponseErrorDocumentErrorCodeCodeEnum = {
+    DocumentNotFound: 'DOCUMENT_NOT_FOUND'
+} as const;
+export type ResponseErrorDocumentErrorCodeCodeEnum = typeof ResponseErrorDocumentErrorCodeCodeEnum[keyof typeof ResponseErrorDocumentErrorCodeCodeEnum];
+
 
 /**
  * Check if a given object implements the ResponseErrorDocumentErrorCode interface.

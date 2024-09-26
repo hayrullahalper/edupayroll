@@ -16,72 +16,71 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface School
+ * @interface Export
  */
-export interface School {
+export interface Export {
     /**
      * 
      * @type {string}
-     * @memberof School
+     * @memberof Export
      */
     id: string;
     /**
      * 
      * @type {string}
-     * @memberof School
+     * @memberof Export
      */
     name: string;
     /**
      * 
      * @type {string}
-     * @memberof School
+     * @memberof Export
      */
-    editorName: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof School
-     */
-    editorTitle: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof School
-     */
-    principalName: string;
+    status: ExportStatusEnum;
     /**
      * 
      * @type {Date}
-     * @memberof School
+     * @memberof Export
      */
     createdAt: Date;
     /**
      * 
      * @type {Date}
-     * @memberof School
+     * @memberof Export
      */
     updatedAt: Date;
 }
 
+
 /**
- * Check if a given object implements the School interface.
+ * @export
  */
-export function instanceOfSchool(value: object): value is School {
+export const ExportStatusEnum = {
+    Failed: 'FAILED',
+    Pending: 'PENDING',
+    Completed: 'COMPLETED',
+    InProgress: 'IN_PROGRESS'
+} as const;
+export type ExportStatusEnum = typeof ExportStatusEnum[keyof typeof ExportStatusEnum];
+
+
+/**
+ * Check if a given object implements the Export interface.
+ */
+export function instanceOfExport(value: object): value is Export {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('editorName' in value) || value['editorName'] === undefined) return false;
-    if (!('editorTitle' in value) || value['editorTitle'] === undefined) return false;
-    if (!('principalName' in value) || value['principalName'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     return true;
 }
 
-export function SchoolFromJSON(json: any): School {
-    return SchoolFromJSONTyped(json, false);
+export function ExportFromJSON(json: any): Export {
+    return ExportFromJSONTyped(json, false);
 }
 
-export function SchoolFromJSONTyped(json: any, ignoreDiscriminator: boolean): School {
+export function ExportFromJSONTyped(json: any, ignoreDiscriminator: boolean): Export {
     if (json == null) {
         return json;
     }
@@ -89,15 +88,13 @@ export function SchoolFromJSONTyped(json: any, ignoreDiscriminator: boolean): Sc
         
         'id': json['id'],
         'name': json['name'],
-        'editorName': json['editorName'],
-        'editorTitle': json['editorTitle'],
-        'principalName': json['principalName'],
+        'status': json['status'],
         'createdAt': (new Date(json['createdAt'])),
         'updatedAt': (new Date(json['updatedAt'])),
     };
 }
 
-export function SchoolToJSON(value?: School | null): any {
+export function ExportToJSON(value?: Export | null): any {
     if (value == null) {
         return value;
     }
@@ -105,9 +102,7 @@ export function SchoolToJSON(value?: School | null): any {
         
         'id': value['id'],
         'name': value['name'],
-        'editorName': value['editorName'],
-        'editorTitle': value['editorTitle'],
-        'principalName': value['principalName'],
+        'status': value['status'],
         'createdAt': ((value['createdAt']).toISOString()),
         'updatedAt': ((value['updatedAt']).toISOString()),
     };

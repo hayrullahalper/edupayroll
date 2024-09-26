@@ -1,18 +1,7 @@
 import Cookies from 'js-cookie';
 import paths from '../../routes/paths';
 import { Configuration, FetchParams, RequestContext, ResponseContext } from '../runtime';
-import { AuthControllerApi, DocumentControllerApi, RecordControllerApi, SchoolControllerApi, TeacherControllerApi, UserControllerApi } from '../apis';
-
-type Controller = 'auth' | 'document' | 'record' | 'school' | 'teacher' | 'user';
-
-type ControllerAPI<T extends Controller> =
-	T extends 'auth' ? AuthControllerApi :
-	T extends 'document' ? DocumentControllerApi :
-	T extends 'record' ? RecordControllerApi :
-	T extends 'school' ? SchoolControllerApi :
-	T extends 'teacher' ? TeacherControllerApi :
-	T extends 'user' ? UserControllerApi :
-	never;
+import { AuthControllerApi, DocumentControllerApi, ExportControllerApi, RecordControllerApi, SchoolControllerApi, TeacherControllerApi, UserControllerApi } from '../apis';
 
 const config = new Configuration({
 	middleware: [{
@@ -40,23 +29,14 @@ const config = new Configuration({
 	basePath: import.meta.env.VITE_REST_API_BASE_URL
 });
 
-function client<T extends Controller>(controller: T): ControllerAPI<T> {
-	switch (controller) {
-	case 'auth':
-		return new AuthControllerApi(config) as any;
-	case 'document':
-		return new DocumentControllerApi(config) as any;
-	case 'record':
-		return new RecordControllerApi(config) as any;
-	case 'school':
-		return new SchoolControllerApi(config) as any;
-	case 'teacher':
-		return new TeacherControllerApi(config) as any;
-	case 'user':
-		return new UserControllerApi(config) as any;
-	default:
-		throw new Error(`Unknown controller: ${controller}`);
-	}
-}
+const client = {
+	auth: new AuthControllerApi(config),
+	document: new DocumentControllerApi(config),
+	export: new ExportControllerApi(config),
+	record: new RecordControllerApi(config),
+	school: new SchoolControllerApi(config),
+	teacher: new TeacherControllerApi(config),
+	user: new UserControllerApi(config)
+};
 
 export default client;

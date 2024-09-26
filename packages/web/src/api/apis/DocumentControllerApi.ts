@@ -16,20 +16,62 @@
 import * as runtime from '../runtime';
 import type {
   DocumentCreateInput,
+  DocumentExportInput,
   DocumentUpdateInput,
-  ResponseObjectDocumentErrorCode,
+  PageResponseDocumentDocumentErrorCode,
+  ResponseDocumentDeletePayloadDocumentErrorCode,
+  ResponseDocumentDocumentErrorCode,
+  ResponseDocumentUpdatePayloadDocumentErrorCode,
+  ResponseExportDocumentErrorCode,
 } from '../models/index';
 import {
     DocumentCreateInputFromJSON,
     DocumentCreateInputToJSON,
+    DocumentExportInputFromJSON,
+    DocumentExportInputToJSON,
     DocumentUpdateInputFromJSON,
     DocumentUpdateInputToJSON,
-    ResponseObjectDocumentErrorCodeFromJSON,
-    ResponseObjectDocumentErrorCodeToJSON,
+    PageResponseDocumentDocumentErrorCodeFromJSON,
+    PageResponseDocumentDocumentErrorCodeToJSON,
+    ResponseDocumentDeletePayloadDocumentErrorCodeFromJSON,
+    ResponseDocumentDeletePayloadDocumentErrorCodeToJSON,
+    ResponseDocumentDocumentErrorCodeFromJSON,
+    ResponseDocumentDocumentErrorCodeToJSON,
+    ResponseDocumentUpdatePayloadDocumentErrorCodeFromJSON,
+    ResponseDocumentUpdatePayloadDocumentErrorCodeToJSON,
+    ResponseExportDocumentErrorCodeFromJSON,
+    ResponseExportDocumentErrorCodeToJSON,
 } from '../models/index';
+
+export interface ClearExportsRequest {
+    id: string;
+}
+
+export interface ClearRecordsRequest {
+    id: string;
+}
 
 export interface CreateDocumentRequest {
     documentCreateInput: DocumentCreateInput;
+}
+
+export interface DeleteDocumentRequest {
+    id: string;
+}
+
+export interface ExportDocumentRequest {
+    id: string;
+    documentExportInput: DocumentExportInput;
+}
+
+export interface GetDocumentRequest {
+    id: string;
+}
+
+export interface GetTeachers1Request {
+    limit: number;
+    offset: number;
+    name?: string;
 }
 
 export interface UpdateDocumentRequest {
@@ -44,7 +86,69 @@ export class DocumentControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async createDocumentRaw(requestParameters: CreateDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseObjectDocumentErrorCode>> {
+    async clearExportsRaw(requestParameters: ClearExportsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseDocumentUpdatePayloadDocumentErrorCode>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling clearExports().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/documents/{id}/clear/exports`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseDocumentUpdatePayloadDocumentErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async clearExports(requestParameters: ClearExportsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseDocumentUpdatePayloadDocumentErrorCode> {
+        const response = await this.clearExportsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async clearRecordsRaw(requestParameters: ClearRecordsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseDocumentUpdatePayloadDocumentErrorCode>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling clearRecords().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/documents/{id}/clear/records`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseDocumentUpdatePayloadDocumentErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async clearRecords(requestParameters: ClearRecordsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseDocumentUpdatePayloadDocumentErrorCode> {
+        const response = await this.clearRecordsRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async createDocumentRaw(requestParameters: CreateDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseDocumentDocumentErrorCode>> {
         if (requestParameters['documentCreateInput'] == null) {
             throw new runtime.RequiredError(
                 'documentCreateInput',
@@ -66,19 +170,172 @@ export class DocumentControllerApi extends runtime.BaseAPI {
             body: DocumentCreateInputToJSON(requestParameters['documentCreateInput']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseObjectDocumentErrorCodeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseDocumentDocumentErrorCodeFromJSON(jsonValue));
     }
 
     /**
      */
-    async createDocument(requestParameters: CreateDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseObjectDocumentErrorCode> {
+    async createDocument(requestParameters: CreateDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseDocumentDocumentErrorCode> {
         const response = await this.createDocumentRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      */
-    async updateDocumentRaw(requestParameters: UpdateDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseObjectDocumentErrorCode>> {
+    async deleteDocumentRaw(requestParameters: DeleteDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseDocumentDeletePayloadDocumentErrorCode>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteDocument().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/documents/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseDocumentDeletePayloadDocumentErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async deleteDocument(requestParameters: DeleteDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseDocumentDeletePayloadDocumentErrorCode> {
+        const response = await this.deleteDocumentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async exportDocumentRaw(requestParameters: ExportDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseExportDocumentErrorCode>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling exportDocument().'
+            );
+        }
+
+        if (requestParameters['documentExportInput'] == null) {
+            throw new runtime.RequiredError(
+                'documentExportInput',
+                'Required parameter "documentExportInput" was null or undefined when calling exportDocument().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/documents/{id}/export`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: DocumentExportInputToJSON(requestParameters['documentExportInput']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseExportDocumentErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async exportDocument(requestParameters: ExportDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseExportDocumentErrorCode> {
+        const response = await this.exportDocumentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getDocumentRaw(requestParameters: GetDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseDocumentDocumentErrorCode>> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling getDocument().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/documents/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseDocumentDocumentErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getDocument(requestParameters: GetDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseDocumentDocumentErrorCode> {
+        const response = await this.getDocumentRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async getTeachers1Raw(requestParameters: GetTeachers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageResponseDocumentDocumentErrorCode>> {
+        if (requestParameters['limit'] == null) {
+            throw new runtime.RequiredError(
+                'limit',
+                'Required parameter "limit" was null or undefined when calling getTeachers1().'
+            );
+        }
+
+        if (requestParameters['offset'] == null) {
+            throw new runtime.RequiredError(
+                'offset',
+                'Required parameter "offset" was null or undefined when calling getTeachers1().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters['limit'] != null) {
+            queryParameters['limit'] = requestParameters['limit'];
+        }
+
+        if (requestParameters['offset'] != null) {
+            queryParameters['offset'] = requestParameters['offset'];
+        }
+
+        if (requestParameters['name'] != null) {
+            queryParameters['name'] = requestParameters['name'];
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/documents`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PageResponseDocumentDocumentErrorCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async getTeachers1(requestParameters: GetTeachers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageResponseDocumentDocumentErrorCode> {
+        const response = await this.getTeachers1Raw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async updateDocumentRaw(requestParameters: UpdateDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResponseDocumentDocumentErrorCode>> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -107,12 +364,12 @@ export class DocumentControllerApi extends runtime.BaseAPI {
             body: DocumentUpdateInputToJSON(requestParameters['documentUpdateInput']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseObjectDocumentErrorCodeFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResponseDocumentDocumentErrorCodeFromJSON(jsonValue));
     }
 
     /**
      */
-    async updateDocument(requestParameters: UpdateDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseObjectDocumentErrorCode> {
+    async updateDocument(requestParameters: UpdateDocumentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResponseDocumentDocumentErrorCode> {
         const response = await this.updateDocumentRaw(requestParameters, initOverrides);
         return await response.value();
     }

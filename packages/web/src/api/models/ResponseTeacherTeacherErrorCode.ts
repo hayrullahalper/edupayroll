@@ -37,7 +37,7 @@ export interface ResponseTeacherTeacherErrorCode {
      * @type {Teacher}
      * @memberof ResponseTeacherTeacherErrorCode
      */
-    node?: Teacher;
+    data?: Teacher;
     /**
      * 
      * @type {Array<ResponseErrorTeacherErrorCode>}
@@ -64,7 +64,7 @@ export function ResponseTeacherTeacherErrorCodeFromJSONTyped(json: any, ignoreDi
     }
     return {
         
-        'node': json['node'] == null ? undefined : TeacherFromJSON(json['node']),
+        'data': json['data'] == null ? undefined : TeacherFromJSON(json['data']),
         'errors': ((json['errors'] as Array<any>).map(ResponseErrorTeacherErrorCodeFromJSON)),
     };
 }
@@ -75,7 +75,7 @@ export function ResponseTeacherTeacherErrorCodeToJSON(value?: ResponseTeacherTea
     }
     return {
         
-        'node': TeacherToJSON(value['node']),
+        'data': TeacherToJSON(value['data']),
         'errors': ((value['errors'] as Array<any>).map(ResponseErrorTeacherErrorCodeToJSON)),
     };
 }
