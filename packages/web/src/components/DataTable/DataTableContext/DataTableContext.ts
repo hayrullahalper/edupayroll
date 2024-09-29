@@ -29,6 +29,7 @@ export interface DataTableProps<T> {
 	loading?: boolean;
 	disabled?: boolean;
 
+	selectable?: boolean;
 	selections?: string[];
 	onSelectionsChange?: (selections: string[]) => void;
 
@@ -55,6 +56,7 @@ export interface DataTableContextType<T>
 		| 'skeleton'
 		| 'emptyState'
 		| 'pagination'
+		| 'selectable'
 		| 'selections'
 		| 'toolbarProps'
 		| 'selectionType'
@@ -62,7 +64,7 @@ export interface DataTableContextType<T>
 		| 'onSelectionTypeChange'
 	>,
 	Required<
-		Pick<DataTableProps<T>, 'skeleton' | 'selections' | 'selectionType'>
+		Pick<DataTableProps<T>, 'skeleton' | 'selectable' | 'selections' | 'selectionType'>
 	> {
 	setSelections: (selections: string[]) => void;
 	setSelectionType: (type: DataTableSelectionType) => void;

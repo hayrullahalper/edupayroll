@@ -16,6 +16,7 @@ export default function DataTable<T>(props: DataTableProps<T>) {
 		loading,
 		toolbar,
 		disabled,
+		selectable,
 		emptyState,
 		pagination,
 		toolbarProps,
@@ -50,6 +51,7 @@ export default function DataTable<T>(props: DataTableProps<T>) {
 			loading={loading}
 			skeleton={skeleton}
 			disabled={disabled || loading}
+			selectable={selectable ?? true}
 		>
 			<Stack h={height} gap={0}>
 				<Paper

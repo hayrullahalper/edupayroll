@@ -20,7 +20,7 @@ export default function DataTableRowCell<T>({
 	record,
 }: DataTableRowCellProps<T>) {
 	const { render, width } = column;
-	const { loading, disabled, keyExtractor } = useDataTable();
+	const { loading, disabled, selectable, keyExtractor } = useDataTable();
 
 	const key = useMemo(
 		() => (loading ? `skeleton-${index}` : keyExtractor(record)),
@@ -47,7 +47,7 @@ export default function DataTableRowCell<T>({
 						htmlFor={`checkbox-${key}`}
 						className={cx(styles.label, { disabled })}
 					>
-						<DataTableRowCheckbox recordKey={key} inputId={`checkbox-${key}`} />
+						{selectable && <DataTableRowCheckbox recordKey={key} inputId={`checkbox-${key}`} />}
 						{content}
 					</Flex>
 				)}

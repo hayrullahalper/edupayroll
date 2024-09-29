@@ -13,10 +13,10 @@ interface DataTableToolbarProps
 	extends PropsWithChildren<any>,
 	Omit<FlexProps, 'children'> {}
 
-const DataTableToolbar = forwardRef<HTMLDivElement, DataTableToolbarProps>(
+export default forwardRef<HTMLDivElement, DataTableToolbarProps>(
 	({ children, ...otherProps }, ref) => {
 		const [opened, { open, close }] = useDisclosure();
-		const { selections, selectionType, records, keyExtractor } = useDataTable();
+		const { selectable, selections, selectionType, records, keyExtractor } = useDataTable();
 
 		const checked = useMemo(
 			() =>
@@ -38,24 +38,28 @@ const DataTableToolbar = forwardRef<HTMLDivElement, DataTableToolbarProps>(
 		return (
 			<Stack gap={0} ref={ref}>
 				<Flex p="sm" gap="xs" align="center">
-					<Menu
-						offset={4}
-						shadow="sm"
-						opened={opened}
-						onClose={close}
-						position="bottom-start"
-						transitionProps={{ duration: 0 }}
-					>
-						<SelectMenuTarget
-							checked={checked}
-							onRequestOpen={open}
-							indeterminate={indeterminate}
-						/>
+					{selectable && (
+						<>
+							<Menu
+								offset={4}
+								shadow="sm"
+								opened={opened}
+								onClose={close}
+								position="bottom-start"
+								transitionProps={{ duration: 0 }}
+							>
+								<SelectMenuTarget
+									checked={checked}
+									onRequestOpen={open}
+									indeterminate={indeterminate}
+								/>
 
-						<SelectMenuDropdown />
-					</Menu>
+								<SelectMenuDropdown />
+							</Menu>
 
-					<Divider orientation="vertical" />
+							<Divider orientation="vertical" />
+						</>
+					)}
 
 					<Flex gap="xs" flex={1} {...otherProps}>
 						{children}
@@ -66,7 +70,3 @@ const DataTableToolbar = forwardRef<HTMLDivElement, DataTableToolbarProps>(
 		);
 	},
 );
-
-DataTableToolbar.displayName = 'DataTableToolbar';
-
-export default DataTableToolbar;

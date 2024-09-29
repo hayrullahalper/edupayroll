@@ -12,10 +12,10 @@ interface DataTableProviderProps<T>
 	extends PropsWithChildren<
 		Omit<
 			DataTableProps<T>,
-				'skeleton' | 'toolbar' | 'emptyState' | 'pagination'
+				'skeleton' | 'selectable' | 'toolbar' | 'emptyState' | 'pagination'
 		>
 	>,
-	Required<Pick<DataTableProps<T>, 'skeleton'>> {}
+	Required<Pick<DataTableProps<T>, 'skeleton' | 'selectable'>> {}
 
 export default function DataTableProvider<T>({
 	records,
@@ -28,6 +28,7 @@ export default function DataTableProvider<T>({
 	children,
 	disabled,
 
+	selectable,
 	selections: controlledSelections,
 	selectionType: controlledSelectionType,
 	onSelectionsChange,
@@ -53,6 +54,7 @@ export default function DataTableProvider<T>({
 			loading,
 			disabled,
 			skeleton,
+			selectable,
 			selections,
 			recordCount,
 			keyExtractor,
@@ -66,6 +68,7 @@ export default function DataTableProvider<T>({
 			loading,
 			disabled,
 			skeleton,
+			selectable,
 			selections,
 			recordCount,
 			keyExtractor,
