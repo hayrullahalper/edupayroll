@@ -42,7 +42,7 @@ public class DocumentController {
   }
 
   @GetMapping("")
-  public ResponseEntity<PageResponse<Document, DocumentErrorCode>> getTeachers(
+  public ResponseEntity<PageResponse<Document, DocumentErrorCode>> getDocuments(
       @RequestParam("limit") int limit,
       @RequestParam("offset") int offset,
       @RequestParam(value = "name", required = false) Optional<String> name) {
