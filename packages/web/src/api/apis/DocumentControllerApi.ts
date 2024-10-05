@@ -68,7 +68,7 @@ export interface GetDocumentRequest {
     id: string;
 }
 
-export interface GetTeachers1Request {
+export interface GetDocumentsRequest {
     limit: number;
     offset: number;
     name?: string;
@@ -285,18 +285,18 @@ export class DocumentControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async getTeachers1Raw(requestParameters: GetTeachers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageResponseDocumentDocumentErrorCode>> {
+    async getDocumentsRaw(requestParameters: GetDocumentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PageResponseDocumentDocumentErrorCode>> {
         if (requestParameters['limit'] == null) {
             throw new runtime.RequiredError(
                 'limit',
-                'Required parameter "limit" was null or undefined when calling getTeachers1().'
+                'Required parameter "limit" was null or undefined when calling getDocuments().'
             );
         }
 
         if (requestParameters['offset'] == null) {
             throw new runtime.RequiredError(
                 'offset',
-                'Required parameter "offset" was null or undefined when calling getTeachers1().'
+                'Required parameter "offset" was null or undefined when calling getDocuments().'
             );
         }
 
@@ -328,8 +328,8 @@ export class DocumentControllerApi extends runtime.BaseAPI {
 
     /**
      */
-    async getTeachers1(requestParameters: GetTeachers1Request, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageResponseDocumentDocumentErrorCode> {
-        const response = await this.getTeachers1Raw(requestParameters, initOverrides);
+    async getDocuments(requestParameters: GetDocumentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PageResponseDocumentDocumentErrorCode> {
+        const response = await this.getDocumentsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

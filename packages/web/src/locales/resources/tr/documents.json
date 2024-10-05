@@ -1,0 +1,30 @@
+{
+  "table": {
+    "edit": "Düzenle",
+    "show": "Görüntüle",
+    "search": "Belge ara...",
+    "columns": {
+      "time": "Dönem",
+      "title": "Başlık",
+      "actions": "İşlemler",
+      "records-count": "Kayıtlar",
+      "exports-count": "Kaydedilenler",
+      "createdAt": "Oluşturulma Tarihi",
+      "updatedAt": "Güncellenme Tarihi"
+    },
+    "emptyState": {
+      "title": "Belge bulunamadı",
+      "description": "Belge oluşturmak için lütfen 'Yeni Belge Oluştur' butonuna tıklayınız."
+    },
+    "tooltips": {
+      "export": "Belgeyi dışa aktar",
+      "delete": "Belgeyi sil"
+    }
+  },
+  "deleteDocument": {
+    "title": "Belgeyi Sil",
+    "message": "<0>{{name}}</0> başlıklı belgeyi silmek istediğinize emin misiniz?",
+    "warning": "Bu işlem geri alınamaz ve bu belgeye ait tüm veriler silinecektir.",
+    "success": "Belge başarıyla silindi."
+  }
+}

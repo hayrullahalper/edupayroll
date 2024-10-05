@@ -26,5 +26,9 @@
   "teachers": {
     "title": "Öğretmenler",
     "new": "Yeni Öğretmen Ekle"
+  },
+  "documents": {
+    "title": "Belgeler",
+    "new": "Yeni Belge Oluştur"
   }
 }

@@ -45,7 +45,7 @@ export default function DataTableRowCell<T>({
 						align="center"
 						component="label"
 						htmlFor={`checkbox-${key}`}
-						className={cx(styles.label, { disabled })}
+						className={cx(styles.label, { disabled, selectable })}
 					>
 						{selectable && <DataTableRowCheckbox recordKey={key} inputId={`checkbox-${key}`} />}
 						{content}

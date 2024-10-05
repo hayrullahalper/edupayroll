@@ -8,7 +8,7 @@ apis/TeacherControllerApi.ts
 apis/UserControllerApi.ts
 apis/index.ts
 index.ts
-models/Document.ts
+models/Document.tsx
 models/DocumentCreateInput.ts
 models/DocumentDeletePayload.ts
 models/DocumentExportInput.ts

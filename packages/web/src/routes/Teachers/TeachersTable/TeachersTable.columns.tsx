@@ -15,7 +15,7 @@ export const columns: DataTableColumn<Teacher>[] = [
 				return <Skeleton h={22} w={138} />;
 			}
 
-			return <Text fz="sm">{record?.name}</Text>;
+			return <Text fz="sm">{record.name}</Text>;
 		},
 	},
 	{
@@ -26,7 +26,7 @@ export const columns: DataTableColumn<Teacher>[] = [
 				return <Skeleton h={22} w={116} />;
 			}
 
-			return record?.idNumber;
+			return record.idNumber;
 		},
 	},
 	{
@@ -37,7 +37,7 @@ export const columns: DataTableColumn<Teacher>[] = [
 				return <Skeleton h={22} w={136} />;
 			}
 
-			return record?.branch;
+			return record.branch;
 		},
 	},
 	{
@@ -48,7 +48,7 @@ export const columns: DataTableColumn<Teacher>[] = [
 				return <Skeleton h={22} w={136} />;
 			}
 
-			return record?.description;
+			return record.description;
 		},
 	},
 	{

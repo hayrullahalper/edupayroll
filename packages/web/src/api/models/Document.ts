@@ -13,12 +13,6 @@
  */
 
 import { mapValues } from '../runtime';
-import type { DocumentUpdateInputTime } from './DocumentUpdateInputTime';
-import {
-    DocumentUpdateInputTimeFromJSON,
-    DocumentUpdateInputTimeFromJSONTyped,
-    DocumentUpdateInputTimeToJSON,
-} from './DocumentUpdateInputTime';
 import type { Export } from './Export';
 import {
     ExportFromJSON,
@@ -52,10 +46,10 @@ export interface Document {
     name: string;
     /**
      * 
-     * @type {DocumentUpdateInputTime}
+     * @type {string}
      * @memberof Document
      */
-    time: DocumentUpdateInputTime;
+    time: string;
     /**
      * 
      * @type {Array<Record>}
@@ -108,7 +102,7 @@ export function DocumentFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         
         'id': json['id'],
         'name': json['name'],
-        'time': DocumentUpdateInputTimeFromJSON(json['time']),
+        'time': json['time'],
         'records': ((json['records'] as Array<any>).map(RecordFromJSON)),
         'exports': ((json['exports'] as Array<any>).map(ExportFromJSON)),
         'createdAt': (new Date(json['createdAt'])),
@@ -124,7 +118,7 @@ export function DocumentToJSON(value?: Document | null): any {
         
         'id': value['id'],
         'name': value['name'],
-        'time': DocumentUpdateInputTimeToJSON(value['time']),
+        'time': value['time'],
         'records': ((value['records'] as Array<any>).map(RecordToJSON)),
         'exports': ((value['exports'] as Array<any>).map(ExportToJSON)),
         'createdAt': ((value['createdAt']).toISOString()),

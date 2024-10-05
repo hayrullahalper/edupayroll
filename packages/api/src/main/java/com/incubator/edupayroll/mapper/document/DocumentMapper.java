@@ -13,7 +13,7 @@ public class DocumentMapper {
     return new Document(
         document.getId(),
         document.getName(),
-        document.getTime(),
+        document.getTime().toString(),
         records,
         exports,
         document.getCreatedAt(),

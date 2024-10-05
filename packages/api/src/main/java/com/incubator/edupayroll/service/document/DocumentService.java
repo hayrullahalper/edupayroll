@@ -45,6 +45,16 @@ public class DocumentService {
     var pr = PageRequest.of(number, limit, sort);
     var page = documentRepository.findAllByUser(user, name.map(String::trim), pr);
 
+    var list = page.get().toList();
+
+    for (var document : list) {
+      var records = recordService.getAllByDocument(document);
+      var exports = exportService.getAllByDocument(document);
+
+      document.setRecords(records);
+      document.setExports(exports);
+    }
+
     return page.get().toList();
   }
 

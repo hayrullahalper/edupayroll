@@ -5,4 +5,8 @@
 	&:global(.disabled) {
 		cursor: default;
 	}
+
+	&:not(&:global(.selectable)) {
+		cursor: default;
+	}
 }
