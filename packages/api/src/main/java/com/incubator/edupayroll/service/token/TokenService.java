@@ -1,19 +1,32 @@
 package com.incubator.edupayroll.service.token;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator.Builder;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
 import java.time.Instant;
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
+
+import com.incubator.edupayroll.repository.TokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TokenService {
-  private final int expiration = 7 * 24 * 60 * 60;
+  private final Algorithm algorithm;
+  private final TokenRepository tokenRepository;
 
-  private final Algorithm algorithm = Algorithm.HMAC256("baeldung");
+
+  @Autowired
+  public TokenService(Environment env, TokenRepository tokenRepository) {
+    this.algorithm = Algorithm.HMAC256(env.getProperty("app.jwt-secret"));
+    this.tokenRepository = tokenRepository;
+  }
 
   public boolean verify(String token) {
     try {
@@ -23,45 +36,31 @@ public class TokenService {
     }
   }
 
-  public String encode(Map<String, Object> claims) {
-    return encode(claims, expiration);
+  public String encodeUserToken(UUID userId, String email) {
+    var jb = generateTokenBuilder();
+
+    jb.withClaim("userId", userId.toString());
+    jb.withClaim("email", email);
+
+    return jb.sign(algorithm);
   }
 
-  public String encode(Map<String, Object> claims, int expiration) {
-    var expiresAt = Instant.now().plusSeconds(expiration);
+  public UserTokenPayload decodeUserToken(String token) {
+    var claims = JWT.decode(token).getClaims();
 
+    var email = claims.get("email").asString();
+    var userId = UUID.fromString(claims.get("userId").asString());
+
+    return new UserTokenPayload(userId, email);
+  }
+
+  private Builder generateTokenBuilder() {
     var jb = JWT.create();
 
-    claims.forEach(
-        (key, value) -> {
-          if (value instanceof String) {
-            jb.withClaim(key, (String) value);
-            return;
-          }
+    int expiration = 7 * 24 * 60 * 60; // 7 days
+    var expiresAt = Instant.now().plusSeconds(expiration);
 
-          if (value instanceof Integer) {
-            jb.withClaim(key, (Integer) value);
-            return;
-          }
-
-          if (value instanceof Boolean) {
-            jb.withClaim(key, (Boolean) value);
-            return;
-          }
-
-          throw new IllegalArgumentException("Unsupported claim type");
-        });
-
-    return jb.withExpiresAt(java.util.Date.from(expiresAt)).sign(algorithm);
-  }
-
-  public Map<String, Claim> decode(String token) {
-    try {
-      return JWT.decode(token).getClaims();
-    } catch (TokenExpiredException e) {
-      throw InvalidTokenException.byExpiredToken(token);
-    } catch (Exception e) {
-      throw InvalidTokenException.byInvalidToken(token, e);
-    }
+    jb.withExpiresAt(Date.from(expiresAt));
+    return jb;
   }
 }

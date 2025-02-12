@@ -32,10 +32,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
       if (token != null && tokenService.verify(token)) {
 
-        var claims = tokenService.decode(token);
+        var payload = tokenService.decodeUserToken(token);
 
-        var userId = claims.get("userId").asString();
-        var verified = claims.get("verified").asBoolean();
+        var userId = payload.userId();
 
         if (!verified) {
           throw InvalidTokenException.byInvalidToken(token);
